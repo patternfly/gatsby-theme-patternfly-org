@@ -1,0 +1,18 @@
+{
+  "name": "gatsby-theme-patternfly-org",
+  "description": "A unified PatternFly-next and PatternFly-react Gatsby theme.",
+  "version": "0.0.1",
+  "author": "Red Hat",
+  "license": "MIT",
+  "peerDependencies": {
+    "gatsby": "^2.6.0"
+  },
+  "dependencies": {
+    "@mdx-js/mdx": "^1.1.5",
+    "@mdx-js/react": "^1.1.5",
+    "@patternfly/react-core": "^3.104.0",
+    "gatsby-plugin-mdx": "^1.0.40",
+    "gatsby-plugin-react-helmet": "^3.1.7",
+    "gatsby-transformer-json": "^2.2.8"
+  }
+}

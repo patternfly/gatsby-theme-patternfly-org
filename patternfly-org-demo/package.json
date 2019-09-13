@@ -1,0 +1,18 @@
+{
+  "name": "patternfly-org-demo",
+  "version": "0.0.1",
+  "private": true,
+  "author": "Red Hat",
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop"
+  },
+  "dependencies": {
+    "gatsby": "^2.15.14",
+    "gatsby-source-filesystem": "^2.1.22",
+    "gatsby-theme-patternfly-org": "^0.0.1",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
+  }
+}

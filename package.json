@@ -5,10 +5,11 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "yarn workspace example build"
+    "build": "yarn workspace patternfly-org-demo build",
+    "develop": "yarn workspace patternfly-org-demo develop"
   },
   "workspaces": [
-    "gatsby-theme-minimal",
-    "example"
+    "gatsby-theme-patternfly-org",
+    "patternfly-org-demo"
   ]
 }
