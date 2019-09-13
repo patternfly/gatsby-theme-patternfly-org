@@ -1,6 +1,11 @@
 const path = require('path');
 
 module.exports = {
+  siteMetadata: {
+    title: 'PatternFly 4',
+    description: 'Documentation for PatternFly 4',
+    siteUrl: 'https://www.patternfly.org'
+  },
   plugins: [
     {
       resolve: `gatsby-theme-patternfly-org`,

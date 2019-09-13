@@ -6,6 +6,8 @@ module.exports = {
       options: {
         extensions: [`.mdx`, `.md`],
       }
-    }
+    },
+    // Convienently change root portions of doc
+    'gatsby-plugin-react-helmet'
   ]
 }
