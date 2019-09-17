@@ -8,6 +8,6 @@ module.exports = {
       }
     },
     // Convienently change root portions of doc
-    'gatsby-plugin-react-helmet'
+    'gatsby-plugin-react-helmet',
   ]
 }

@@ -14,6 +14,7 @@ module.exports = {
     {
       resolve: 'gatsby-source-filesystem',
       options: {
+        name: 'core', // This goes in URLs
         path: `${path.resolve(__dirname)}/patternfly-next/src/patternfly`
       }
     },

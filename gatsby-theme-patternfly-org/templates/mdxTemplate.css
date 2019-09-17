@@ -1,0 +1,16 @@
+.ws-section-main {
+  background-color: #f8f8f8 !important;
+  padding: 48px;
+  padding-top: 32px;
+}
+
+.ws-framework-title {
+  color: #06c;
+}
+
+.ws-toc {
+  padding-top: 14px;
+  padding-bottom: 14px;
+  margin-right: 30px;
+  display: inline-block;
+}

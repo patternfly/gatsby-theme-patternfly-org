@@ -1,5 +1,7 @@
 const path = require('path');
 
+const partials = {};
+
 // Add map PR-related environment variables to gatsby nodes
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   const num = process.env.CIRCLE_PR_NUMBER || process.env.PR_NUMBER;
@@ -19,13 +21,20 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   });
 };
 
-exports.onCreateNode = ({ node, actions }) => {
+exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions;
   if (node.internal.type === 'Mdx') {
+    // Source comes from gatsby-source-filesystem definition in gatsby-config.js
+    const source = getNode(node.parent).sourceInstanceName;
+    createNodeField({
+      node,
+      name: 'source',
+      value: source
+    });
     createNodeField({
       node,
       name: 'slug',
-      value: `/documentation/core/${node.frontmatter.section}/${path.basename(node.fileAbsolutePath, '.md')}`.toLowerCase()
+      value: `/documentation/${source}/${node.frontmatter.section}/${path.basename(node.fileAbsolutePath, '.md')}`.toLowerCase()
     });
     createNodeField({
       node,
@@ -37,61 +46,66 @@ exports.onCreateNode = ({ node, actions }) => {
       name: 'title',
       value: node.frontmatter.title
     });
+  } else if (node.internal.type === 'File' && node.extension === 'hbs'){
+    partials[path.basename(node.absolutePath, '.hbs')] = node.absolutePath;
   }
 };
 
-exports.createPages = ({ actions, graphql }) => {
-  const { createPage } = actions;
-
-  return graphql(`
-    {
-      allMdx {
-        nodes {
-          id
-          fields {
-            slug
-            navSection
-            title
-          }
+exports.createPages = ({ actions, graphql, getNode }) => graphql(`
+  {
+    allMdx {
+      nodes {
+        id
+        fields {
+          slug
+          source
+          navSection
+          title
         }
       }
     }
-  `).then(result => {
-    if (result.errors) {
-      return Promise.reject(result.errors);
-    }
+  }
+`).then(result => {
+  if (result.errors) {
+    return Promise.reject(result.errors);
+  }
 
-    return result.data.allMdx.nodes.forEach(node => {
-      const { slug, navSection, title } = node.fields;
+  return result.data.allMdx.nodes.forEach(node => {
+    const { slug, source, navSection, title } = node.fields;
 
-      createPage({
-        path: node.fields.slug,
-        component: path.resolve(__dirname, `./templates/mdxTemplate.js`),
-        context: {
-          id: node.id,
-          slug,
-          navSection,
-          title
-        }
-      });
+    actions.createPage({
+      path: node.fields.slug,
+      component: path.resolve(__dirname, `./templates/mdxTemplate.js`),
+      context: {
+        id: node.id,
+        source,
+        slug,
+        navSection,
+        title,
+      }
     });
   });
-};
+});
 
-exports.onCreateWebpackConfig = ({ stage, actions }) =>
-  new Promise((resolve, reject) => {
-    actions.setWebpackConfig({
-      module: {
-        rules: [
-          {
-            test: /\.hbs$/,
-            query: {
-              extensions: '.hbs',
+exports.onCreateWebpackConfig = ({ stage, actions }) =>{
+  actions.setWebpackConfig({
+    module: {
+      rules: [
+        {
+          test: /\.hbs$/,
+          query: {
+            extensions: '.hbs',
+            partialResolver(partial, callback) {
+              if (partials[partial]) {
+                callback(null, partials[partial]);
+              } else {
+                callback(new Error(`Could not find partial: ${partial}`), '');
+              }
             },
-            loader: 'handlebars-loader'
-          }
-        ]
-      },
-    });
-    resolve();
+          },
+          loader: 'handlebars-loader'
+        }
+      ]
+    },
   });
+}

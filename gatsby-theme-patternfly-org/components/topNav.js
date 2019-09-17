@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'gatsby';
 import { Nav, NavList, NavItem } from '@patternfly/react-core';
+import './topNav.css';
 
 export default ({ location }) => (
   <Nav aria-label="Nav">
@@ -16,7 +17,7 @@ export default ({ location }) => (
         },
         {
           text: 'Documentation',
-          link: '/documentation/core/aboutmodalbox'
+          link: '/documentation/core/components/aboutmodalbox'
         },
         {
           text: 'Contribute',

@@ -1,11 +1,13 @@
 import React from 'react';
 import { graphql, useStaticQuery, Link } from 'gatsby';
 import { Nav, NavList, NavExpandable, NavItem } from '@patternfly/react-core';
+import { capitalize } from '../helpers';
 
 export default ({ context, location }) => {
   const data = useStaticQuery(graphql`
   {
-    allSitePage(filter: { context: { slug: { ne: null } } }) {
+    allSitePage(filter: { context: { slug: { ne: null } } },
+                sort: { fields: context___title }) {
       nodes {
         context {
           slug
@@ -33,7 +35,7 @@ export default ({ context, location }) => {
         {['components', 'layouts', 'utilities', 'demos', 'experimental'].map(navSection => (
           <NavExpandable
             key={navSection}
-            title={navSection}
+            title={capitalize(navSection)}
             isActive={location.pathname.includes(navSection)}
             isExpanded={location.pathname.includes(navSection)}
           >
