@@ -14,7 +14,7 @@ export default class Example extends React.Component {
       .replace(/^\s*import.*from.*/gm, '') // single line import
       .replace(/^\s*import\s+{[\s\S]+?}\s+from.*/gm, '') // multi line import
       .replace(/^\s*export.*;/gm, '') // single line export
-      .replace(/export default/gm, '') // inline export
+      .replace(/export default/gm, ''); // inline export
 
     return toParse;
   }

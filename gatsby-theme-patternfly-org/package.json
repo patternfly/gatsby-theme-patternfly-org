@@ -20,6 +20,7 @@
     "handlebars": "^4.2.0",
     "handlebars-loader": "^1.7.1",
     "handlebars-utils": "^1.0.6",
+    "pretty": "^2.0.0",
     "react-helmet": "^5.2.1",
     "react-live": "^2.2.0"
   }

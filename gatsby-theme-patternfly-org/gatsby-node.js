@@ -1,5 +1,4 @@
 const path = require('path');
-
 const partials = {};
 
 // Add map PR-related environment variables to gatsby nodes
@@ -21,11 +20,12 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   });
 };
 
-exports.onCreateNode = ({ node, actions, getNode }) => {
+exports.onCreateNode = ({ node, actions, getNode, cache }) => {
   const { createNodeField } = actions;
   if (node.internal.type === 'Mdx') {
     // Source comes from gatsby-source-filesystem definition in gatsby-config.js
     const source = getNode(node.parent).sourceInstanceName;
+    const { section, title } = node.frontmatter;
     createNodeField({
       node,
       name: 'source',
@@ -34,20 +34,22 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     createNodeField({
       node,
       name: 'slug',
-      value: `/documentation/${source}/${node.frontmatter.section}/${path.basename(node.fileAbsolutePath, '.md')}`.toLowerCase()
+      value: `/documentation/${source}/${section}/${path.basename(node.fileAbsolutePath, '.md')}`.toLowerCase()
     });
     createNodeField({
       node,
       name: 'navSection',
-      value: node.frontmatter.section.toLowerCase()
+      value: section.toLowerCase()
     });
     createNodeField({
       node,
       name: 'title',
-      value: node.frontmatter.title
+      value: title
     });
-  } else if (node.internal.type === 'File' && node.extension === 'hbs'){
+  } else if (node.internal.type === 'File' && node.extension === 'hbs') {
     partials[path.basename(node.absolutePath, '.hbs')] = node.absolutePath;
+    // Save to the gatsby cache for subsequent runs https://www.gatsbyjs.org/docs/build-caching/
+    cache.set('partials', partials).then();
   }
 };
 
@@ -87,25 +89,26 @@ exports.createPages = ({ actions, graphql, getNode }) => graphql(`
   });
 });
 
-exports.onCreateWebpackConfig = ({ stage, actions }) =>{
-  actions.setWebpackConfig({
-    module: {
-      rules: [
-        {
-          test: /\.hbs$/,
-          query: {
-            extensions: '.hbs',
-            partialResolver(partial, callback) {
-              if (partials[partial]) {
-                callback(null, partials[partial]);
-              } else {
-                callback(new Error(`Could not find partial: ${partial}`), '');
-              }
+exports.onCreateWebpackConfig = ({ actions, cache }) => cache.get('partials')
+  .then(cachedPartials =>
+    actions.setWebpackConfig({
+      module: {
+        rules: [
+          {
+            test: /\.hbs$/,
+            query: {
+              extensions: '.hbs',
+              partialResolver(partial, callback) {
+                if (cachedPartials[partial]) {
+                  callback(null, cachedPartials[partial]);
+                } else {
+                  callback(new Error(`Could not find partial: ${partial}`), '');
+                }
+              },
             },
-          },
-          loader: 'handlebars-loader'
-        }
-      ]
-    },
-  });
-}
+            loader: 'handlebars-loader'
+          }
+        ]
+      }
+    })
+  );

@@ -45,7 +45,7 @@ export default ({ children, location }) => {
   const SideBar = <PageSidebar nav={<SideNav context="core" location={location} />} />;
 
   return (
-    <Page header={Header} sidebar={SideBar} className="pf-m-redhat-font">
+    <Page isManagedSidebar header={Header} sidebar={SideBar} className="pf-m-redhat-font">
       <Helmet>
         <title>{siteTitle}</title>
       </Helmet>
