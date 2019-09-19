@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 const partials = {};
 const { extractExamples } = require('./helpers/extractExamples');
 
@@ -21,7 +22,7 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   });
 };
 
-exports.onCreateNode = ({ node, actions, getNode, cache }) => {
+exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions;
   if (node.internal.type === 'Mdx') {
     // Source comes from gatsby-source-filesystem definition in gatsby-config.js
@@ -48,9 +49,26 @@ exports.onCreateNode = ({ node, actions, getNode, cache }) => {
       value: title
     });
   } else if (node.internal.type === 'File' && node.extension === 'hbs') {
-    partials[path.basename(node.absolutePath, '.hbs')] = node.absolutePath;
-    // Save to the gatsby cache for subsequent runs https://www.gatsbyjs.org/docs/build-caching/
-    cache.set('partials', partials).then();
+    // Add a special field to identify partial files
+    const split = node.absolutePath.split('/');
+    const parentFolder = split[split.length - 2];
+    // Exclude example partials, they just bloat bundle
+    if (!parentFolder.includes('example')) {
+      const partial = fs.readFileSync(node.absolutePath, 'utf8');
+      // Exclude empty partials, they bug out 
+      if (partial) {
+        createNodeField({
+          node,
+          name: 'name',
+          value: path.basename(node.absolutePath, '.hbs')
+        });
+        createNodeField({
+          node,
+          name: 'partial',
+          value: partial
+        });
+      }
+    }
   }
 };
 
@@ -85,37 +103,24 @@ exports.createPages = ({ actions, graphql, getNode }) => graphql(`
     });
 
     // Crawl the AST to find examples and create new pages for them
-    Object.entries(extractExamples(node.mdxAST)).forEach(([key, mdxBody]) => {
-      actions.createPage({
-        path: `${slug}/${key}`,
-        component: path.resolve(__dirname, `./templates/mdxTemplateFullscreen.js`),
-        context: {
-          mdxBody
-        }
-      })
-    })
+    // Object.entries(extractExamples(node.mdxAST)).forEach(([key, mdxBody]) => {
+    //   actions.createPage({
+    //     path: `${slug}/${key}`,
+    //     component: path.resolve(__dirname, `./templates/mdxTemplateFullscreen.js`),
+    //     context: {
+    //       mdxBody
+    //     }
+    //   })
+    // })
   }));
 
-exports.onCreateWebpackConfig = ({ actions, cache }) => cache.get('partials')
-  .then(cachedPartials =>
-    actions.setWebpackConfig({
-      module: {
-        rules: [
-          {
-            test: /\.hbs$/,
-            query: {
-              extensions: '.hbs',
-              partialResolver(partial, callback) {
-                if (cachedPartials[partial]) {
-                  callback(null, cachedPartials[partial]);
-                } else {
-                  callback(new Error(`Could not find partial: ${partial}`), '');
-                }
-              },
-            },
-            loader: 'handlebars-loader'
-          }
-        ]
-      }
-    })
-  );
+exports.onCreateWebpackConfig = ({ actions }) => actions.setWebpackConfig({
+    module: {
+      rules: [
+        {
+          test: /\.hbs$/,
+          loader: 'null-loader'
+        }
+      ]
+    }
+  });

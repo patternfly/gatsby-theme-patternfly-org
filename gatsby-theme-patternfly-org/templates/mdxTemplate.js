@@ -14,9 +14,7 @@ const components = {
   code: Example,
 };
 for (let i = 1; i <= 6; i++) {
-  components[`h${i}`] = props => (
-    <AutoLinkHeader size={`h${i}`} {...props} />
-  );
+  components[`h${i}`] = props => <AutoLinkHeader size={`h${i}`} {...props} />;
 }
 
 export default ({ data, location }) => {
