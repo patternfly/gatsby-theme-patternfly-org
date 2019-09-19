@@ -1,33 +1,56 @@
 import React from 'react';
+import Handlebars from 'handlebars';
 import { LiveProvider, LiveEditor, LivePreview, LiveError } from 'react-live';
 import EditorToolbar from './editorToolbar';
 import AutoLinkHeader from './autoLinkHeader';
 import './example.css';
 
 export default class Example extends React.Component {
-  static transformCode(code) {
+  constructor(props) {
+    super(props);
+    console.log('example props', props);
+  }
+  static transformCode(code, language) {
     if (typeof code !== 'string') {
       return;
     }
-    // These don't actually do anything except make Buble mad
-    const toParse = code
-      .replace(/^\s*import.*from.*/gm, '') // single line import
-      .replace(/^\s*import\s+{[\s\S]+?}\s+from.*/gm, '') // multi line import
-      .replace(/^\s*export.*;/gm, '') // single line export
-      .replace(/export default/gm, ''); // inline export
-
-    return toParse;
+    if (language.includes('-hbs')) {
+      return Handlebars.compile(code)
+        .replace(/class=/g, 'className='); // HTML from handlebars
+    }
+    else if (language.includes('-js')) {
+      return code
+        .replace(/^\s*import.*from.*/gm, '') // single line import
+        .replace(/^\s*import\s+{[\s\S]+?}\s+from.*/gm, '') // multi line import
+        .replace(/^\s*export.*;/gm, '') // single line export
+        .replace(/export default/gm, '') // inline export
+    }
+    // HTML
+    return code.replace(/class=/g, 'className=');
   }
 
   render() {
-    const { noLive, title } = this.props;
-    return (
-      <div className="ws-example">
-        <AutoLinkHeader size="h4" headingLevel="h3" className="ws-example-heading">{title}</AutoLinkHeader>
+    const { noLive, title, className, isFullscreen = false } = this.props;
+    if (isFullscreen) {
+      return (
         <LiveProvider
           code={this.props.html || this.props.react}
           scope={this.scope}
-          transformCode={Example.transformCode}
+          transformCode={code => Example.transformCode(code, className)}
+          >
+          <LivePreview />
+        </LiveProvider>
+      );
+    }
+    return (
+      <div className="ws-example">
+        <AutoLinkHeader size="h4" headingLevel="h3" className="ws-example-heading">
+          {title}
+        </AutoLinkHeader>
+        <LiveProvider
+          code={this.props.html || this.props.react}
+          scope={this.scope}
+          transformCode={code => Example.transformCode(code, className)}
           disabled={noLive}
           theme={{
             /* disable theme so we can use the global one imported in gatsby-browser.js */

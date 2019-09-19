@@ -11,7 +11,7 @@ import './mdxTemplate.css';
 
 const components = {
   pre: React.Fragment,
-  Example: Example
+  code: Example,
 };
 for (let i = 1; i <= 6; i++) {
   components[`h${i}`] = props => (

@@ -1,5 +1,6 @@
 const path = require('path');
 const partials = {};
+const { extractExamples } = require('./helpers/extractExamples');
 
 // Add map PR-related environment variables to gatsby nodes
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
@@ -64,19 +65,15 @@ exports.createPages = ({ actions, graphql, getNode }) => graphql(`
           navSection
           title
         }
+        mdxAST
       }
     }
   }
-`).then(result => {
-  if (result.errors) {
-    return Promise.reject(result.errors);
-  }
-
-  return result.data.allMdx.nodes.forEach(node => {
+  `).then(result => result.data.allMdx.nodes.forEach(node => {
     const { slug, source, navSection, title } = node.fields;
 
     actions.createPage({
-      path: node.fields.slug,
+      path: slug,
       component: path.resolve(__dirname, `./templates/mdxTemplate.js`),
       context: {
         id: node.id,
@@ -86,8 +83,18 @@ exports.createPages = ({ actions, graphql, getNode }) => graphql(`
         title,
       }
     });
-  });
-});
+
+    // Crawl the AST to find examples and create new pages for them
+    Object.entries(extractExamples(node.mdxAST)).forEach(([key, mdxBody]) => {
+      actions.createPage({
+        path: `${slug}/${key}`,
+        component: path.resolve(__dirname, `./templates/mdxTemplateFullscreen.js`),
+        context: {
+          mdxBody
+        }
+      })
+    })
+  }));
 
 exports.onCreateWebpackConfig = ({ actions, cache }) => cache.get('partials')
   .then(cachedPartials =>

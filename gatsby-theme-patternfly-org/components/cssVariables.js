@@ -34,6 +34,7 @@ export default class extends React.Component {
       { title: 'React Token', transforms: [sortable] },
       { title: 'Value', transforms: [sortable] }
     ];
+    
     this.state = {
       filterValue: '',
       rows: initialRows,
