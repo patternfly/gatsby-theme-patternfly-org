@@ -1,6 +1,4 @@
 import React from 'react';
-import { graphql, useStaticQuery } from 'gatsby';
-import Handlebars from 'handlebars';
 import { LiveProvider, LiveEditor, LivePreview, LiveError } from 'react-live';
 import EditorToolbar from './editorToolbar';
 import AutoLinkHeader from './autoLinkHeader';
@@ -11,7 +9,7 @@ const transformCode = (code, language, hbs) => {
     return;
   }
   if (language.includes('-hbs')) {
-    return Handlebars.compile(code)({})
+    return hbs.compile(code)({})
       .replace(/class=/g, 'className='); // HTML from handlebars
   }
   else if (language.includes('-js')) {
@@ -26,27 +24,12 @@ const transformCode = (code, language, hbs) => {
 }
 
 export default props => {
-  const data = useStaticQuery(graphql`
-  {
-    partials: allFile(filter: { fields: { name: { ne: null } } }) {
-      nodes {
-        fields {
-          name
-          partial
-        }
-      }
-    }
-  }
-  `);
-
-  data.partials.nodes.forEach(({ fields }) => Handlebars.registerPartial(fields.name, fields.partial));
-
   const { noLive, title, className, isFullscreen = false } = props;
   if (isFullscreen) {
     return (
       <LiveProvider
         code={props.children.toString()}
-        transformCode={code => transformCode(code, className)}
+        transformCode={code => transformCode(code, className, props.handlebars)}
         >
         <LivePreview />
       </LiveProvider>
@@ -59,7 +42,7 @@ export default props => {
       </AutoLinkHeader>
       <LiveProvider
         code={props.children.toString()}
-        transformCode={code => transformCode(code, className, Handlebars)}
+        transformCode={code => transformCode(code, className, props.handlebars)}
         disabled={noLive}
         theme={{
           /* disable theme so we can use the global one imported in gatsby-browser.js */

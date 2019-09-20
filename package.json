@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "yarn workspace patternfly-org-demo build",
+    "clean": "yarn workspace patternfly-org-demo clean",
     "develop": "yarn workspace patternfly-org-demo develop"
   },
   "workspaces": [

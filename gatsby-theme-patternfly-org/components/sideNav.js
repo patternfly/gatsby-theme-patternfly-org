@@ -1,18 +1,18 @@
 import React from 'react';
 import { graphql, useStaticQuery, Link } from 'gatsby';
 import { Nav, NavList, NavExpandable, NavItem } from '@patternfly/react-core';
-import { capitalize } from '../helpers';
+import { capitalize } from '../helpers/capitalize';
 
 export default ({ context, location }) => {
   const data = useStaticQuery(graphql`
   {
-    allSitePage(filter: { context: { slug: { ne: null } } },
+    allSitePage(filter: { context: { navSection: { ne: null } } },
                 sort: { fields: context___title }) {
       nodes {
+        path
         context {
-          slug
-          navSection
           title
+          navSection
         }
       }
     }
@@ -23,7 +23,7 @@ export default ({ context, location }) => {
     accum[navSection] = accum[navSection] || [];
     accum[navSection].push({
       text: node.context.title,
-      slug: node.context.slug
+      path: node.path
     });
 
     return accum;
@@ -40,8 +40,8 @@ export default ({ context, location }) => {
             isExpanded={location.pathname.includes(navSection)}
           >
             {allPages[navSection].map(node => (
-              <NavItem key={node.slug} isActive={location.pathname.includes(node.slug)}>
-                <Link to={node.slug}>{node.text}</Link>
+              <NavItem key={node.path} isActive={location.pathname.includes(node.path)}>
+                <Link to={node.path}>{node.text}</Link>
               </NavItem>
             ))}
           </NavExpandable>

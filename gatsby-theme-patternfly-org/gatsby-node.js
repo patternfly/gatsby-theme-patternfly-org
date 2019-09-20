@@ -1,6 +1,5 @@
 const path = require('path');
 const fs = require('fs');
-const partials = {};
 const { extractExamples } = require('./helpers/extractExamples');
 
 // Add map PR-related environment variables to gatsby nodes
@@ -22,11 +21,19 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   });
 };
 
+const getParentFolder = path => {
+  const split = path.replace('examples/', '').split('/');
+  split.pop();
+  return split.join('/');
+}
+
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions;
   if (node.internal.type === 'Mdx') {
     // Source comes from gatsby-source-filesystem definition in gatsby-config.js
-    const source = getNode(node.parent).sourceInstanceName;
+    const parent = getNode(node.parent);
+    const source = parent.sourceInstanceName;
+
     const { section, title } = node.frontmatter;
     createNodeField({
       node,
@@ -48,12 +55,15 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       name: 'title',
       value: title
     });
+    createNodeField({
+      node,
+      name: 'parentFolder',
+      // Add a special field to identify partial files
+      value: getParentFolder(parent.relativePath)
+    });
   } else if (node.internal.type === 'File' && node.extension === 'hbs') {
-    // Add a special field to identify partial files
-    const split = node.absolutePath.split('/');
-    const parentFolder = split[split.length - 2];
     // Exclude example partials, they just bloat bundle
-    if (!parentFolder.includes('example')) {
+    if (!node.relativePath.includes('example')) {
       const partial = fs.readFileSync(node.absolutePath, 'utf8');
       // Exclude empty partials, they bug out 
       if (partial) {
@@ -66,6 +76,12 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
           node,
           name: 'partial',
           value: partial
+        });
+        createNodeField({
+          node,
+          name: 'parentFolder',
+          // Add a special field to identify partial files
+          value: getParentFolder(node.relativePath)
         });
       }
     }
@@ -82,21 +98,24 @@ exports.createPages = ({ actions, graphql, getNode }) => graphql(`
           source
           navSection
           title
+          parentFolder
         }
         mdxAST
       }
     }
   }
   `).then(result => result.data.allMdx.nodes.forEach(node => {
-    const { slug, source, navSection, title } = node.fields;
+    const { slug, navSection, title } = node.fields;
 
     actions.createPage({
       path: slug,
       component: path.resolve(__dirname, `./templates/mdxTemplate.js`),
       context: {
+        // To fetch more MDX data
         id: node.id,
-        source,
-        slug,
+        // To fetch partials
+        parentFolder: node.fields.parentFolder,
+        // For use in sideNav.js
         navSection,
         title,
       }

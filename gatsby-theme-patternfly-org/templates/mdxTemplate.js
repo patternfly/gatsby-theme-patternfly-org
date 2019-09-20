@@ -1,5 +1,6 @@
 import React from 'react';
 import { graphql } from 'gatsby';
+import Handlebars from 'handlebars';
 import { MDXProvider } from '@mdx-js/react';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import { PageSection, Title } from '@patternfly/react-core';
@@ -11,7 +12,6 @@ import './mdxTemplate.css';
 
 const components = {
   pre: React.Fragment,
-  code: Example,
 };
 for (let i = 1; i <= 6; i++) {
   components[`h${i}`] = props => <AutoLinkHeader size={`h${i}`} {...props} />;
@@ -22,10 +22,17 @@ export default ({ data, location }) => {
   const sourceName = data.mdx.fields.source === 'core'
     ? 'HTML'
     : 'React';
+  const handlebarsInstance = Handlebars.create();
+  data.partials.nodes.forEach(({ fields }) =>
+    handlebarsInstance.registerPartial(fields.name, fields.partial));
+  
   return (
     <SideNavLayout location={location}>
       <PageSection className="ws-section-main">
-        <MDXProvider components={components}>
+        <MDXProvider components={{
+          code: props => <Example handlebars={handlebarsInstance} {...props} />,
+          ...components
+        }}>
           <Title size="md" className="ws-framework-title">{sourceName}</Title>
           <Title size="4xl">{title}</Title>
           <a href="#examples" className="ws-toc">
@@ -49,8 +56,9 @@ export default ({ data, location }) => {
   );
 }
 
+// TODO: Get only partials for component
 export const pageQuery = graphql`
-  query($id: String!) {
+  query($id: String!, $parentFolder: String!) {
     mdx(id: { eq: $id }) {
       body
       frontmatter {
@@ -59,6 +67,14 @@ export const pageQuery = graphql`
       }
       fields {
         source
+      }
+    }
+    partials: allFile(filter: { fields: { parentFolder: { eq: $parentFolder } } }) {
+      nodes {
+        fields {
+          name
+          partial
+        }
       }
     }
   }
