@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs');
-const { extractExamples } = require('./helpers/extractExamples');
+const Handlebars = require('handlebars');
+const { extractCoreExamples } = require('./helpers/extractExamples');
 
 // Add map PR-related environment variables to gatsby nodes
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
@@ -103,35 +104,53 @@ exports.createPages = ({ actions, graphql, getNode }) => graphql(`
         mdxAST
       }
     }
-  }
-  `).then(result => result.data.allMdx.nodes.forEach(node => {
-    const { slug, navSection, title } = node.fields;
-
-    actions.createPage({
-      path: slug,
-      component: path.resolve(__dirname, `./templates/mdxTemplate.js`),
-      context: {
-        // To fetch more MDX data
-        id: node.id,
-        // To fetch partials
-        parentFolder: node.fields.parentFolder,
-        // For use in sideNav.js
-        navSection,
-        title,
+    partials: allFile(filter: { fields: { name: { ne: null } } }) {
+      nodes {
+        fields {
+          name
+          partial
+        }
       }
-    });
+    }
+  }
+  `).then(result => {
+    if (result.errors) {
+      return Promise.reject(result.errors);
+    }
+    const handlebarsInstance = Handlebars.create();
+    result.data.partials.nodes.forEach(({ fields }) =>
+      handlebarsInstance.registerPartial(fields.name, fields.partial));
 
-    // Crawl the AST to find examples and create new pages for them
-    // Object.entries(extractExamples(node.mdxAST)).forEach(([key, mdxBody]) => {
-    //   actions.createPage({
-    //     path: `${slug}/${key}`,
-    //     component: path.resolve(__dirname, `./templates/mdxTemplateFullscreen.js`),
-    //     context: {
-    //       mdxBody
-    //     }
-    //   })
-    // })
-  }));
+    result.data.allMdx.nodes.forEach(node => {
+      const { slug, navSection, title } = node.fields;
+
+      actions.createPage({
+        path: slug,
+        component: path.resolve(__dirname, `./templates/mdx.js`),
+        context: {
+          // To fetch more MDX data
+          id: node.id,
+          // To fetch partials
+          parentFolder: node.fields.parentFolder,
+          // For use in sideNav.js
+          navSection,
+          title,
+        }
+      });
+
+      // Crawl the AST to find examples and create new pages for them
+      Object.entries(extractCoreExamples(node.mdxAST, handlebarsInstance))
+        .forEach(([key, html]) =>
+          actions.createPage({
+            path: `${slug}/${key}`,
+            component: path.resolve(__dirname, `./templates/htmlFullscreen.js`),
+            context: {
+              html
+            }
+          })
+        );
+    });
+});
 
 exports.onCreateWebpackConfig = ({ actions }) => actions.setWebpackConfig({
     module: {

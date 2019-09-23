@@ -8,7 +8,7 @@ import SideNavLayout from '../layouts/sideNavLayout';
 import AutoLinkHeader from '../components/autoLinkHeader';
 import Example from '../components/example';
 import CSSVariables from '../components/cssVariables';
-import './mdxTemplate.css';
+import './mdx.css';
 
 const components = {
   pre: React.Fragment,
@@ -56,7 +56,6 @@ export default ({ data, location }) => {
   );
 }
 
-// TODO: Get only partials for component
 export const pageQuery = graphql`
   query($id: String!, $parentFolder: String!) {
     mdx(id: { eq: $id }) {
