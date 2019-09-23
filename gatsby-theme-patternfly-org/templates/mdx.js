@@ -17,7 +17,7 @@ for (let i = 1; i <= 6; i++) {
   components[`h${i}`] = props => <AutoLinkHeader size={`h${i}`} {...props} />;
 }
 
-export default ({ data, location }) => {
+export default ({ data, location, pageContext }) => {
   const { title, cssPrefix } = data.mdx.frontmatter;
   const sourceName = data.mdx.fields.source === 'core'
     ? 'HTML'
@@ -27,7 +27,7 @@ export default ({ data, location }) => {
     handlebarsInstance.registerPartial(fields.name, fields.partial));
   
   return (
-    <SideNavLayout location={location}>
+    <SideNavLayout location={location} topNavItems={pageContext.topNavItems}>
       <PageSection className="ws-section-main">
         <MDXProvider components={{
           code: props => <Example handlebars={handlebarsInstance} location={location} {...props} />,

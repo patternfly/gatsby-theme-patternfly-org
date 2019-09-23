@@ -11,6 +11,7 @@
   },
   "workspaces": [
     "gatsby-theme-patternfly-org",
-    "patternfly-org-demo"
+    "patternfly-org-demo",
+    "patternfly-org-demo/patternfly-next"
   ]
 }

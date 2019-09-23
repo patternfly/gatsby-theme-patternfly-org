@@ -14,14 +14,12 @@ import SideNav from '../components/sideNav';
 import TopNav from '../components/topNav';
 import './sideNavLayout.css';
 
-export default ({ children, location }) => {
+export default ({ children, location, topNavItems }) => {
   const data = useStaticQuery(graphql`
   {
     site {
       siteMetadata {
         title
-        description
-        siteUrl
       }
     }
     prInfo: envVars(name: { eq: "PR_INFO" }) {
@@ -39,13 +37,13 @@ export default ({ children, location }) => {
       logoProps={{
         href: data.prInfo.url || '/'
       }}
-      topNav={<TopNav location={location} />}
+      topNav={<TopNav location={location} navItems={topNavItems} />}
     />
   );
-  const SideBar = <PageSidebar nav={<SideNav context="core" location={location} />} />;
+  const SideBar = <PageSidebar nav={<SideNav context="core" location={location} />} className="ws-page-sidebar" />;
 
   return (
-    <Page isManagedSidebar header={Header} sidebar={SideBar} className="pf-m-redhat-font">
+    <Page isManagedSidebar header={Header} sidebar={SideBar} className="ws-page pf-m-redhat-font">
       <Helmet>
         <title>{siteTitle}</title>
       </Helmet>

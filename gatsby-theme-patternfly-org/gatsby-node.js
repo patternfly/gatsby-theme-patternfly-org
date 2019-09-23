@@ -89,7 +89,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   }
 };
 
-exports.createPages = ({ actions, graphql }) => graphql(`
+exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
   {
     allMdx {
       nodes {
@@ -135,6 +135,8 @@ exports.createPages = ({ actions, graphql }) => graphql(`
           // For use in sideNav.js
           navSection,
           title,
+          // For use in topNav.js
+          topNavItems: pluginOptions.topNavItems
         }
       });
 

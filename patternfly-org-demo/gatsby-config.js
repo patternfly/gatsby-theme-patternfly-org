@@ -9,7 +9,30 @@ module.exports = {
   plugins: [
     {
       resolve: `gatsby-theme-patternfly-org`,
-      options: {}
+      options: {
+        topNavItems: [
+          {
+            text: 'Get started',
+            link: '/get-started/about'
+          },
+          {
+            text: 'Design guidelines',
+            link: '/design-guidelines/styles/colors'
+          },
+          {
+            text: 'Documentation',
+            link: '/documentation/core/components/aboutmodalbox'
+          },
+          {
+            text: 'Contribute',
+            link: '/contribute/about'
+          },
+          {
+            text: 'Get in touch',
+            link: '/get-in-touch'
+          },
+        ]
+      }
     },
     {
       resolve: 'gatsby-source-filesystem',
