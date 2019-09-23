@@ -89,7 +89,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   }
 };
 
-exports.createPages = ({ actions, graphql, getNode }) => graphql(`
+exports.createPages = ({ actions, graphql }) => graphql(`
   {
     allMdx {
       nodes {

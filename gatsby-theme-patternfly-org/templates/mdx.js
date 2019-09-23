@@ -30,7 +30,7 @@ export default ({ data, location }) => {
     <SideNavLayout location={location}>
       <PageSection className="ws-section-main">
         <MDXProvider components={{
-          code: props => <Example handlebars={handlebarsInstance} {...props} />,
+          code: props => <Example handlebars={handlebarsInstance} location={location} {...props} />,
           ...components
         }}>
           <Title size="md" className="ws-framework-title">{sourceName}</Title>
@@ -46,10 +46,16 @@ export default ({ data, location }) => {
               CSS Variables
             </a>
           )}
+          <AutoLinkHeader size="h1" id="examples">Examples</AutoLinkHeader>
           <MDXRenderer>
             {data.mdx.body}
           </MDXRenderer>
-          {cssPrefix && <CSSVariables prefix={cssPrefix} />}
+          {cssPrefix && (
+            <React.Fragment>
+              <AutoLinkHeader size="h1" id="css-variables">CSS Variables</AutoLinkHeader>
+              <CSSVariables prefix={cssPrefix} />
+            </React.Fragment>
+          )}
         </MDXProvider>
       </PageSection>
     </SideNavLayout>

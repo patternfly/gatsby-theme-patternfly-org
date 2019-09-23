@@ -8,11 +8,11 @@ const transformCode = (code, language, hbs) => {
   if (typeof code !== 'string') {
     return;
   }
-  if (language.includes('-hbs')) {
-    return hbs.compile(code)({})
-      .replace(/class=/g, 'className='); // HTML from handlebars
+  if (language === 'hbs') {
+    return `<React.Fragment>${hbs.compile(code)({})
+      .replace(/class=/g, 'className=')}</React.Fragment>`; // HTML from handlebars
   }
-  else if (language.includes('-js')) {
+  else if (language === 'js') {
     return code
       .replace(/^\s*import.*from.*/gm, '') // single line import
       .replace(/^\s*import\s+{[\s\S]+?}\s+from.*/gm, '') // multi line import
@@ -23,39 +23,94 @@ const transformCode = (code, language, hbs) => {
   return code.replace(/class=/g, 'className=');
 }
 
-export default props => {
-  const { noLive, title, className, isFullscreen = false } = props;
-  if (isFullscreen) {
+const getLanguage = className => {
+  if (className.includes('-js')) {
+    return 'jsx';
+  }
+  else if (className.includes('-hbs')) {
+    return 'hbs';
+  }
+
+  return 'html';
+}
+
+const getSupportedLanguages = language => {
+  switch (language) {
+    case 'hbs':
+      return ['html', 'hbs'];    
+    default:
+      return ['jsx'];
+  }
+}
+
+export default class Example extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.lang = getLanguage(props.className);
+    if (this.lang === 'hbs') {
+      if (!props.handlebars) {
+        console.error('Handlebars instance is required for hbs code.');
+        this.html = 'No Handlebars compiler';
+      }
+      else {
+        this.html = props.handlebars.compile(props.children.toString())({});
+      }
+    }
+
+    this.supportedLangs = getSupportedLanguages(this.lang);
+    this.state = {
+      code: props.children.toString(),
+    };
+  }
+
+  onLanguageChange = newLang => {
+    const initialCode = this.props.children.toString();
+    if (newLang === 'html') {
+      this.setState({ lang: newLang, code: this.html })
+    }
+    else {
+      this.setState({ lang: newLang, code: initialCode });
+    }
+  }
+
+  render() {
+    const { code } = this.state;
+    const { noLive, title, isFullscreen = false, handlebars, location } = this.props;
+    if (isFullscreen && this.lang === 'jsx') {
+      return (
+        <LiveProvider
+          code={code}
+          transformCode={code => transformCode(code, this.lang, handlebars)}>
+          <LivePreview />
+        </LiveProvider>
+      );
+    }
     return (
-      <LiveProvider
-        code={props.children.toString()}
-        transformCode={code => transformCode(code, className, props.handlebars)}
+      <div className="ws-example">
+        <AutoLinkHeader size="h4" headingLevel="h3" className="ws-example-heading">
+          {title.replace(/-/g, ' ')}
+        </AutoLinkHeader>
+        <LiveProvider
+          code={code}
+          transformCode={code => transformCode(code, this.lang, handlebars)}
+          disabled={noLive || isFullscreen}
+          theme={{
+            /* disable theme so we can use the global one imported in gatsby-browser.js */
+            plain: {},
+            styles: []
+          }}
         >
-        <LivePreview />
-      </LiveProvider>
+          {isFullscreen ? 'Fullscreen preview only' : <LivePreview className="ws-preview" />}
+          <EditorToolbar
+            showLights={false}
+            editor={<LiveEditor />}
+            supportedLangs={this.supportedLangs}
+            onLanguageChange={this.onLanguageChange}
+            fullscreenLink={`${location.pathname}/${title.toLowerCase()}`} />
+          {!noLive && <LiveError />}
+        </LiveProvider>
+      </div>
     );
   }
-  return (
-    <div className="ws-example">
-      <AutoLinkHeader size="h4" headingLevel="h3" className="ws-example-heading">
-        {title}
-      </AutoLinkHeader>
-      <LiveProvider
-        code={props.children.toString()}
-        transformCode={code => transformCode(code, className, props.handlebars)}
-        disabled={noLive}
-        theme={{
-          /* disable theme so we can use the global one imported in gatsby-browser.js */
-          plain: {},
-          styles: []
-        }}
-      >
-        {!noLive && <LivePreview className="ws-preview" />}
-        <EditorToolbar
-          showLights={false}
-          editor={<LiveEditor />} />
-        {!noLive && <LiveError />}
-      </LiveProvider>
-    </div>
-  )
 }

@@ -1,8 +1,7 @@
 import React from 'react';
-import { css } from '@patternfly/react-styles';
 import PropTypes from 'prop-types';
 import { Button, TextContent, Text } from '@patternfly/react-core';
-import { CodeIcon, CopyIcon, AsleepIcon, ExternalLinkAltIcon } from '@patternfly/react-icons';
+import { CopyIcon, AsleepIcon, ExternalLinkAltIcon } from '@patternfly/react-icons';
 
 const propTypes = {
   className: PropTypes.string,
@@ -17,7 +16,7 @@ const defaultProps = {
   fullscreenLink: ''
 };
 
-class EditorToolbar extends React.Component {
+export default class EditorToolbar extends React.Component {
   constructor(props) {
     super(props);
     this.toCopy = props.code;
@@ -25,14 +24,9 @@ class EditorToolbar extends React.Component {
 
   state = {
     codeOpen: false,
+    openLang: null,
     showCopyMessage: false,
     lights: true
-  };
-
-  onToggle = () => {
-    this.setState({
-      codeOpen: !this.state.codeOpen
-    });
   };
 
   handleClickCopy = () => {
@@ -48,21 +42,35 @@ class EditorToolbar extends React.Component {
     }, 2000);
   };
 
+  onLanguageChange = lang => {
+    this.setState({
+      codeOpen: this.state.codeOpen && this.state.openLang === lang ? false : true,
+      openLang: lang
+    });
+
+    if (this.props.onLanguageChange) {
+      this.props.onLanguageChange(lang);
+    }
+  }
+
   render() {
-    const { editor, live, showLights, fullscreenLink } = this.props;
+    const { editor, showLights, fullscreenLink, supportedLangs } = this.props;
     const { codeOpen, showCopyMessage } = this.state;
 
     return (
       <React.Fragment>
-        <div className="toolbar">
-          <Button
-            onClick={this.onToggle}
-            variant="plain"
-            title="Toggle code"
-            aria-label="Toggle code"
-          >
-            <CodeIcon />
-          </Button>
+        <div>
+          {supportedLangs.map(lang => 
+            <Button
+              key={lang}
+              onClick={() => this.onLanguageChange(lang)}
+              variant="plain"
+              title={`Toggle ${lang} code`}
+              aria-label={`Toggle ${lang} code`}
+            >
+              {lang.toUpperCase()}
+            </Button>
+          )}
           <Button
             onClick={this.handleClickCopy}
             variant="plain"
@@ -94,15 +102,8 @@ class EditorToolbar extends React.Component {
           }
           {showCopyMessage && (
             <TextContent>
-              <Text component="pre" className={css('messageText')}>
-                Copied to clipboard
-              </Text>
-            </TextContent>
-          )}
-          {codeOpen && !live && (
-            <TextContent className="messageShow">
               <Text component="pre" className="messageText">
-                Live editing disabled
+                Copied to clipboard
               </Text>
             </TextContent>
           )}
@@ -115,5 +116,3 @@ class EditorToolbar extends React.Component {
 
 EditorToolbar.propTypes = propTypes;
 EditorToolbar.defaultProps = defaultProps;
-
-export default EditorToolbar;
