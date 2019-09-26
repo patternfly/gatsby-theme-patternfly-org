@@ -1,7 +1,8 @@
 import React from 'react';
 import { LiveProvider, LiveEditor, LivePreview, LiveError } from 'react-live';
-import EditorToolbar from './editorToolbar';
+import ExampleToolbar from './exampleToolbar';
 import AutoLinkHeader from './autoLinkHeader';
+import { getParameters } from 'codesandbox/lib/api/define';
 import './example.css';
 
 const transformCode = (code, language, html) => {
@@ -10,7 +11,9 @@ const transformCode = (code, language, html) => {
   }
   if (language === 'hbs') {
     // HTML from handlebars
-    return `<div dangerouslySetInnerHTML={{ __html: "${html}"}} />`;
+    return `<div dangerouslySetInnerHTML={{ __html: "${html
+      .replace(/"/g, '\\"')
+      .replace(/\n/g, '')}"}} />`;
   }
   else if (language === 'js') {
     return code
@@ -54,8 +57,19 @@ export default class Example extends React.Component {
 
     this.lang = getLanguage(props.className);
     this.html = props.html
-      ? props.html.replace(/"/g, '\\"').replace(/\n/g, '')
+      ? props.html
       : 'This is a hbs code block, but no html trickled down from gatsby-node.js to mdx.js to example.js';
+    const params = {
+      files: {
+        'index.html': {
+          content: this.html,
+        },
+        'package.json': {
+          content: { dependencies: { '@patternfly/patternfly': '2.33.5' } },
+        },
+      },
+    };
+    this.codeBoxParams = getParameters(params);
 
     this.supportedLangs = getSupportedLanguages(this.lang);
     this.state = {
@@ -104,12 +118,13 @@ export default class Example extends React.Component {
           }}
         >
           {isFullscreen ? 'Fullscreen preview only' : <LivePreview className="ws-preview" />}
-          <EditorToolbar
+          <ExampleToolbar
             showLights={false}
             editor={<LiveEditor />}
             supportedLangs={this.supportedLangs}
             onLanguageChange={this.onLanguageChange}
-            fullscreenLink={`${location.pathname}/${title.toLowerCase()}`} />
+            fullscreenLink={`${location.pathname}/${title.toLowerCase()}`}
+            codeSandboxLink={`https://codesandbox.io/api/v1/sandboxes/define?parameters=${this.codeBoxParams}`} />
           {!noLive && <LiveError />}
         </LiveProvider>
       </div>

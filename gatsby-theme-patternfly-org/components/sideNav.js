@@ -16,6 +16,14 @@ export default ({ context, location }) => {
         }
       }
     }
+    sitePlugin(name: { eq: "gatsby-theme-patternfly-org" }) {
+      pluginOptions {
+        sideNavItems {
+          section
+          title
+        }
+      }
+    }
   }
   `);
   const allPages = data.allSitePage.nodes.reduce((accum, node) => {
@@ -32,20 +40,30 @@ export default ({ context, location }) => {
   return (
     <Nav aria-label="SideNav">
       <NavList>
-        {['components', 'layouts', 'utilities', 'demos', 'experimental'].map(navSection => (
-          <NavExpandable
-            key={navSection}
-            title={capitalize(navSection)}
-            isActive={location.pathname.includes(navSection)}
-            isExpanded={location.pathname.includes(navSection)}
-          >
-            {allPages[navSection].map(node => (
-              <NavItem key={node.path} isActive={location.pathname.includes(node.path)}>
-                <Link to={node.path}>{node.text}</Link>
-              </NavItem>
-            ))}
-          </NavExpandable>
-        ))}
+        {data.sitePlugin.pluginOptions.sideNavItems.map(({ section, title }) => {
+          if (section) {
+            return (
+              <NavExpandable
+                key={section}
+                title={capitalize(section)}
+                isActive={location.pathname.includes(section)}
+                isExpanded={location.pathname.includes(section)}
+              >
+                {allPages[section].map(node => (
+                  <NavItem key={node.path} isActive={location.pathname.includes(node.path)}>
+                    <Link to={node.path}>{node.text}</Link>
+                  </NavItem>
+                ))}
+              </NavExpandable>
+            );
+          }
+          const node = allPages['root'].find(node => node.text === title);
+          return (
+            <NavItem key={node.path} isActive={location.pathname.includes(node.path)}>
+              <Link to={node.path}>{node.text}</Link>
+            </NavItem>
+          );
+        })}
       </NavList>
     </Nav>
   )

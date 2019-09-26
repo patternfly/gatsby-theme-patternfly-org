@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const { execSync } = require('child_process');
 const { extractCoreExamples } = require('./helpers/extractExamples');
 const { createHandlebars } = require('./helpers/createHandlebars');
 
@@ -7,11 +8,13 @@ const { createHandlebars } = require('./helpers/createHandlebars');
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   const num = process.env.CIRCLE_PR_NUMBER || process.env.PR_NUMBER;
   const url = process.env.CIRCLE_PULL_REQUEST;
+  const lastTag = execSync('git describe --tags --abbrev=0').toString();
   // Docs https://www.gatsbyjs.org/docs/actions/#createNode
   actions.createNode({
     name: 'PR_INFO',
     num: num || '',
     url: url || '',
+    lastTag: lastTag || '',
     id: createNodeId('PR_INFO'),
     parent: null,
     children: [],
@@ -29,7 +32,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     const parent = getNode(node.parent);
     const source = parent.sourceInstanceName;
 
-    const { section, title } = node.frontmatter;
+    let { section = 'root', title } = node.frontmatter;
     createNodeField({
       node,
       name: 'source',
@@ -38,7 +41,11 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     createNodeField({
       node,
       name: 'slug',
-      value: `/documentation/${source}/${section}/${path.basename(node.fileAbsolutePath, '.md')}`.toLowerCase()
+      value: `/documentation/${source}${
+      section === 'root'
+        ? ''
+        : `/${section}`
+      }/${path.basename(node.fileAbsolutePath, '.md')}`.toLowerCase()
     });
     createNodeField({
       node,

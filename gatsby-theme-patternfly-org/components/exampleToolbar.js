@@ -1,22 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, TextContent, Text } from '@patternfly/react-core';
-import { CopyIcon, AsleepIcon, ExternalLinkAltIcon } from '@patternfly/react-icons';
+import { CopyIcon, AsleepIcon, ExternalLinkAltIcon, CodepenIcon } from '@patternfly/react-icons';
 
-const propTypes = {
-  className: PropTypes.string,
-  editor: PropTypes.element.isRequired,
-  live: PropTypes.bool,
-  fullscreenLink: PropTypes.string,
-};
-
-const defaultProps = {
-  className: '',
-  live: true,
-  fullscreenLink: ''
-};
-
-export default class EditorToolbar extends React.Component {
+export default class ExampleToolbar extends React.Component {
   constructor(props) {
     super(props);
     this.toCopy = props.code;
@@ -54,7 +41,7 @@ export default class EditorToolbar extends React.Component {
   }
 
   render() {
-    const { editor, showLights, fullscreenLink, supportedLangs } = this.props;
+    const { editor, showLights, fullscreenLink, codeSandboxLink, supportedLangs } = this.props;
     const { codeOpen, showCopyMessage } = this.state;
 
     return (
@@ -79,14 +66,29 @@ export default class EditorToolbar extends React.Component {
           >
             <CopyIcon />
           </Button>
-          {showLights && <Button
-            onClick={this.toggleLights}
-            variant="plain"
-            title="Toggle Dark Theme"
-            aria-label="Toggle Dark Theme"
-          >
-            <AsleepIcon />
-          </Button>}
+          {showLights && 
+            <Button
+              onClick={this.toggleLights}
+              variant="plain"
+              title="Toggle Dark Theme"
+              aria-label="Toggle Dark Theme"
+            >
+              <AsleepIcon />
+            </Button>
+          }
+          {codeSandboxLink &&
+            <Button
+              component="a"
+              href={codeSandboxLink} 
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="plain"
+              title="Open in CodeSandbox"
+              aria-label="Open in CodeSandbox"
+            >
+              <CodepenIcon />
+            </Button>
+          }
           {fullscreenLink &&
             <Button
               component="a"
@@ -100,19 +102,16 @@ export default class EditorToolbar extends React.Component {
               <ExternalLinkAltIcon />
             </Button>
           }
-          {showCopyMessage && (
+          {showCopyMessage &&
             <TextContent>
               <Text component="pre" className="messageText">
                 Copied to clipboard
               </Text>
             </TextContent>
-          )}
+          }
         </div>
         {codeOpen && editor}
       </React.Fragment>
     );
   }
 }
-
-EditorToolbar.propTypes = propTypes;
-EditorToolbar.defaultProps = defaultProps;

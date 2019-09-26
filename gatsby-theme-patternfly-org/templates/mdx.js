@@ -18,7 +18,7 @@ for (let i = 1; i <= 6; i++) {
 }
 
 export default ({ data, location, pageContext }) => {
-  const { title, cssPrefix } = data.mdx.frontmatter;
+  const { title, cssPrefix, showTOC } = data.mdx.frontmatter;
   const sourceName = data.mdx.fields.source === 'core'
     ? 'HTML'
     : 'React';
@@ -34,20 +34,24 @@ export default ({ data, location, pageContext }) => {
               {...props} />,
           ...components
         }}>
-          <Title size="md" className="ws-framework-title">{sourceName}</Title>
-          <Title size="4xl">{title}</Title>
-          <a href="#examples" className="ws-toc">
-            Examples
-          </a>
-          <a href="#documentation" className="ws-toc">
-            Documentation
-          </a>
-          {cssPrefix && (
-            <a href="#css-variables" className="ws-toc">
-              CSS Variables
-            </a>
+          {showTOC && (
+            <React.Fragment>
+              <Title size="md" className="ws-framework-title">{sourceName}</Title>
+              <Title size="4xl">{title}</Title>
+              <a href="#examples" className="ws-toc">
+                Examples
+              </a>
+              <a href="#documentation" className="ws-toc">
+                Documentation
+              </a>
+              {cssPrefix && (
+                <a href="#css-variables" className="ws-toc">
+                  CSS Variables
+                </a>
+              )}
+              <AutoLinkHeader size="h1" id="examples">Examples</AutoLinkHeader>
+            </React.Fragment>
           )}
-          <AutoLinkHeader size="h1" id="examples">Examples</AutoLinkHeader>
           <MDXRenderer>
             {data.mdx.body}
           </MDXRenderer>
