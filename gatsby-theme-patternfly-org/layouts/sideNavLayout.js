@@ -14,7 +14,7 @@ import SideNav from '../components/sideNav';
 import TopNav from '../components/topNav';
 import './sideNavLayout.css';
 
-export default ({ children, location, topNavItems }) => {
+export default ({ children, location }) => {
   const data = useStaticQuery(graphql`
   {
     site {
@@ -25,6 +25,14 @@ export default ({ children, location, topNavItems }) => {
     prInfo: envVars(name: { eq: "PR_INFO" }) {
       num
       url
+    }
+    themeOptions: sitePlugin(name: { eq: "gatsby-theme-patternfly-org" }) {
+      pluginOptions {
+        topNavItems {
+          text
+          link
+        }
+      }
     }
   }
   `);
@@ -37,7 +45,7 @@ export default ({ children, location, topNavItems }) => {
       logoProps={{
         href: data.prInfo.url || '/'
       }}
-      topNav={<TopNav location={location} navItems={topNavItems} />}
+      topNav={<TopNav location={location} navItems={data.themeOptions.pluginOptions.topNavItems} />}
     />
   );
   const SideBar = <PageSidebar nav={<SideNav context="core" location={location} />} className="ws-page-sidebar" />;

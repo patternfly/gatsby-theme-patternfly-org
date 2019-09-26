@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
-const Handlebars = require('handlebars');
 const { extractCoreExamples } = require('./helpers/extractExamples');
+const { createHandlebars } = require('./helpers/createHandlebars');
 
 // Add map PR-related environment variables to gatsby nodes
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
@@ -21,12 +21,6 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
     }
   });
 };
-
-const getParentFolder = path => {
-  const split = path.replace('examples/', '').split('/');
-  split.pop();
-  return split.join('/');
-}
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions;
@@ -56,12 +50,6 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       name: 'title',
       value: title
     });
-    createNodeField({
-      node,
-      name: 'parentFolder',
-      // Add a special field to identify partial files
-      value: getParentFolder(parent.relativePath)
-    });
   } else if (node.internal.type === 'File' && node.extension === 'hbs') {
     // Exclude example partials, they just bloat bundle
     if (!node.relativePath.includes('example')) {
@@ -78,18 +66,12 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
           name: 'partial',
           value: partial
         });
-        createNodeField({
-          node,
-          name: 'parentFolder',
-          // Add a special field to identify partial files
-          value: getParentFolder(node.relativePath)
-        });
       }
     }
   }
 };
 
-exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
+exports.createPages = ({ actions, graphql }) => graphql(`
   {
     allMdx {
       nodes {
@@ -99,7 +81,6 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
           source
           navSection
           title
-          parentFolder
         }
         mdxAST
       }
@@ -117,11 +98,10 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
     if (result.errors) {
       return Promise.reject(result.errors);
     }
-    const handlebarsInstance = Handlebars.create();
-    result.data.partials.nodes.forEach(({ fields }) =>
-      handlebarsInstance.registerPartial(fields.name, fields.partial));
+    const hbsInstance = createHandlebars(result.data.partials.nodes);
 
     result.data.allMdx.nodes.forEach(node => {
+      const htmlExamples = extractCoreExamples(node.mdxAST, hbsInstance);
       const { slug, navSection, title } = node.fields;
 
       actions.createPage({
@@ -130,29 +110,26 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
         context: {
           // To fetch more MDX data
           id: node.id,
-          // To fetch partials
-          parentFolder: node.fields.parentFolder,
           // For use in sideNav.js
           navSection,
           title,
-          // For use in topNav.js
-          topNavItems: pluginOptions.topNavItems
+          // To render example HTML
+          htmlExamples,
         }
       });
 
-      // Crawl the AST to find examples and create new pages for them
-      Object.entries(extractCoreExamples(node.mdxAST, handlebarsInstance))
-        .forEach(([key, html]) =>
-          actions.createPage({
-            path: `${slug}/${key}`,
-            component: path.resolve(__dirname, `./templates/htmlFullscreen.js`),
-            context: {
-              html
-            }
-          })
-        );
+      // Create per-example fullscreen pages
+      Object.entries(htmlExamples).forEach(([key, html]) =>
+        actions.createPage({
+          path: `${slug}/${key}`,
+          component: path.resolve(__dirname, `./templates/htmlFullscreen.js`),
+          context: {
+            html
+          }
+        })
+      );
     });
-});
+  });
 
 exports.onCreateWebpackConfig = ({ actions }) => actions.setWebpackConfig({
     module: {

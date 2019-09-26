@@ -9,7 +9,6 @@ const components = {
 };
 
 export default ({ pageContext }) => {
-  console.log('fs page', pageContext.mdxBody);
   return (
     <MDXProvider components={components}>
       <MDXRenderer>

@@ -2,10 +2,7 @@ const visit = require('unist-util-visit');
 const mdxASTtoHAST = require('@mdx-js/mdx/mdx-ast-to-mdx-hast');
 const { toJSX } = require('@mdx-js/mdx/mdx-hast-to-jsx');
 const babel = require('@babel/core');
-
-const getId = metastring => metastring.match(/title=(\S*)/)[1]
-  .toLowerCase()
-  .replace(/[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,./:;<=>?@[\]^`{|}~]/g, '');
+const { getId } = require('./getId');
 
 /* https://github.com/mdx-js/specification
  *
@@ -32,10 +29,9 @@ module.exports = {
 
     visit(mdxAST, 'code', node => {
       if (node.lang === 'hbs') {
-        // Ternary to help in debugging
-        exampleHTML[getId(node.meta)] = hbsInstance
-          ? hbsInstance.compile(node.value)({})
-          : node.value;
+        const html = hbsInstance.compile(node.value)({});
+        // Add the html to the object that fullscreen pages get created from
+        exampleHTML[getId(node.meta.match(/title=(\S*)/)[1])] = html;
       }
     })
 
@@ -61,4 +57,4 @@ module.exports = {
 
 // TODO: Write some tests for example MDXAsts
 // console.log(module.exports.extractCoreExamples({
-// ))
+// }, hbsInstance))

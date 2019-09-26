@@ -5,9 +5,14 @@ module.exports = {
       resolve: 'gatsby-plugin-mdx',
       options: {
         extensions: [`.mdx`, `.md`],
+        defaultLayouts: {
+          default: require.resolve('./templates/mdxDefault.js'),
+        },
       }
     },
-    // Convienently change root portions of doc
+    // Convienently change <head> based on JS
     'gatsby-plugin-react-helmet',
+    // Get version numbers from package.json files
+    'gatsby-transformer-json',
   ]
 }

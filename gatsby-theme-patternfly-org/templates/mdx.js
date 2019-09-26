@@ -1,6 +1,5 @@
 import React from 'react';
 import { graphql } from 'gatsby';
-import Handlebars from 'handlebars';
 import { MDXProvider } from '@mdx-js/react';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import { PageSection, Title } from '@patternfly/react-core';
@@ -8,6 +7,7 @@ import SideNavLayout from '../layouts/sideNavLayout';
 import AutoLinkHeader from '../components/autoLinkHeader';
 import Example from '../components/example';
 import CSSVariables from '../components/cssVariables';
+import { getId } from '../helpers/getId';
 import './mdx.css';
 
 const components = {
@@ -22,15 +22,16 @@ export default ({ data, location, pageContext }) => {
   const sourceName = data.mdx.fields.source === 'core'
     ? 'HTML'
     : 'React';
-  const handlebarsInstance = Handlebars.create();
-  data.partials.nodes.forEach(({ fields }) =>
-    handlebarsInstance.registerPartial(fields.name, fields.partial));
   
   return (
-    <SideNavLayout location={location} topNavItems={pageContext.topNavItems}>
+    <SideNavLayout location={location}>
       <PageSection className="ws-section-main">
         <MDXProvider components={{
-          code: props => <Example handlebars={handlebarsInstance} location={location} {...props} />,
+          code: props =>
+            <Example
+              location={location}
+              html={pageContext.htmlExamples[getId(props.title)]}
+              {...props} />,
           ...components
         }}>
           <Title size="md" className="ws-framework-title">{sourceName}</Title>
@@ -63,7 +64,7 @@ export default ({ data, location, pageContext }) => {
 }
 
 export const pageQuery = graphql`
-  query($id: String!, $parentFolder: String!) {
+  query($id: String!) {
     mdx(id: { eq: $id }) {
       body
       frontmatter {
@@ -74,7 +75,7 @@ export const pageQuery = graphql`
         source
       }
     }
-    partials: allFile(filter: { fields: { parentFolder: { eq: $parentFolder } } }) {
+    partials: allFile(filter: { fields: { name: { ne: null } } }) {
       nodes {
         fields {
           name

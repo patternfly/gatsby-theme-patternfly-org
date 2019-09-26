@@ -4,13 +4,13 @@ import EditorToolbar from './editorToolbar';
 import AutoLinkHeader from './autoLinkHeader';
 import './example.css';
 
-const transformCode = (code, language, hbs) => {
+const transformCode = (code, language, html) => {
   if (typeof code !== 'string') {
     return;
   }
   if (language === 'hbs') {
-    return `<React.Fragment>${hbs.compile(code)({})
-      .replace(/class=/g, 'className=')}</React.Fragment>`; // HTML from handlebars
+    // HTML from handlebars
+    return `<div dangerouslySetInnerHTML={{ __html: "${html}"}} />`;
   }
   else if (language === 'js') {
     return code
@@ -24,6 +24,9 @@ const transformCode = (code, language, hbs) => {
 }
 
 const getLanguage = className => {
+  if (typeof className !== 'string') {
+    return 'pre';
+  }
   if (className.includes('-js')) {
     return 'jsx';
   }
@@ -38,8 +41,10 @@ const getSupportedLanguages = language => {
   switch (language) {
     case 'hbs':
       return ['html', 'hbs'];    
-    default:
+    case 'jsx':
       return ['jsx'];
+    default:
+      return [];
   }
 }
 
@@ -48,15 +53,9 @@ export default class Example extends React.Component {
     super(props);
 
     this.lang = getLanguage(props.className);
-    if (this.lang === 'hbs') {
-      if (!props.handlebars) {
-        console.error('Handlebars instance is required for hbs code.');
-        this.html = 'No Handlebars compiler';
-      }
-      else {
-        this.html = props.handlebars.compile(props.children.toString())({});
-      }
-    }
+    this.html = props.html
+      ? props.html.replace(/"/g, '\\"').replace(/\n/g, '')
+      : 'This is a hbs code block, but no html trickled down from gatsby-node.js to mdx.js to example.js';
 
     this.supportedLangs = getSupportedLanguages(this.lang);
     this.state = {
@@ -76,12 +75,15 @@ export default class Example extends React.Component {
 
   render() {
     const { code } = this.state;
-    const { noLive, title, isFullscreen = false, handlebars, location } = this.props;
+    const { noLive, title, isFullscreen = false, location, children } = this.props;
+    if (this.lang === 'pre') {
+      return <pre>{children}</pre>;
+    }
     if (isFullscreen && this.lang === 'jsx') {
       return (
         <LiveProvider
           code={code}
-          transformCode={code => transformCode(code, this.lang, handlebars)}>
+          transformCode={code => transformCode(code, this.lang, this.html)}>
           <LivePreview />
         </LiveProvider>
       );
@@ -93,8 +95,8 @@ export default class Example extends React.Component {
         </AutoLinkHeader>
         <LiveProvider
           code={code}
-          transformCode={code => transformCode(code, this.lang, handlebars)}
-          disabled={noLive || isFullscreen}
+          transformCode={code => transformCode(code, this.lang, this.html)}
+          disabled={noLive || isFullscreen || this.lang === 'hbs'}
           theme={{
             /* disable theme so we can use the global one imported in gatsby-browser.js */
             plain: {},
