@@ -76,6 +76,8 @@ export default class ExampleToolbar extends React.Component {
               <AsleepIcon />
             </Button>
           }
+          {/* TODO: Make this a POST request in a form so we can send more than 2k characters */}
+          {/* https://codesandbox.io/docs/importing#define-api */}
           {codeSandboxLink &&
             <Button
               component="a"

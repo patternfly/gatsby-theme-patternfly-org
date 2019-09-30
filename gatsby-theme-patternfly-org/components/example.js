@@ -30,7 +30,7 @@ const getLanguage = className => {
   if (typeof className !== 'string') {
     return 'pre';
   }
-  if (className.includes('-js')) {
+  else if (className.includes('-js')) {
     return 'jsx';
   }
   else if (className.includes('-hbs')) {
@@ -62,12 +62,33 @@ export default class Example extends React.Component {
     const params = {
       files: {
         'index.html': {
-          content: this.html,
+          content: `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Include latest PatternFly css via CDN -->
+    <link 
+      rel="stylesheet" 
+      href="https://unpkg.com/@patternfly/patternfly/patternfly.css" 
+      crossorigin="anonymous"
+    >
+    <title>PatternFly-next ${props.title} CodeSandbox Example</title>
+  </head>
+  <body>
+    ${this.html}
+  </body>
+</html>`,
         },
         'package.json': {
-          content: { dependencies: { '@patternfly/patternfly': '2.33.5' } },
+          content: {},
         },
+        'sandbox.config.json': {
+          content: { template: 'static' }
+        }
       },
+      template: 'static',
     };
     this.codeBoxParams = getParameters(params);
 
