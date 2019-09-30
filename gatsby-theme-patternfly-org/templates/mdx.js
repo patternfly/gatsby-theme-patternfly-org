@@ -8,14 +8,8 @@ import AutoLinkHeader from '../components/autoLinkHeader';
 import Example from '../components/example';
 import CSSVariables from '../components/cssVariables';
 import { getId } from '../helpers/getId';
+import { commonComponents } from '../helpers/getCommonComponents';
 import './mdx.css';
-
-const components = {
-  pre: React.Fragment,
-};
-for (let i = 1; i <= 6; i++) {
-  components[`h${i}`] = props => <AutoLinkHeader size={`h${i}`} {...props} />;
-}
 
 export default ({ data, location, pageContext }) => {
   const { title, cssPrefix, showTOC = true } = data.mdx.frontmatter;
@@ -32,7 +26,7 @@ export default ({ data, location, pageContext }) => {
               location={location}
               html={pageContext.htmlExamples[getId(props.title)]}
               {...props} />,
-          ...components
+          ...commonComponents
         }}>
           {showTOC && (
             <React.Fragment>

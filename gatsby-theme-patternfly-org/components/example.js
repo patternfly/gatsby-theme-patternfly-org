@@ -68,7 +68,7 @@ export default class Example extends React.Component {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Include latest PatternFly css via CDN -->
+    <!-- Include latest PatternFly CSS via CDN -->
     <link 
       rel="stylesheet" 
       href="https://unpkg.com/@patternfly/patternfly/patternfly.css" 
