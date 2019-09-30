@@ -18,7 +18,7 @@ for (let i = 1; i <= 6; i++) {
 }
 
 export default ({ data, location, pageContext }) => {
-  const { title, cssPrefix, showTOC } = data.mdx.frontmatter;
+  const { title, cssPrefix, showTOC = true } = data.mdx.frontmatter;
   const sourceName = data.mdx.fields.source === 'core'
     ? 'HTML'
     : 'React';

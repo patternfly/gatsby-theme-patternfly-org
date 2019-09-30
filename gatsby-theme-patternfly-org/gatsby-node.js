@@ -8,7 +8,7 @@ const { createHandlebars } = require('./helpers/createHandlebars');
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   const num = process.env.CIRCLE_PR_NUMBER || process.env.PR_NUMBER;
   const url = process.env.CIRCLE_PULL_REQUEST;
-  const lastTag = execSync('git describe --tags --abbrev=0').toString();
+  const lastTag = 'latest';
   // Docs https://www.gatsbyjs.org/docs/actions/#createNode
   actions.createNode({
     name: 'PR_INFO',

@@ -10,6 +10,13 @@ module.exports = {
     {
       resolve: `gatsby-theme-patternfly-org`,
       options: {
+        sideNavItems: [
+          { section: 'components' },
+          { section: 'layouts' },
+          { section: 'utilities' },
+          { section: 'demos' },
+          { section: 'experimental' },
+        ],
         topNavItems: [
           {
             text: 'Get started',
