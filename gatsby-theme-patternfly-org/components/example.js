@@ -95,6 +95,7 @@ export default class Example extends React.Component {
     this.supportedLangs = getSupportedLanguages(this.lang);
     this.state = {
       code: props.children.toString(),
+      darkMode: false
     };
   }
 
@@ -108,8 +109,12 @@ export default class Example extends React.Component {
     }
   }
 
+  onDarkmodeChange = () => {
+    this.setState({ darkMode: !this.state.darkMode });
+  }
+
   render() {
-    const { code } = this.state;
+    const { code, darkMode } = this.state;
     const { noLive, title, isFullscreen = false, location, children } = this.props;
     if (this.lang === 'pre') {
       return <pre>{children}</pre>;
@@ -124,7 +129,7 @@ export default class Example extends React.Component {
       );
     }
     return (
-      <div className="ws-example">
+      <div className={`ws-example ${darkMode ? 'pf-t-dark pf-m-opaque-200' : ''}`}>
         <AutoLinkHeader size="h4" headingLevel="h3" className="ws-example-heading">
           {title.replace(/-/g, ' ')}
         </AutoLinkHeader>
@@ -140,10 +145,11 @@ export default class Example extends React.Component {
         >
           {isFullscreen ? 'Fullscreen preview only' : <LivePreview className="ws-preview" />}
           <ExampleToolbar
-            showLights={false}
             editor={<LiveEditor />}
             supportedLangs={this.supportedLangs}
             onLanguageChange={this.onLanguageChange}
+            onDarkmodeChange={this.onDarkmodeChange}
+            isFullscreen={isFullscreen}
             fullscreenLink={`${location.pathname}/${title.toLowerCase()}`}
             codeSandboxLink={`https://codesandbox.io/api/v1/sandboxes/define?parameters=${this.codeBoxParams}`} />
           {!noLive && <LiveError />}

@@ -13,7 +13,6 @@ export default class ExampleToolbar extends React.Component {
     codeOpen: false,
     openLang: null,
     showCopyMessage: false,
-    lights: true
   };
 
   handleClickCopy = () => {
@@ -41,7 +40,7 @@ export default class ExampleToolbar extends React.Component {
   }
 
   render() {
-    const { editor, showLights, fullscreenLink, codeSandboxLink, supportedLangs } = this.props;
+    const { editor, fullscreenLink, codeSandboxLink, supportedLangs, onDarkmodeChange, isFullscreen } = this.props;
     const { codeOpen, showCopyMessage } = this.state;
 
     return (
@@ -66,9 +65,9 @@ export default class ExampleToolbar extends React.Component {
           >
             <CopyIcon />
           </Button>
-          {showLights && 
+          {!isFullscreen &&
             <Button
-              onClick={this.toggleLights}
+              onClick={onDarkmodeChange}
               variant="plain"
               title="Toggle Dark Theme"
               aria-label="Toggle Dark Theme"

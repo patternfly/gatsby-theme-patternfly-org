@@ -57,7 +57,8 @@ export default ({ location }) => {
               </NavExpandable>
             );
           }
-          const node = allPages['root'].find(node => node.text.toLowerCase() === title.toLowerCase()) || { text: '???', path: '/' };
+          const node = allPages['root'].find(node => node.text.toLowerCase() === title.toLowerCase())
+            || { text: '???', path: '/' };
           return (
             <NavItem key={node.path} isActive={location.pathname.includes(node.path)}>
               <Link to={node.path}>{node.text}</Link>
