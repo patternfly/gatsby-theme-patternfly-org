@@ -3,7 +3,7 @@ import { graphql, useStaticQuery, Link } from 'gatsby';
 import { Nav, NavList, NavExpandable, NavItem } from '@patternfly/react-core';
 import { capitalize } from '../helpers/capitalize';
 
-export default ({ context, location }) => {
+export default ({ location }) => {
   const data = useStaticQuery(graphql`
   {
     allSitePage(filter: { context: { navSection: { ne: null } } },
@@ -41,7 +41,7 @@ export default ({ context, location }) => {
     <Nav aria-label="SideNav">
       <NavList>
         {data.sitePlugin.pluginOptions.sideNavItems.map(({ section, title }) => {
-          if (section) {
+          if (section && allPages[section]) {
             return (
               <NavExpandable
                 key={section}
@@ -57,7 +57,7 @@ export default ({ context, location }) => {
               </NavExpandable>
             );
           }
-          const node = allPages['root'].find(node => node.text === title);
+          const node = allPages['root'].find(node => node.text.toLowerCase() === title.toLowerCase()) || { text: '???', path: '/' };
           return (
             <NavItem key={node.path} isActive={location.pathname.includes(node.path)}>
               <Link to={node.path}>{node.text}</Link>
