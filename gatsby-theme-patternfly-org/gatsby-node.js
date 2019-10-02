@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
-const { execSync } = require('child_process');
 const { extractCoreExamples } = require('./helpers/extractExamples');
+const { extractTableOfContents } = require('./helpers/extractTableOfContents');
 const { createHandlebars } = require('./helpers/createHandlebars');
 
 // Add map PR-related environment variables to gatsby nodes
@@ -109,6 +109,7 @@ exports.createPages = ({ actions, graphql }) => graphql(`
 
     result.data.allMdx.nodes.forEach(node => {
       const htmlExamples = extractCoreExamples(node.mdxAST, hbsInstance);
+      const tableOfContents = extractTableOfContents(node.mdxAST) || [];
       const { slug, navSection, title } = node.fields;
 
       actions.createPage({
@@ -122,6 +123,8 @@ exports.createPages = ({ actions, graphql }) => graphql(`
           title,
           // To render example HTML
           htmlExamples,
+          // To render TOC
+          tableOfContents,
         }
       });
 

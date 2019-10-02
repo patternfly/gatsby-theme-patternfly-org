@@ -7,7 +7,7 @@ import { commonComponents } from '../helpers/getCommonComponents';
 export default ({ children, location }) => {
   return (
     <SideNavLayout location={location}>
-      <PageSection className="ws-section-main">
+      <PageSection className="ws-section-main pf-c-content">
         <MDXProvider components={commonComponents}>
           {children}
         </MDXProvider>

@@ -33,7 +33,7 @@ module.exports = {
         // Add the html to the object that fullscreen pages get created from
         exampleHTML[getId(node.meta.match(/title=(\S*)/)[1])] = html;
       }
-    })
+    });
 
     return exampleHTML;
   },

@@ -12,14 +12,31 @@ import { commonComponents } from '../helpers/getCommonComponents';
 import './mdx.css';
 
 export default ({ data, location, pageContext }) => {
-  const { title, cssPrefix, showTOC = true } = data.mdx.frontmatter;
+  const { title, cssPrefix, hideTOC } = data.mdx.frontmatter;
   const sourceName = data.mdx.fields.source === 'core'
     ? 'HTML'
     : 'React';
-  
+
   return (
     <SideNavLayout location={location}>
-      <PageSection className="ws-section-main">
+      {!hideTOC && (
+        <PageSection className="ws-section">
+          <Title size="md" className="ws-framework-title">{sourceName}</Title>
+          <Title size="4xl">{title}</Title>
+          {pageContext.tableOfContents.map(heading => (
+            <a key={heading} href={`#${heading.toLowerCase()}`} className="ws-toc">
+              {heading}
+            </a>
+          ))}
+          {cssPrefix && (
+            <a href="#css-variables" className="ws-toc">
+              CSS Variables
+            </a>
+          )}
+        </PageSection>
+      )}
+
+      <PageSection className="ws-section pf-c-content">
         <MDXProvider components={{
           code: props =>
             <Example
@@ -28,35 +45,18 @@ export default ({ data, location, pageContext }) => {
               {...props} />,
           ...commonComponents
         }}>
-          {showTOC && (
-            <React.Fragment>
-              <Title size="md" className="ws-framework-title">{sourceName}</Title>
-              <Title size="4xl">{title}</Title>
-              <a href="#examples" className="ws-toc">
-                Examples
-              </a>
-              <a href="#documentation" className="ws-toc">
-                Documentation
-              </a>
-              {cssPrefix && (
-                <a href="#css-variables" className="ws-toc">
-                  CSS Variables
-                </a>
-              )}
-              <AutoLinkHeader size="h1" id="examples">Examples</AutoLinkHeader>
-            </React.Fragment>
-          )}
           <MDXRenderer>
             {data.mdx.body}
           </MDXRenderer>
-          {cssPrefix && (
-            <React.Fragment>
-              <AutoLinkHeader size="h1" id="css-variables">CSS Variables</AutoLinkHeader>
-              <CSSVariables prefix={cssPrefix} />
-            </React.Fragment>
-          )}
         </MDXProvider>
       </PageSection>
+
+      {cssPrefix && (
+        <PageSection className="ws-section">
+          <AutoLinkHeader size="h1" id="css-variables">CSS Variables</AutoLinkHeader>
+          <CSSVariables prefix={cssPrefix} />
+        </PageSection>
+      )}
     </SideNavLayout>
   );
 }
@@ -68,6 +68,7 @@ export const pageQuery = graphql`
       frontmatter {
         title
         cssPrefix
+        hideTOC
       }
       fields {
         source

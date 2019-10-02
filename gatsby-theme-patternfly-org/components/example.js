@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'gatsby';
 import { LiveProvider, LiveEditor, LivePreview, LiveError } from 'react-live';
 import ExampleToolbar from './exampleToolbar';
 import AutoLinkHeader from './autoLinkHeader';
@@ -116,6 +117,8 @@ export default class Example extends React.Component {
   render() {
     const { code, darkMode } = this.state;
     const { noLive, title, isFullscreen = false, location, children } = this.props;
+    const fullscreenLink = `${location.pathname}/${title.toLowerCase()}`;
+
     if (this.lang === 'pre') {
       return <pre>{children}</pre>;
     }
@@ -129,7 +132,7 @@ export default class Example extends React.Component {
       );
     }
     return (
-      <div className={`ws-example ${darkMode ? 'pf-t-dark pf-m-opaque-200' : ''}`}>
+      <div className="ws-example">
         <AutoLinkHeader size="h4" headingLevel="h3" className="ws-example-heading">
           {title.replace(/-/g, ' ')}
         </AutoLinkHeader>
@@ -143,14 +146,16 @@ export default class Example extends React.Component {
             styles: []
           }}
         >
-          {isFullscreen ? 'Fullscreen preview only' : <LivePreview className="ws-preview" />}
+          {isFullscreen
+            ? <div className="ws-preview">This preview can be accessed in <Link to={fullscreenLink}>full page mode.</Link></div>
+            : <LivePreview className={`ws-preview ${darkMode ? 'pf-t-dark pf-m-opaque-200' : ''}`} />}
           <ExampleToolbar
             editor={<LiveEditor />}
             supportedLangs={this.supportedLangs}
             onLanguageChange={this.onLanguageChange}
             onDarkmodeChange={this.onDarkmodeChange}
             isFullscreen={isFullscreen}
-            fullscreenLink={`${location.pathname}/${title.toLowerCase()}`}
+            fullscreenLink={fullscreenLink}
             codeSandboxLink={`https://codesandbox.io/api/v1/sandboxes/define?parameters=${this.codeBoxParams}`} />
           {!noLive && <LiveError />}
         </LiveProvider>
