@@ -5,7 +5,7 @@ module.exports = {
     const toc = [];
 
     visit(mdxAST, 'heading', node => {
-      if (node.depth === 1 && node.children.length > 0) { // # H1 heading
+      if (node.depth === 2 && node.children.length > 0) { // ## h2 headings
         toc.push(node.children[0].value);
       }
     });

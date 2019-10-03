@@ -8,7 +8,7 @@ import AutoLinkHeader from '../components/autoLinkHeader';
 import Example from '../components/example';
 import CSSVariables from '../components/cssVariables';
 import { getId } from '../helpers/getId';
-import { commonComponents } from '../helpers/getCommonComponents';
+import { commonComponents } from '../helpers/commonComponents';
 import './mdx.css';
 
 export default ({ data, location, pageContext }) => {
@@ -36,7 +36,7 @@ export default ({ data, location, pageContext }) => {
         </PageSection>
       )}
 
-      <PageSection className="ws-section pf-c-content">
+      <PageSection className="ws-section">
         <MDXProvider components={{
           code: props =>
             <Example

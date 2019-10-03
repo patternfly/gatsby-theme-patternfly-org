@@ -50,7 +50,7 @@ export default ({ location }) => {
                 isExpanded={location.pathname.includes(section)}
               >
                 {allPages[section].map(node => (
-                  <NavItem key={node.path} isActive={location.pathname.includes(node.path)}>
+                  <NavItem key={node.path} isActive={location.pathname === node.path}>
                     <Link to={node.path}>{node.text}</Link>
                   </NavItem>
                 ))}

@@ -10,103 +10,90 @@ const transformCode = (code, language, html) => {
   if (typeof code !== 'string') {
     return;
   }
-  if (language === 'hbs') {
-    // HTML from handlebars
-    return `<div dangerouslySetInnerHTML={{ __html: "${html
-      .replace(/"/g, '\\"')
-      .replace(/\n/g, '')}"}} />`;
-  }
-  else if (language === 'js') {
+  if (language === 'js') {
     return code
       .replace(/^\s*import.*from.*/gm, '') // single line import
       .replace(/^\s*import\s+{[\s\S]+?}\s+from.*/gm, '') // multi line import
       .replace(/^\s*export.*;/gm, '') // single line export
       .replace(/export default/gm, '') // inline export
   }
-  // HTML
-  return code.replace(/class=/g, 'className=');
+  // HTML/HBS
+  const transformed = language === 'hbs' ? html : code;
+  return `<div dangerouslySetInnerHTML={{ __html: "${transformed
+    .replace(/"/g, '\\"')
+    .replace(/\n/g, '')}"}} />`;;
 }
 
-const getLanguage = className => {
-  if (typeof className !== 'string') {
-    return 'pre';
-  }
-  else if (className.includes('-js')) {
-    return 'jsx';
-  }
-  else if (className.includes('-hbs')) {
-    return 'hbs';
-  }
-
-  return 'html';
-}
-
-const getSupportedLanguages = language => {
-  switch (language) {
-    case 'hbs':
-      return ['html', 'hbs'];    
-    case 'jsx':
+const getSupportedLanguages = className => {
+  if (typeof className === 'string') {
+    if (className.includes('-js')) {
       return ['jsx'];
-    default:
-      return [];
+    }
+    else if (className.includes('-hbs')) {
+      return ['html', 'hbs'];
+    }
   }
+  return ['unknown'];
 }
+
+const getParams = (title, html) => ({
+  files: {
+    'index.html': {
+      content: `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Include latest PatternFly CSS via CDN -->
+  <link 
+    rel="stylesheet" 
+    href="https://unpkg.com/@patternfly/patternfly/patternfly.css" 
+    crossorigin="anonymous"
+  >
+  <title>PatternFly-next ${title} CodeSandbox Example</title>
+</head>
+<body>
+  ${html}
+</body>
+</html>`,
+    },
+    'package.json': {
+      content: {},
+    },
+    'sandbox.config.json': {
+      content: { template: 'static' }
+    }
+  },
+  template: 'static',
+});
 
 export default class Example extends React.Component {
   constructor(props) {
     super(props);
 
-    this.lang = getLanguage(props.className);
     this.html = props.html
       ? props.html
       : 'This is a hbs code block, but no html trickled down from gatsby-node.js to mdx.js to example.js';
-    const params = {
-      files: {
-        'index.html': {
-          content: `<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    this.codeBoxParams = getParameters(getParams(props.title, this.html));
 
-    <!-- Include latest PatternFly CSS via CDN -->
-    <link 
-      rel="stylesheet" 
-      href="https://unpkg.com/@patternfly/patternfly/patternfly.css" 
-      crossorigin="anonymous"
-    >
-    <title>PatternFly-next ${props.title} CodeSandbox Example</title>
-  </head>
-  <body>
-    ${this.html}
-  </body>
-</html>`,
-        },
-        'package.json': {
-          content: {},
-        },
-        'sandbox.config.json': {
-          content: { template: 'static' }
-        }
-      },
-      template: 'static',
-    };
-    this.codeBoxParams = getParameters(params);
+    this.supportedLangs = getSupportedLanguages(props.className);
+    const initialLang = this.supportedLangs[0];
 
-    this.supportedLangs = getSupportedLanguages(this.lang);
     this.state = {
-      code: props.children.toString(),
+      editorCode: initialLang === 'html' ? this.html : props.children.toString(),
+      editorLang: initialLang,
       darkMode: false
     };
   }
 
   onLanguageChange = newLang => {
-    const initialCode = this.props.children.toString();
     if (newLang === 'html') {
-      this.setState({ lang: newLang, code: this.html })
+      this.setState({ editorLang: newLang, editorCode: this.html })
     }
     else {
-      this.setState({ lang: newLang, code: initialCode });
+      const initialCode = this.props.children.toString();
+      this.setState({ editorLang: newLang, editorCode: initialCode });
     }
   }
 
@@ -115,18 +102,18 @@ export default class Example extends React.Component {
   }
 
   render() {
-    const { code, darkMode } = this.state;
+    const { editorCode, darkMode, editorLang } = this.state;
     const { noLive, title, isFullscreen = false, location, children } = this.props;
     const fullscreenLink = `${location.pathname}/${title.toLowerCase()}`;
 
-    if (this.lang === 'pre') {
+    if (editorLang === 'pre') {
       return <pre>{children}</pre>;
     }
-    if (isFullscreen && this.lang === 'jsx') {
+    if (isFullscreen && editorLang === 'jsx') {
       return (
         <LiveProvider
-          code={code}
-          transformCode={code => transformCode(code, this.lang, this.html)}>
+          code={editorCode}
+          transformCode={code => transformCode(code, editorLang, this.html)}>
           <LivePreview />
         </LiveProvider>
       );
@@ -137,9 +124,9 @@ export default class Example extends React.Component {
           {title.replace(/-/g, ' ')}
         </AutoLinkHeader>
         <LiveProvider
-          code={code}
-          transformCode={code => transformCode(code, this.lang, this.html)}
-          disabled={noLive || isFullscreen || this.lang === 'hbs'}
+          code={editorCode}
+          transformCode={code => transformCode(code, editorLang, this.html)}
+          disabled={noLive || isFullscreen || editorLang === 'hbs'}
           theme={{
             /* disable theme so we can use the global one imported in gatsby-browser.js */
             plain: {},
