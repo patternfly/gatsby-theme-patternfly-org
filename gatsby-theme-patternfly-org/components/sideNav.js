@@ -20,7 +20,8 @@ export default ({ location }) => {
       pluginOptions {
         sideNavItems {
           section
-          title
+          text
+          link
         }
       }
     }
@@ -40,7 +41,7 @@ export default ({ location }) => {
   return (
     <Nav aria-label="SideNav">
       <NavList>
-        {data.sitePlugin.pluginOptions.sideNavItems.map(({ section, title }) => {
+        {data.sitePlugin.pluginOptions.sideNavItems.map(({ section, text, link }) => {
           if (section && allPages[section]) {
             return (
               <NavExpandable
@@ -57,11 +58,10 @@ export default ({ location }) => {
               </NavExpandable>
             );
           }
-          const node = allPages['root'].find(node => node.text.toLowerCase() === title.toLowerCase())
-            || { text: '???', path: '/' };
+
           return (
-            <NavItem key={node.path} isActive={location.pathname.includes(node.path)}>
-              <Link to={node.path}>{node.text}</Link>
+            <NavItem key={link} isActive={location.pathname === link}>
+              <Link to={link}>{text}</Link>
             </NavItem>
           );
         })}

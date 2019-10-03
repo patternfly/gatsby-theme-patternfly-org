@@ -105,6 +105,12 @@ exports.createPages = ({ actions, graphql }) => graphql(`
     if (result.errors) {
       return Promise.reject(result.errors);
     }
+    // Create a global CSS Variable page
+    actions.createPage({
+      path: '/documentation/global-css-variables',
+      component: path.resolve(__dirname, `./pages/globalCSSVariables.js`),
+    });
+
     const hbsInstance = createHandlebars(result.data.partials.nodes);
 
     result.data.allMdx.nodes.forEach(node => {
