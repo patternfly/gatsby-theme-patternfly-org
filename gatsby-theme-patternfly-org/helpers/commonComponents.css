@@ -1,3 +1,32 @@
 .ws-content-p {
   padding: 12px;
 }
+
+h2.ws-title {
+  margin-bottom: .5rem;
+  font-size: 24px;
+  font-weight: 500;
+  color: #393f44;
+}
+
+h3.ws-title {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-size: 1.25em;
+}
+
+.ws-section table {
+  border-collapse: collapse;
+}
+
+.ws-section table tr:nth-child(2n) {
+  background: #f1f1f1;
+}
+
+.ws-section table td,
+.ws-section table th,
+.ws-section table tr {
+  padding: .5em;
+  border: 1px solid #ccc;
+  vertical-align: top;
+}
