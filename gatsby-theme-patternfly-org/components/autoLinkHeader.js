@@ -1,19 +1,8 @@
 import React from 'react';
 import { Title } from '@patternfly/react-core';
 import { LinkIcon } from '@patternfly/react-icons';
+import { slugger } from '../helpers/slugger';
 import './autoLinkHeader.css';
-
-// TODO: cache slugs and make unique
-const slugger = children => {
-  const value = React.Children.toArray(children).join('');
-  const whitespace = /\s/g;
-  const specials = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,./:;<=>?@[\]^`{|}~]/g;
-  return value
-    .toLowerCase()
-    .trim()
-    .replace(specials, '')
-    .replace(whitespace, '-');
-};
 
 // "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl"
 const sizes = {

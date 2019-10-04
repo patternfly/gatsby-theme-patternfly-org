@@ -4,6 +4,7 @@ import { LiveProvider, LiveEditor, LivePreview, LiveError } from 'react-live';
 import ExampleToolbar from './exampleToolbar';
 import AutoLinkHeader from './autoLinkHeader';
 import { getParameters } from 'codesandbox/lib/api/define';
+import { slugger } from '../helpers/slugger';
 import './example.css';
 
 const transformCode = (code, language, html) => {
@@ -19,7 +20,7 @@ const transformCode = (code, language, html) => {
   }
   // HTML/HBS
   const transformed = language === 'hbs' ? html : code;
-  return `<div dangerouslySetInnerHTML={{ __html: "${transformed
+  return `<div className="ws-preview-html" dangerouslySetInnerHTML={{ __html: "${transformed
     .replace(/"/g, '\\"')
     .replace(/\n/g, '')}"}} />`;;
 }
@@ -72,6 +73,7 @@ export default class Example extends React.Component {
   constructor(props) {
     super(props);
 
+    this.component = props.location.pathname.split('/').pop();
     this.html = props.html
       ? props.html
       : 'This is a hbs code block, but no html trickled down from gatsby-node.js to mdx.js to example.js';
@@ -118,6 +120,8 @@ export default class Example extends React.Component {
         </LiveProvider>
       );
     }
+    // /documentation/core/{components,layouts,utilities,experimental}
+    const section = location.pathname.split('/')[3];
     return (
       <div className="ws-example">
         <AutoLinkHeader size="h4" headingLevel="h3" className="ws-example-heading">
@@ -135,7 +139,9 @@ export default class Example extends React.Component {
         >
           {isFullscreen
             ? <div className="ws-preview">This preview can be accessed in <Link to={fullscreenLink}>full page mode.</Link></div>
-            : <LivePreview className={`ws-preview ${darkMode ? 'pf-t-dark pf-m-opaque-200' : ''}`} />}
+            : <LivePreview
+              id={`ws-example-${section[0]}-${this.component}-${slugger(title)}`}
+              className={`ws-example-${section[0]}-${this.component} ws-preview ${darkMode ? 'pf-t-dark pf-m-opaque-200' : ''}`} />}
           <ExampleToolbar
             editor={<LiveEditor />}
             supportedLangs={this.supportedLangs}
