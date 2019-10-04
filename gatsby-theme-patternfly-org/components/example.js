@@ -74,7 +74,6 @@ export default class Example extends React.Component {
   constructor(props) {
     super(props);
 
-    this.component = props.location.pathname.split('/').pop();
     this.html = props.html
       ? props.html
       : 'This is a hbs code block, but no html trickled down from gatsby-node.js to mdx.js to example.js';
@@ -122,7 +121,9 @@ export default class Example extends React.Component {
     }
     const fullscreenLink = `${location.pathname}/${title.toLowerCase()}`;
     // /documentation/core/{components,layouts,utilities,experimental}
-    const section = location.pathname.split('/')[3];
+    const split = location.pathname.split('/');
+    const section = split[3];
+    const component = split.pop();
     return (
       <div className="ws-example">
         <AutoLinkHeader size="h4" headingLevel="h3" className="ws-example-heading">
@@ -141,8 +142,8 @@ export default class Example extends React.Component {
           {isFullscreen
             ? <div className="ws-preview">This preview can be accessed in <Link to={fullscreenLink}>full page mode.</Link></div>
             : <LivePreview
-              id={`ws-example-${section[0]}-${this.component}-${slugger(title)}`}
-              className={`ws-example-${section[0]}-${this.component} ws-preview ${darkMode ? 'pf-t-dark pf-m-opaque-200' : ''}`} />}
+              id={`ws-example-${section[0]}-${component}-${slugger(title)}`}
+              className={`ws-example-${section[0]}-${component} ws-preview ${darkMode ? 'pf-t-dark pf-m-opaque-200' : ''}`} />}
           <ExampleToolbar
             editor={<LiveEditor className="ws-editor"/>}
             supportedLangs={this.supportedLangs}
