@@ -15,3 +15,16 @@
   border-bottom: 1px solid #f8f8f8;
   transition: width .2s ease-in-out;
 }
+
+.ws-code {
+  padding: .25em .75em;
+  color: #004368;
+  white-space: nowrap;
+  background-color: #def3ff;
+  border-radius: .5em;
+}
+
+.ws-editor .token.punctuation,
+.ws-editor .token.operator {
+  color: #c9190b;
+}

@@ -4,6 +4,7 @@ import { LiveProvider, LiveEditor, LivePreview, LiveError } from 'react-live';
 import ExampleToolbar from './exampleToolbar';
 import AutoLinkHeader from './autoLinkHeader';
 import { getParameters } from 'codesandbox/lib/api/define';
+import 'prismjs/themes/prism-coy.css';
 import { slugger } from '../helpers/slugger';
 import './example.css';
 
@@ -77,7 +78,7 @@ export default class Example extends React.Component {
     this.html = props.html
       ? props.html
       : 'This is a hbs code block, but no html trickled down from gatsby-node.js to mdx.js to example.js';
-    this.codeBoxParams = getParameters(getParams(props.title, this.html));
+    this.codeBoxParams = props.html ? getParameters(getParams(props.title, this.html)) : '';
 
     this.supportedLangs = getSupportedLanguages(props.className);
     const initialLang = this.supportedLangs[0];
@@ -106,10 +107,9 @@ export default class Example extends React.Component {
   render() {
     const { editorCode, darkMode, editorLang } = this.state;
     const { noLive, title, isFullscreen = false, location, children } = this.props;
-    const fullscreenLink = `${location.pathname}/${title.toLowerCase()}`;
 
-    if (editorLang === 'pre') {
-      return <pre>{children}</pre>;
+    if (editorLang === 'unknown') {
+      return <code className="ws-code">{children}</code>;
     }
     if (isFullscreen && editorLang === 'jsx') {
       return (
@@ -120,6 +120,7 @@ export default class Example extends React.Component {
         </LiveProvider>
       );
     }
+    const fullscreenLink = `${location.pathname}/${title.toLowerCase()}`;
     // /documentation/core/{components,layouts,utilities,experimental}
     const section = location.pathname.split('/')[3];
     return (
@@ -143,7 +144,7 @@ export default class Example extends React.Component {
               id={`ws-example-${section[0]}-${this.component}-${slugger(title)}`}
               className={`ws-example-${section[0]}-${this.component} ws-preview ${darkMode ? 'pf-t-dark pf-m-opaque-200' : ''}`} />}
           <ExampleToolbar
-            editor={<LiveEditor />}
+            editor={<LiveEditor className="ws-editor"/>}
             supportedLangs={this.supportedLangs}
             onLanguageChange={this.onLanguageChange}
             onDarkmodeChange={this.onDarkmodeChange}

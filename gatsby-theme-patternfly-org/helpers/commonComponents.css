@@ -1,3 +1,44 @@
 .ws-content-p {
   padding: 12px;
 }
+
+h2.ws-title {
+  margin-bottom: .5rem;
+  font-size: 24px;
+  font-weight: 500;
+  color: #393f44;
+}
+
+h3.ws-title {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-size: 1.25em;
+}
+
+.ws-section table {
+  border-collapse: collapse;
+}
+
+.ws-section table tr:nth-child(2n) {
+  background: #f1f1f1;
+}
+
+#examples ~ table td,
+#examples ~ table th,
+#examples ~ table tr {
+  padding: .5em;
+  border: 1px solid #ccc;
+  vertical-align: top;
+}
+
+@media screen and (max-width: 1450px) {
+  table.pf-m-grid-2xl.pf-c-table tbody:first-of-type {
+    border-top: 0;
+  }
+}
+
+@media screen and (max-width: 1450px) {
+  table.pf-m-grid-2xl.pf-c-table tr:not(.pf-c-table__expandable-row) {
+    border-bottom: 0;
+  }
+}
