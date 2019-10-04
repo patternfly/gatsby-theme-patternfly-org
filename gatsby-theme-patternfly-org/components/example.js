@@ -151,6 +151,7 @@ export default class Example extends React.Component {
             onDarkmodeChange={this.onDarkmodeChange}
             isFullscreen={isFullscreen}
             fullscreenLink={fullscreenLink}
+            code={editorCode}
             codeSandboxLink={`https://codesandbox.io/api/v1/sandboxes/define?parameters=${this.codeBoxParams}`} />
           {!noLive && <LiveError />}
         </LiveProvider>

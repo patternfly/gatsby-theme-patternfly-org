@@ -15,9 +15,25 @@ export default class ExampleToolbar extends React.Component {
     showCopyMessage: false,
   };
 
-  handleClickCopy = () => {
-    // TODO: copy
-    // copy(this.toCopy);
+  onCopy = () => {
+    let el = document.createElement('textarea');
+    // Set value (string to be copied)
+    el.value = this.props.code;
+    // Set non-editable to avoid focus and move outside of view
+    el.setAttribute('readonly', '');
+    el.style = {
+      display: 'none',
+      position: 'absolute',
+      left: '-9999px'
+    };
+    document.body.appendChild(el);
+    // Select text inside element
+    el.select();
+    // Copy text to clipboard
+    document.execCommand('copy');
+    // Remove temporary element
+    document.body.removeChild(el);
+
     this.setState({
       showCopyMessage: true
     });
@@ -58,7 +74,7 @@ export default class ExampleToolbar extends React.Component {
             </Button>
           )}
           <Button
-            onClick={this.handleClickCopy}
+            onClick={this.onCopy}
             variant="plain"
             title="Copy code"
             aria-label="Copy code"
