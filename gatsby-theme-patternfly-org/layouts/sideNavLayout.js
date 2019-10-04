@@ -41,10 +41,11 @@ export default ({ children, location }) => {
   const Header = (
     <PageHeader
       className="ws-page-header"
-      logo={data.prInfo.num ? `PR #${data.prInfo.num}` : <Brand src={brandImg} alt="PatternFly Logo" />}
+      logo={data.prInfo.num ? `PR #${data.prInfo.num}` : siteTitle}
       logoProps={{
         href: data.prInfo.url || '/'
       }}
+      showNavToggle
       topNav={<TopNav location={location} navItems={data.themeOptions.pluginOptions.topNavItems} />}
     />
   );

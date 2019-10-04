@@ -1,7 +1,8 @@
 import React from 'react';
+import './htmlFullscreen.css';
 
 export default ({ pageContext }) => (
   <div
-    id="ws-fullscreen-example"
-    dangerouslySetInnerHTML={{__html: pageContext.html || 'no fs example'}} />
+    class="ws-fullscreen-example"
+    dangerouslySetInnerHTML={{__html: pageContext.html || 'No fullscreen example.'}} />
 );
