@@ -6,7 +6,7 @@ import './commonComponents.css';
 // These components replace how all elements of markdown are rendered
 // TODO: more or less copy all of https://github.com/patternfly/patternfly-next/blob/master/src/patternfly/components/Content/content.scss
 export const commonComponents = {
-  inlineCode: props => <Example>{props.children}</Example>,
+  inlineCode: Example,
   pre: React.Fragment
 };
 for (let i = 1; i <= 6; i++) {

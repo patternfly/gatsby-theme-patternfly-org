@@ -12,6 +12,8 @@
   "workspaces": [
     "gatsby-theme-patternfly-org",
     "patternfly-org-demo",
-    "patternfly-org-demo/patternfly-next"
+    "patternfly-org-demo/patternfly-next",
+    "patternfly-org-demo/patternfly-react/packages/patternfly-4/react-docs",
+    "patternfly-org-demo/patternfly-react/packages/patternfly-4/react-docs/plugins/gatsby-transformer-react-docgen-typescript"
   ]
 }

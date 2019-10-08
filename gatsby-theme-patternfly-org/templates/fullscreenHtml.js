@@ -1,5 +1,5 @@
 import React from 'react';
-import './htmlFullscreen.css';
+import './fullscreen.css';
 
 export default ({ pageContext }) => (
   <div

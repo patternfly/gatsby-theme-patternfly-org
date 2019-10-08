@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const { extractCoreExamples } = require('./helpers/extractExamples');
+const { extractExamples } = require('./helpers/extractExamples');
 const { extractTableOfContents } = require('./helpers/extractTableOfContents');
 const { createHandlebars } = require('./helpers/createHandlebars');
 
@@ -57,9 +57,8 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       name: 'title',
       value: title
     });
-  } else if (node.internal.type === 'File' && node.extension === 'hbs') {
-    // Exclude example partials, they just bloat bundle
-    if (!node.relativePath.includes('example')) {
+  } else if (node.internal.type === 'File') {
+    if (node.extension === 'hbs' && !node.relativePath.includes('example')) {
       const partial = fs.readFileSync(node.absolutePath, 'utf8');
       // Exclude empty partials, they bug out 
       if (partial) {
@@ -74,6 +73,19 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
           value: partial
         });
       }
+    } else {
+      // Add a null field so React's docs don't crash on the GraphQL for
+      // patternfly-next like allFile(filter: { fields: { name: { ne: "" } } })
+      createNodeField({
+        node,
+        name: 'name',
+        value: ''
+      });
+      createNodeField({
+        node,
+        name: 'partial',
+        value: ''
+      });
     }
   }
 };
@@ -92,7 +104,7 @@ exports.createPages = ({ actions, graphql }) => graphql(`
         mdxAST
       }
     }
-    partials: allFile(filter: { fields: { name: { ne: null } } }) {
+    partials: allFile(filter: { fields: { name: { ne: "" } } }) {
       nodes {
         fields {
           name
@@ -114,10 +126,10 @@ exports.createPages = ({ actions, graphql }) => graphql(`
     const hbsInstance = createHandlebars(result.data.partials.nodes);
 
     result.data.allMdx.nodes.forEach(node => {
-      const htmlExamples = extractCoreExamples(node.mdxAST, hbsInstance);
       const tableOfContents = extractTableOfContents(node.mdxAST) || [];
-      const { slug, navSection, title } = node.fields;
+      const { slug, navSection, title, source } = node.fields;
 
+      const examples = extractExamples(node.mdxAST, hbsInstance);
       actions.createPage({
         path: slug,
         component: path.resolve(__dirname, `./templates/mdx.js`),
@@ -128,22 +140,33 @@ exports.createPages = ({ actions, graphql }) => graphql(`
           navSection,
           title,
           // To render example HTML
-          htmlExamples,
+          htmlExamples: source === 'core' ? examples : undefined,
           // To render TOC
           tableOfContents,
         }
       });
 
       // Create per-example fullscreen pages
-      Object.entries(htmlExamples).forEach(([key, html]) =>
-        actions.createPage({
-          path: `${slug}/${key}`,
-          component: path.resolve(__dirname, `./templates/htmlFullscreen.js`),
-          context: {
-            html
-          }
-        })
-      );
+      Object.entries(examples).forEach(([key, example]) => {
+        if (source === 'html') {
+          actions.createPage({
+            path: `${slug}/${key}`,
+            component: path.resolve(__dirname, `./templates/fullscreenHtml.js`),
+            context: {
+              html: example
+            }
+          })
+        }
+        else if (source === 'react') {
+          actions.createPage({
+            path: `${slug}/${key}`,
+            component: path.resolve(__dirname, `./templates/fullscreenMdx.js`),
+            context: {
+              mdxBody: example
+            }
+          })
+        }
+      });
     });
   });
 
