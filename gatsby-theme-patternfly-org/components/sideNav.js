@@ -3,6 +3,14 @@ import { graphql, useStaticQuery, Link } from 'gatsby';
 import { Nav, NavList, NavExpandable, NavItem } from '@patternfly/react-core';
 import { capitalize } from '../helpers/capitalize';
 
+const removeTrailingSlash = link => {
+  if (link.endsWith('/')) {
+    return link.substr(0, link.length - 1);
+  }
+
+  return link;
+}
+
 export default ({ location }) => {
   const data = useStaticQuery(graphql`
   {
@@ -47,11 +55,11 @@ export default ({ location }) => {
               <NavExpandable
                 key={section}
                 title={capitalize(section)}
-                isActive={location.pathname.includes(section)}
-                isExpanded={location.pathname.includes(section)}
+                isActive={location.pathname.includes(`/${section}/`)}
+                isExpanded={location.pathname.includes(`/${section}/`)}
               >
                 {allPages[section].map(node => (
-                  <NavItem key={node.path} isActive={location.pathname === node.path}>
+                  <NavItem key={node.path} isActive={removeTrailingSlash(location.pathname) === node.path}>
                     <Link to={node.path}>{node.text}</Link>
                   </NavItem>
                 ))}
@@ -60,7 +68,7 @@ export default ({ location }) => {
           }
 
           return (
-            <NavItem key={link} isActive={location.pathname === link}>
+            <NavItem key={link} isActive={removeTrailingSlash(location.pathname) === link}>
               <Link to={link}>{text}</Link>
             </NavItem>
           );
