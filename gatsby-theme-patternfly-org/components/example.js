@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'gatsby';
 import { LiveProvider, LiveEditor, LivePreview, LiveError } from 'react-live';
+import { useMDXScope } from 'gatsby-plugin-mdx/context';
 import ExampleToolbar from './exampleToolbar';
 import AutoLinkHeader from './autoLinkHeader';
 import { getParameters } from 'codesandbox/lib/api/define';
@@ -8,7 +9,7 @@ import 'prismjs/themes/prism-coy.css';
 import { slugger } from '../helpers/slugger';
 import './example.css';
 import { transformCode } from '../helpers/transformCode';
-import { useMDXScope } from 'gatsby-plugin-mdx/context';
+import { removeTrailingSlash } from '../helpers/removeTrailingSlash';
 
 const getSupportedLanguages = className => {
   if (typeof className === 'string') {
@@ -79,7 +80,7 @@ export default props => {
   }
   const fullscreenLink = `${location.pathname}/${title.toLowerCase()}`;
   // /documentation/core/{components,layouts,utilities,experimental}
-  const split = location.pathname.split('/');
+  const split = removeTrailingSlash(location.pathname).split('/');
   const section = split[3];
   const component = split.pop();
   const codeBoxParams = props.html ? getParameters(getParams(props.title, html)) : '';

@@ -2,14 +2,7 @@ import React from 'react';
 import { graphql, useStaticQuery, Link } from 'gatsby';
 import { Nav, NavList, NavExpandable, NavItem } from '@patternfly/react-core';
 import { capitalize } from '../helpers/capitalize';
-
-const removeTrailingSlash = link => {
-  if (link.endsWith('/')) {
-    return link.substr(0, link.length - 1);
-  }
-
-  return link;
-}
+import { removeTrailingSlash } from '../helpers/removeTrailingSlash';
 
 export default ({ location }) => {
   const data = useStaticQuery(graphql`
