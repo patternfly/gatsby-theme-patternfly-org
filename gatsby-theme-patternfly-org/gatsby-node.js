@@ -162,7 +162,7 @@ exports.createPages = ({ actions, graphql }) => graphql(`
             path: `${slug}/${key}`,
             component: path.resolve(__dirname, `./templates/fullscreenMdx.js`),
             context: {
-              mdxBody: example
+              jsx: example
             }
           })
         }
