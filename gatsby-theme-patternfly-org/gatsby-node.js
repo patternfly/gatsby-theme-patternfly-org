@@ -148,7 +148,7 @@ exports.createPages = ({ actions, graphql }) => graphql(`
 
       // Create per-example fullscreen pages
       Object.entries(examples).forEach(([key, example]) => {
-        if (source === 'html') {
+        if (source === 'core') {
           actions.createPage({
             path: `${slug}/${key}`,
             component: path.resolve(__dirname, `./templates/fullscreenHtml.js`),
@@ -168,15 +168,4 @@ exports.createPages = ({ actions, graphql }) => graphql(`
         }
       });
     });
-  });
-
-exports.onCreateWebpackConfig = ({ actions }) => actions.setWebpackConfig({
-    module: {
-      rules: [
-        {
-          test: /\.hbs$/,
-          loader: 'null-loader'
-        }
-      ]
-    }
   });
