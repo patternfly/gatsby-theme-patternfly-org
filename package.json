@@ -5,11 +5,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "yarn workspace patternfly-org-demo build",
-    "clean": "yarn workspace patternfly-org-demo clean",
     "clean:next": "yarn workspace @patternfly/patternfly clean",
-    "develop:next": "yarn workspace @patternfly/patternfly dev -p 8001",
     "clean:react": "yarn workspace @patternfly/react-docs clean",
+    "develop:next": "yarn workspace @patternfly/patternfly dev -p 8001",
     "develop:react": "yarn workspace @patternfly/react-docs develop -p 8002"
   },
   "workspaces": {
