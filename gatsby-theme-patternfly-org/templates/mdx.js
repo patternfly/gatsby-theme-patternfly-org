@@ -13,9 +13,8 @@ import './mdx.css';
 
 export default ({ data, location, pageContext }) => {
   const { title, cssPrefix, hideTOC } = data.mdx.frontmatter;
-  const sourceName = data.mdx.fields.source === 'core'
-    ? 'HTML'
-    : 'React';
+  const { source } = data.mdx.fields;
+  const sourceName = source === 'core' ? 'HTML' : 'React';
 
   return (
     <SideNavLayout location={location}>
@@ -41,6 +40,7 @@ export default ({ data, location, pageContext }) => {
           code: props =>
             <Example
               location={location}
+              source={source}
               html={props.title && pageContext.htmlExamples ? pageContext.htmlExamples[getId(props.title)] : undefined}
               {...props} />,
           ...commonComponents

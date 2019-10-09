@@ -7,7 +7,9 @@
   "scripts": {
     "build": "yarn workspace patternfly-org-demo build",
     "clean": "yarn workspace patternfly-org-demo clean",
-    "develop": "yarn workspace patternfly-org-demo develop"
+    "clean:react": "yarn workspace @patternfly/react-docs clean",
+    "develop:next": "yarn workspace @patternfly/patternfly develop -p 8001",
+    "develop:react": "yarn workspace @patternfly/react-docs develop -p 8002"
   },
   "workspaces": [
     "gatsby-theme-patternfly-org",
