@@ -1,7 +1,7 @@
 [submodule "patternfly-org-demo/patternfly-next"]
 	path = patternfly-org-demo/patternfly-next
-	url = git@github.com:redallen/patternfly-next.git
-	branch = refactor/mdx
+	url = git@github.com:patternfly/patternfly-next.git
+	branch = master
 [submodule "patternfly-org-demo/patternfly-react"]
 	path = patternfly-org-demo/patternfly-react
 	url = git@github.com:redallen/patternfly-react.git

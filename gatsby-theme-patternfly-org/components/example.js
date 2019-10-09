@@ -23,7 +23,7 @@ const getSupportedLanguages = className => {
   return ['unknown'];
 }
 
-const getParams = (title, html) => ({
+const getStaticParams = (title, html) => ({
   files: {
     'index.html': {
       content: `<!DOCTYPE html>
@@ -31,14 +31,13 @@ const getParams = (title, html) => ({
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <!-- Include latest PatternFly CSS via CDN -->
   <link 
     rel="stylesheet" 
     href="https://unpkg.com/@patternfly/patternfly/patternfly.css" 
     crossorigin="anonymous"
   >
-  <title>PatternFly-next ${title} CodeSandbox Example</title>
+  <title>PatternFly-Next ${title} CodeSandbox Example</title>
 </head>
 <body>
   ${html}
@@ -53,6 +52,53 @@ const getParams = (title, html) => ({
     }
   },
   template: 'static',
+});
+
+const getReactParams = (title, jsx) => ({
+  files: {
+    'index.html': {
+      content: `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Include latest PatternFly CSS via CDN -->
+    <link 
+      rel="stylesheet" 
+      href="https://unpkg.com/@patternfly/patternfly/patternfly-base.css" 
+      crossorigin="anonymous"
+    >
+    <title>PatternFly-React ${title} CodeSandbox Example</title>
+  </head>
+<body>
+  <noscript>
+    You need to enable JavaScript to run this app.
+  </noscript>
+  <div id="root"></div>
+</body>
+</html>`,
+    },
+    'index.js': {
+      content: `import ReactDOM from "react-dom";
+${jsx}
+
+const rootElement = document.getElementById("root");
+ReactDOM.render(<App />, rootElement);`
+    },
+    'package.json': {
+      content: {
+        dependencies: {
+          '@patternfly/react-core': 'latest',
+          'react': '16.9.0',
+          'react-dom': '16.9.0'
+        }
+      },
+    },
+    'sandbox.config.json': {
+      content: { template: 'create-react-app' }
+    }
+  },
+  template: 'create-react-app',
 });
 
 // This component uses hooks in order to call useMDXScope()
@@ -83,7 +129,9 @@ export default props => {
   const split = removeTrailingSlash(location.pathname).split('/');
   const section = split[3];
   const component = split.pop();
-  const codeBoxParams = props.html ? getParameters(getParams(props.title, html)) : '';
+  const codeBoxParams = getParameters(props.html
+    ? getStaticParams(props.title, html)
+    : getReactParams(props.title, editorCode, editorLang));
   return (
     <div className="ws-example">
       <AutoLinkHeader size="h4" headingLevel="h3" className="ws-example-heading">

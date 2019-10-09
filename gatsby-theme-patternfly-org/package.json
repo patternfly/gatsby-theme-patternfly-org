@@ -5,10 +5,10 @@
   "author": "Red Hat",
   "license": "MIT",
   "peerDependencies": {
-    "@patternfly/patternfly": "^2.33.5",
     "gatsby": "^2.6.0"
   },
   "dependencies": {
+    "@patternfly/patternfly": "^2.33.5",
     "@patternfly/react-core": "^3.113.0",
     "@patternfly/react-icons": "^3.14.8",
     "@patternfly/react-table": "^2.22.28",

@@ -41,7 +41,7 @@ export default ({ data, location, pageContext }) => {
           code: props =>
             <Example
               location={location}
-              html={props.title ? pageContext.htmlExamples[getId(props.title)] : undefined}
+              html={props.title && pageContext.htmlExamples ? pageContext.htmlExamples[getId(props.title)] : undefined}
               {...props} />,
           ...commonComponents
         }}>
