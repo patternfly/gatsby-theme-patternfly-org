@@ -31,6 +31,20 @@ export default ({ data, location, pageContext }) => {
   const { title, cssPrefix, hideTOC, experimentalStage, optIn } = data.mdx.frontmatter;
   const { source } = data.mdx.fields;
   const sourceName = source === 'core' ? 'HTML' : 'React';
+  const getWarning = state => {
+    switch(state) {
+      case 'early':
+        return "This is an experimental feature in the early stages of testing. It's not intended for production use.";
+      case 'deprecated':
+        return "This experimental feature has been deprecated and will be removed in a future release. We recommend you avoid or move away from using this feature in your projects.";
+      default:
+        return (
+          <React.Fragment>
+  This experimental feature has been promoted to a <a href={`../../components/${state}`}>production-level component</a> and will be removed in a future release. Use the production-ready version of this feature instead."
+          </React.Fragment>
+        );
+    }
+  }
 
   return (
     <SideNavLayout location={location}>
