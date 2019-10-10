@@ -90,7 +90,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   }
 };
 
-exports.createPages = ({ actions, graphql }) => graphql(`
+exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
   {
     allMdx {
       nodes {
@@ -112,11 +112,6 @@ exports.createPages = ({ actions, graphql }) => graphql(`
         }
       }
     }
-    sitePlugin(name: { eq: "gatsby-theme-patternfly-org" }) {
-      pluginOptions {
-        hiddenPages
-      }
-    }
   }
   `).then(result => {
     if (result.errors) {
@@ -130,7 +125,7 @@ exports.createPages = ({ actions, graphql }) => graphql(`
 
     const hbsInstance = createHandlebars(result.data.partials.nodes);
 
-    const hidden = (result.data.sitePlugin.pluginOptions.hiddenPages || []).map(title => title.toLowerCase());
+    const hidden = (pluginOptions.hiddenPages || []).map(title => title.toLowerCase());
 
     result.data.allMdx.nodes.filter(node => hidden.indexOf(node.fields.title.toLowerCase()) === -1).forEach(node => {
       const tableOfContents = extractTableOfContents(node.mdxAST) || [];
