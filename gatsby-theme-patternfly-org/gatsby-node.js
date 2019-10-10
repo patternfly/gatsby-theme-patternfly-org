@@ -113,11 +113,6 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
         }
       }
     }
-    sitePlugin(name: { eq: "gatsby-theme-patternfly-org" }) {
-      pluginOptions {
-        hiddenPages
-      }
-    }
   }
   `).then(result => {
     if (result.errors) {
