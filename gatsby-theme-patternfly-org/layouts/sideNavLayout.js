@@ -8,8 +8,7 @@ import React from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
 import { Helmet } from 'react-helmet';
 
-import { Brand, Page, PageHeader, PageSidebar } from '@patternfly/react-core';
-import brandImg from '../images/logo.svg';
+import { Page, PageHeader, PageSidebar } from '@patternfly/react-core';
 import SideNav from '../components/sideNav';
 import TopNav from '../components/topNav';
 import './sideNavLayout.css';

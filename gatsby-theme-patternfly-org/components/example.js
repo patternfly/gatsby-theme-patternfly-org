@@ -10,6 +10,7 @@ import { slugger } from '../helpers/slugger';
 import './example.css';
 import { transformCode } from '../helpers/transformCode';
 import { removeTrailingSlash } from '../helpers/removeTrailingSlash';
+import { getStaticParams, getReactParams } from '../helpers/codesandbox';
 
 const getSupportedLanguages = className => {
   if (typeof className === 'string') {
@@ -22,84 +23,6 @@ const getSupportedLanguages = className => {
   }
   return ['unknown'];
 }
-
-const getStaticParams = (title, html) => ({
-  files: {
-    'index.html': {
-      content: `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <!-- Include latest PatternFly CSS via CDN -->
-  <link 
-    rel="stylesheet" 
-    href="https://unpkg.com/@patternfly/patternfly/patternfly.css" 
-    crossorigin="anonymous"
-  >
-  <title>PatternFly-Next ${title} CodeSandbox Example</title>
-</head>
-<body>
-  ${html}
-</body>
-</html>`,
-    },
-    'package.json': {
-      content: {},
-    },
-    'sandbox.config.json': {
-      content: { template: 'static' }
-    }
-  },
-  template: 'static',
-});
-
-const getReactParams = (title, jsx) => ({
-  files: {
-    'index.html': {
-      content: `<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- Include latest PatternFly CSS via CDN -->
-    <link 
-      rel="stylesheet" 
-      href="https://unpkg.com/@patternfly/patternfly/patternfly-base.css" 
-      crossorigin="anonymous"
-    >
-    <title>PatternFly-React ${title} CodeSandbox Example</title>
-  </head>
-<body>
-  <noscript>
-    You need to enable JavaScript to run this app.
-  </noscript>
-  <div id="root"></div>
-</body>
-</html>`,
-    },
-    'index.js': {
-      content: `import ReactDOM from "react-dom";
-${jsx}
-
-const rootElement = document.getElementById("root");
-ReactDOM.render(<App />, rootElement);`
-    },
-    'package.json': {
-      content: {
-        dependencies: {
-          '@patternfly/react-core': 'latest',
-          'react': '16.9.0',
-          'react-dom': '16.9.0'
-        }
-      },
-    },
-    'sandbox.config.json': {
-      content: { template: 'create-react-app' }
-    }
-  },
-  template: 'create-react-app',
-});
 
 // This component uses hooks in order to call useMDXScope()
 export default props => {
@@ -125,20 +48,23 @@ export default props => {
     return <code className="ws-code">{children}</code>;
   }
   const fullscreenLink = `${location.pathname}/${title.toLowerCase()}`;
+  const scope = useMDXScope();
   // /documentation/core/{components,layouts,utilities,experimental}
   const split = removeTrailingSlash(location.pathname).split('/');
   const section = split[3];
   const component = split.pop();
-  const codeBoxParams = getParameters(props.html
+  const codeBoxParams = getParameters(
+    props.html
     ? getStaticParams(props.title, html)
-    : getReactParams(props.title, editorCode, editorLang));
+    : getReactParams(props.title, editorCode));
+  
   return (
     <div className="ws-example">
       <AutoLinkHeader size="h4" headingLevel="h3" className="ws-example-heading">
         {title.replace(/-/g, ' ')}
       </AutoLinkHeader>
       <LiveProvider
-        scope={useMDXScope()}
+        scope={scope}
         code={editorCode}
         transformCode={code => transformCode(code, editorLang, html)}
         disabled={noLive || isFullscreen || editorLang === 'hbs'}
