@@ -5,8 +5,6 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "yarn workspace patternfly-org-demo build",
-    "clean": "yarn workspace patternfly-org-demo clean",
     "clean:next": "yarn workspace @patternfly/patternfly clean",
     "develop:next": "yarn workspace @patternfly/patternfly dev -p 8001",
     "clean:react": "yarn workspace @patternfly/react-docs clean",
@@ -21,6 +19,7 @@
       "patternfly-org-demo/patternfly-react/packages/patternfly-4/react-docs/plugins/gatsby-transformer-react-docgen-typescript"
     ],
     "nohoist": [
+      "**/@patternfly/patternfly",
       "**/gatsby-theme-patternfly-org"
     ]
   }

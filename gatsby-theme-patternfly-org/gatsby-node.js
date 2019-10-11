@@ -125,7 +125,6 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
     });
 
     const hbsInstance = createHandlebars(result.data.partials.nodes);
-
     const hidden = (pluginOptions.hiddenPages || []).map(title => title.toLowerCase());
 
     result.data.allMdx.nodes.filter(node => hidden.indexOf(node.fields.title.toLowerCase()) === -1).forEach(node => {
