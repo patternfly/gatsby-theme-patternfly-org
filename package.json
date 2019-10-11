@@ -6,8 +6,8 @@
   "license": "MIT",
   "scripts": {
     "clean:next": "yarn workspace @patternfly/patternfly clean",
+    "develop:next": "yarn workspace @patternfly/patternfly dev -p 8001",
     "clean:react": "yarn workspace @patternfly/react-docs clean",
-    "develop:next": "yarn workspace @patternfly/patternfly develop:theme",
     "develop:react": "yarn workspace @patternfly/react-docs develop -p 8002"
   },
   "workspaces": {
