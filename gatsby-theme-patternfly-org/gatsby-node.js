@@ -95,13 +95,14 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
     allMdx {
       nodes {
         id
+        fileAbsolutePath
+        mdxAST
         fields {
           slug
           source
           navSection
           title
         }
-        mdxAST
       }
     }
     partials: allFile(filter: { fields: { name: { ne: "" } } }) {
@@ -131,7 +132,7 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
       const tableOfContents = extractTableOfContents(node.mdxAST) || [];
       const { slug, navSection, title, source } = node.fields;
 
-      const examples = extractExamples(node.mdxAST, hbsInstance);
+      const examples = extractExamples(node.mdxAST, hbsInstance, path.relative(__dirname, node.fileAbsolutePath));
       actions.createPage({
         path: slug,
         component: path.resolve(__dirname, `./templates/mdx.js`),
