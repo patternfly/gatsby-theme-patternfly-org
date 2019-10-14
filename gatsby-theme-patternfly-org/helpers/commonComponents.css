@@ -15,16 +15,25 @@ h3.ws-title {
   border-collapse: collapse;
 }
 
-.ws-section table tr:nth-child(2n) {
-  background: #f1f1f1;
-}
-
 #examples ~ table td,
 #examples ~ table th,
 #examples ~ table tr {
   padding: .5em;
-  border: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
   vertical-align: top;
+}
+
+.pf-c-table {
+  background: none;
+}
+
+.pf-c-table tr {
+  background: var(--pf-c-table--BackgroundColor);
+}
+
+.pf-c-table tr {
+  margin-top: 8px;
 }
 
 @media screen and (max-width: 1450px) {

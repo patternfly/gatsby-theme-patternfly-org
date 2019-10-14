@@ -18,10 +18,8 @@
 
 .ws-code {
   padding: .25em .75em;
-  color: #004368;
   white-space: nowrap;
-  background-color: #def3ff;
-  border-radius: .5em;
+  font-size: var(--pf-global--FontSize--md);
 }
 
 .ws-editor .token.punctuation,

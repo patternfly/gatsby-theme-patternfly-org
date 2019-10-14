@@ -1,7 +1,10 @@
 .ws-section {
-  background-color: #f8f8f8 !important;
   padding: 48px;
   padding-top: 32px;
+}
+
+.ws-section:first-of-type {
+  padding-bottom: 0;
 }
 
 .ws-framework-title {
