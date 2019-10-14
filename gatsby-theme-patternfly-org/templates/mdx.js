@@ -20,7 +20,8 @@ const getWarning = state => {
     default:
       return (
         <React.Fragment>
-This experimental feature has been promoted to a <a href={`../../components/${state}`}>production-level component</a> and will be removed in a future release. Use the production-ready version of this feature instead."
+          This experimental feature has been promoted to a <a href={`../../components/${state}`}>production-level component</a> and will be removed in a future release.
+          Use the production-ready version of this feature instead.
         </React.Fragment>
       );
   }
