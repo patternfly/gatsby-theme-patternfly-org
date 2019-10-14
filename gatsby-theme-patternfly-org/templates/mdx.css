@@ -4,6 +4,10 @@
   padding-top: 32px;
 }
 
+.ws-section:first-of-type {
+  padding-bottom: 0;
+}
+
 .ws-framework-title {
   color: #06c;
 }

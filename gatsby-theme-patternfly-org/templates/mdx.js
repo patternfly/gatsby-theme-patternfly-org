@@ -90,7 +90,7 @@ export default ({ data, location, pageContext }) => {
 
       {cssPrefix && (
         <PageSection className="ws-section">
-          <AutoLinkHeader size="h1" id="css-variables">CSS Variables</AutoLinkHeader>
+          <AutoLinkHeader size="h2" id="css-variables" className="ws-title">CSS Variables</AutoLinkHeader>
           <CSSVariables prefix={cssPrefix} />
         </PageSection>
       )}
