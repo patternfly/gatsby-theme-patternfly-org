@@ -32,37 +32,45 @@ export const getStaticParams = (title, html) => ({
 
 // TODO: Make React examples work and use a template that has our assets.
 export const getReactParams = (title, code) => {
-  const className = /class (.*?) /.exec(code)[1];
+  let toRender = 'Example';
+  const classNameMatch = /class (\w+) /.exec(code);
+  const equalityMatch = /(\w+) =/.exec(code);
+  if (classNameMatch) {
+    toRender = classNameMatch[1];
+  } else if (equalityMatch) {
+    toRender = equalityMatch[1];
+    code = code.replace(/(\w+) =/, `const ${toRender} =`)
+  }
   return {
     files: {
       'index.html': {
         content: `<!DOCTYPE html>
-  <html lang="en">
-    <head>
-      <meta charset="utf-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <!-- Include latest PatternFly CSS via CDN -->
-      <link 
-        rel="stylesheet" 
-        href="https://unpkg.com/@patternfly/patternfly/patternfly-base.css" 
-        crossorigin="anonymous"
-      >
-      <title>PatternFly-React ${title} CodeSandbox Example</title>
-    </head>
-  <body>
-    <noscript>
-      You need to enable JavaScript to run this app.
-    </noscript>
-    <div id="root"></div>
-  </body>
-  </html>`,
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Include latest PatternFly CSS via CDN -->
+    <link 
+      rel="stylesheet" 
+      href="https://unpkg.com/@patternfly/patternfly/patternfly-base.css" 
+      crossorigin="anonymous"
+    >
+    <title>PatternFly-React ${title} CodeSandbox Example</title>
+  </head>
+<body>
+  <noscript>
+    You need to enable JavaScript to run this app.
+  </noscript>
+  <div id="root"></div>
+</body>
+</html>`,
       },
       'index.js': {
         content: `import ReactDOM from "react-dom";
-  ${code}
+${code}
 
-  const rootElement = document.getElementById("root");
-  ReactDOM.render(<${className} />, rootElement);`
+const rootElement = document.getElementById("root");
+ReactDOM.render(<${toRender} />, rootElement);`
       },
       'package.json': {
         content: {
@@ -77,6 +85,5 @@ export const getReactParams = (title, code) => {
         content: { template: 'create-react-app' }
       }
     },
-    template: 'create-react-app',
   }
 }

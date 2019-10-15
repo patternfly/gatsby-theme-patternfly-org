@@ -75,7 +75,7 @@ export default props => {
         }}
       >
         {isFullscreen
-          ? <div className="ws-preview">This preview can be accessed in <Link to={fullscreenLink}>full page mode.</Link></div>
+          ? <div className="ws-preview">This preview can be accessed in <a href={fullscreenLink} target="_blank">full page mode.</a></div>
           : <LivePreview
             id={`ws-${props.source}-${section[0]}-${component}-${slugger(title)}`}
             className={`ws-${props.source}-${section[0]}-${component} ws-preview${darkMode ? ' pf-t-dark pf-m-opaque-200' : ''}`} />}
