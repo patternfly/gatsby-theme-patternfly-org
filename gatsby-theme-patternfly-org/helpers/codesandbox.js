@@ -32,7 +32,11 @@ export const getStaticParams = (title, html) => ({
 
 // TODO: Make React examples work and use a template that has our assets.
 export const getReactParams = (title, code) => {
-  const className = /class (.*?) /.exec(code)[1];
+  let toRender = 'Example';
+  const classNameMatch = /class (.*?) /.exec(code);
+  if (classNameMatch) {
+    toRender = classNameMatch[1];
+  }
   return {
     files: {
       'index.html': {
@@ -62,7 +66,7 @@ export const getReactParams = (title, code) => {
   ${code}
 
   const rootElement = document.getElementById("root");
-  ReactDOM.render(<${className} />, rootElement);`
+  ReactDOM.render(<${toRender} />, rootElement);`
       },
       'package.json': {
         content: {
