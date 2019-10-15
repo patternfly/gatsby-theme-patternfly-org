@@ -36,7 +36,7 @@ references:
 
 workflows:
   version: 2
-  build_test_deploy:
+  install_build_deploy:
     jobs:
     - install
     - build_react:
@@ -59,7 +59,7 @@ workflows:
 jobs:
   install:
     docker:
-    - image: circleci/node:8.15
+    - image: circleci/node:10
     steps:
     - checkout
     - run:
@@ -82,7 +82,7 @@ jobs:
         key: *js_deps_cache_key
   build_react:
     docker:
-    - image: circleci/node:8.15
+    - image: circleci/node:10
     steps:
     - *attach_workspace
     - restore_cache:
@@ -106,7 +106,7 @@ jobs:
         - patternfly-org-demo/patternfly-react/packages/react-docs/public/
   build_next:
     docker:
-    - image: circleci/node:8.15
+    - image: circleci/node:10
     steps:
     - *attach_workspace
     - restore_cache:
@@ -124,7 +124,7 @@ jobs:
         - patternfly-org-demo/patternfly-next/public/
   upload_docs:
     docker:
-    - image: circleci/node:8.15
+    - image: circleci/node:10
     steps:
     - *attach_workspace
     - restore_cache:
@@ -135,7 +135,7 @@ jobs:
         command: ./circleci/upload-docs.sh
   deploy:
     docker:
-    - image: circleci/node:8.15
+    - image: circleci/node:10
     steps:
     - *attach_workspace
     - restore_cache:
