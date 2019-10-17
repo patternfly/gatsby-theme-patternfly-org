@@ -4,8 +4,7 @@ import { useMDXScope } from 'gatsby-plugin-mdx/context';
 import { transformCode } from '../helpers/transformCode';
 import './fullscreen.css';
 
-export default ({ pageContext }) => {
-  console.log('hey', pageContext, useMDXScope())
+const FullscreenMDXTemplate = ({ pageContext }) => {
   return (
     <LiveProvider
       scope={useMDXScope()}
@@ -15,3 +14,5 @@ export default ({ pageContext }) => {
     </LiveProvider>
   );
 }
+
+export default FullscreenMDXTemplate;

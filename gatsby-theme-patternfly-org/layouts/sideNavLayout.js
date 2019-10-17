@@ -13,7 +13,7 @@ import SideNav from '../components/sideNav';
 import TopNav from '../components/topNav';
 import './sideNavLayout.css';
 
-export default ({ children, location }) => {
+const SideNavLayout = ({ children, location }) => {
   const data = useStaticQuery(graphql`
   {
     site {
@@ -45,7 +45,7 @@ export default ({ children, location }) => {
         href: data.prInfo.url || '/'
       }}
       showNavToggle
-      topNav={<TopNav location={location} navItems={data.themeOptions.pluginOptions.topNavItems} />}
+      topNav={<TopNav location={location} navItems={data.themeOptions.pluginOptions.topNavItems || []} />}
     />
   );
   const SideBar = <PageSidebar nav={<SideNav context="core" location={location} />} className="ws-page-sidebar" />;
@@ -59,3 +59,5 @@ export default ({ children, location }) => {
     </Page>
   );
 }
+
+export default SideNavLayout;

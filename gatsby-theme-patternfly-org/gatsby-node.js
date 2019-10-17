@@ -32,7 +32,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     const parent = getNode(node.parent);
     const source = parent.sourceInstanceName;
 
-    let { section = 'root', title } = node.frontmatter;
+    let { section = 'root', title, propComponents = [''] } = node.frontmatter;
     createNodeField({
       node,
       name: 'source',
@@ -56,6 +56,12 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       node,
       name: 'title',
       value: title
+    });
+    // We need to populate this for the query on `fields` in createPages
+    createNodeField({
+      node,
+      name: 'propComponents',
+      value: propComponents
     });
   } else if (node.internal.type === 'File') {
     if (node.extension === 'hbs' && !node.relativePath.includes('example')) {
@@ -102,6 +108,7 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
           source
           navSection
           title
+          propComponents
         }
       }
     }
@@ -127,47 +134,50 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
     const hbsInstance = createHandlebars(result.data.partials.nodes);
     const hidden = (pluginOptions.hiddenPages || []).map(title => title.toLowerCase());
 
-    result.data.allMdx.nodes.filter(node => hidden.indexOf(node.fields.title.toLowerCase()) === -1).forEach(node => {
-      const tableOfContents = extractTableOfContents(node.mdxAST) || [];
-      const { slug, navSection, title, source } = node.fields;
+    result.data.allMdx.nodes
+      .filter(node => !hidden.includes(node.fields.title.toLowerCase()))
+      .forEach(node => {
+        const tableOfContents = extractTableOfContents(node.mdxAST) || [];
+        const { slug, navSection, title, source, propComponents = [] } = node.fields;
 
-      const examples = extractExamples(node.mdxAST, hbsInstance, path.relative(__dirname, node.fileAbsolutePath));
-      actions.createPage({
-        path: slug,
-        component: path.resolve(__dirname, `./templates/mdx.js`),
-        context: {
-          // To fetch more MDX data
-          id: node.id,
-          // For use in sideNav.js
-          navSection,
-          title,
-          // To render example HTML
-          htmlExamples: source === 'core' ? examples : undefined,
-          // To render TOC
-          tableOfContents,
-        }
-      });
+        const examples = extractExamples(node.mdxAST, hbsInstance, path.relative(__dirname, node.fileAbsolutePath));
+        actions.createPage({
+          path: slug,
+          component: path.resolve(__dirname, `./templates/mdx.js`),
+          context: {
+            // Required by template to fetch more MDX/React docgen data
+            id: node.id,
+            propComponents,
+            // For use in sideNav.js
+            navSection,
+            title,
+            // To render example HTML
+            htmlExamples: source === 'core' ? examples : undefined,
+            // To render TOC
+            tableOfContents,
+          }
+        });
 
-      // Create per-example fullscreen pages
-      Object.entries(examples).forEach(([key, example]) => {
-        if (source === 'core') {
-          actions.createPage({
-            path: `${slug}/${key}`,
-            component: path.resolve(__dirname, `./templates/fullscreenHtml.js`),
-            context: {
-              html: example
-            }
-          })
-        }
-        else if (source === 'react') {
-          actions.createPage({
-            path: `${slug}/${key}`,
-            component: path.resolve(__dirname, `./templates/fullscreenMdx.js`),
-            context: {
-              jsx: example
-            }
-          })
-        }
+        // Create per-example fullscreen pages
+        Object.entries(examples).forEach(([key, example]) => {
+          if (source === 'core') {
+            actions.createPage({
+              path: `${slug}/${key}`,
+              component: path.resolve(__dirname, `./templates/fullscreenHtml.js`),
+              context: {
+                html: example
+              }
+            })
+          }
+          else if (source === 'react') {
+            actions.createPage({
+              path: `${slug}/${key}`,
+              component: path.resolve(__dirname, `./templates/fullscreenMdx.js`),
+              context: {
+                jsx: example
+              }
+            })
+          }
+        });
       });
-    });
   });

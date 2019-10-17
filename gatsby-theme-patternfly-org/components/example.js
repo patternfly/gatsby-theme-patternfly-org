@@ -25,7 +25,7 @@ const getSupportedLanguages = className => {
 }
 
 // This component uses hooks in order to call useMDXScope()
-export default props => {
+const Example = props => {
   const html = props.html
     ? props.html
     : 'This is a hbs code block, but no html trickled down from gatsby-node.js to mdx.js to example.js';
@@ -61,7 +61,7 @@ export default props => {
   return (
     <div className="ws-example">
       <AutoLinkHeader size="h4" headingLevel="h3" className="ws-example-heading">
-        {title.replace(/-/g, ' ')}
+        {title.replace(/-/g, ' ').replace(/  /g, '-')}
       </AutoLinkHeader>
       <LiveProvider
         scope={scope}
@@ -93,3 +93,5 @@ export default props => {
     </div>
   );
 }
+
+export default Example;

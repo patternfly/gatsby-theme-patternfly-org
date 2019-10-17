@@ -2,6 +2,7 @@
 USERNAME=${CIRCLE_PROJECT_USERNAME}
 REPONAME=${CIRCLE_PROJECT_REPONAME}
 PR_NUM=${CIRCLE_PR_NUMBER}
+BRANCH=${CIRCLE_BRANCH}
 
 if [ -n "${PR_NUM}" ] # If build is a PR
 then
@@ -10,8 +11,10 @@ then
   # So, just replace "/" or "." with "-"
   DEPLOY_SUBDOMAIN=`echo "${REPONAME}-pr-$PR_NUM" | tr '[\/|\.]' '-' | cut -c1-253`
   ALREADY_DEPLOYED=`npx surge list | grep ${DEPLOY_SUBDOMAIN}`
-else
+elif [ "${BRANCH}" = "master" ]
   DEPLOY_SUBDOMAIN=${REPONAME}
+else
+  DEPLOY_SUBDOMAIN=`echo "${REPONAME}-pr-${BRANCH}" | tr '[\/|\.]' '-' | cut -c1-253`
 fi
 
 DEPLOY_DOMAIN_NEXT="https://${DEPLOY_SUBDOMAIN}-next.surge.sh"

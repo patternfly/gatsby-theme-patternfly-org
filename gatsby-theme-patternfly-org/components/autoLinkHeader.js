@@ -14,7 +14,7 @@ const sizes = {
   h6: 'sm'
 }
 
-export default ({
+const AutoLinkHeader = ({
   id,
   idSuffix = '',
   size,
@@ -33,3 +33,5 @@ export default ({
     </Title>
   )
 };
+
+export default AutoLinkHeader;
