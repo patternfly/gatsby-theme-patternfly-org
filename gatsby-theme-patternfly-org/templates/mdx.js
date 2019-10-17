@@ -7,6 +7,7 @@ import SideNavLayout from '../layouts/sideNavLayout';
 import AutoLinkHeader from '../components/autoLinkHeader';
 import Example from '../components/example';
 import CSSVariables from '../components/cssVariables';
+import PropsTable from '../components/propsTable';
 import { getId } from '../helpers/getId';
 import { commonComponents } from '../helpers/commonComponents';
 import './mdx.css';
@@ -28,9 +29,21 @@ const getWarning = state => {
 }
 
 export default ({ data, location, pageContext }) => {
-  const { title, cssPrefix, hideTOC, experimentalStage, optIn } = data.mdx.frontmatter;
+  const { title, cssPrefix, hideTOC, experimentalStage, optIn, propComponents, hideDarkMode } = data.mdx.frontmatter;
   const { source } = data.mdx.fields;
   const sourceName = source === 'core' ? 'HTML' : 'React';
+  const props = data.props && data.props.nodes && propComponents
+    ? propComponents
+      .map(name => {
+        const propTable = data.props.nodes.find(node => node.name === name);
+        if (!propTable) {
+          console.warn(`PropComponent ${name} specified in frontmatter, but not found at runtime.`);
+        }
+        
+        return propTable;
+      })
+      .filter(Boolean)
+    : undefined;
 
   return (
     <SideNavLayout location={location}>
@@ -64,6 +77,11 @@ export default ({ data, location, pageContext }) => {
               {heading}
             </a>
           ))}
+          {props && (
+            <a href="#props" className="ws-toc">
+              Props
+            </a>
+          )}
           {cssPrefix && (
             <a href="#css-variables" className="ws-toc">
               CSS Variables
@@ -78,7 +96,8 @@ export default ({ data, location, pageContext }) => {
             <Example
               location={location}
               source={source}
-              html={props.title && pageContext.htmlExamples && pageContext.htmlExamples[getId(props.title) ]}
+              html={props.title && pageContext.htmlExamples && pageContext.htmlExamples[getId(props.title)]}
+              hideDarkMode={hideDarkMode}
               {...props} />,
           ...commonComponents
         }}>
@@ -87,6 +106,18 @@ export default ({ data, location, pageContext }) => {
           </MDXRenderer>
         </MDXProvider>
       </PageSection>
+
+      {props && (
+        <PageSection className="ws-section">
+          <AutoLinkHeader size="h2" id="props" className="ws-title">Props</AutoLinkHeader>
+          {props.map(component => (
+            <React.Fragment key={component.name}>
+              {component.description}
+              <PropsTable caption={`${component.name} properties`} propList={component.props} />
+            </React.Fragment>
+          ))}
+        </PageSection>
+      )}
 
       {cssPrefix && (
         <PageSection className="ws-section">
@@ -99,7 +130,7 @@ export default ({ data, location, pageContext }) => {
 }
 
 export const pageQuery = graphql`
-  query($id: String!) {
+  query MdxDocsPage($id: String!, $propComponents: [String]!) {
     mdx(id: { eq: $id }) {
       body
       frontmatter {
@@ -108,6 +139,8 @@ export const pageQuery = graphql`
         hideTOC
         optIn
         experimentalStage
+        propComponents
+        hideDarkMode
       }
       fields {
         source
@@ -118,6 +151,26 @@ export const pageQuery = graphql`
         fields {
           name
           partial
+        }
+      }
+    }
+    props: allComponentMetadata(filter: { name: { in: $propComponents, ne: null } }) {
+      nodes {
+        name
+        props {
+          name
+          description
+          required
+          type {
+            name
+          }
+          tsType {
+            name
+            raw
+          }
+          defaultValue {
+            value
+          }
         }
       }
     }

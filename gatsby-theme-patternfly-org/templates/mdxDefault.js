@@ -5,7 +5,7 @@ import SideNavLayout from '../layouts/sideNavLayout';
 import { commonComponents } from '../helpers/commonComponents';
 import './mdx.css';
 
-export default ({ children, location }) => {
+const MDXDefaultTemplate = ({ children, location }) => {
   return (
     <SideNavLayout location={location}>
       <PageSection className="ws-section">
@@ -16,3 +16,5 @@ export default ({ children, location }) => {
     </SideNavLayout>
   );
 }
+
+export default MDXDefaultTemplate;

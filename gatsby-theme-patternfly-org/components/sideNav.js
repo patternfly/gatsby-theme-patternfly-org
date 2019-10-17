@@ -4,7 +4,7 @@ import { Nav, NavList, NavExpandable, NavItem } from '@patternfly/react-core';
 import { capitalize } from '../helpers/capitalize';
 import { removeTrailingSlash } from '../helpers/removeTrailingSlash';
 
-export default ({ location }) => {
+const SideNav = ({ location }) => {
   const data = useStaticQuery(graphql`
   {
     allSitePage(filter: { context: { navSection: { ne: null } } },
@@ -40,7 +40,7 @@ export default ({ location }) => {
   }, {});
 
   return (
-    <Nav aria-label="SideNav">
+    <Nav aria-label="Side Nav">
       <NavList>
         {data.sitePlugin.pluginOptions.sideNavItems.map(({ section, text, link }) => {
           if (section && allPages[section]) {
@@ -70,3 +70,5 @@ export default ({ location }) => {
     </Nav>
   )
 }
+
+export default SideNav;

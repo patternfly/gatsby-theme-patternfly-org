@@ -25,14 +25,14 @@ const getSupportedLanguages = className => {
 }
 
 // This component uses hooks in order to call useMDXScope()
-export default props => {
+const Example = props => {
   const html = props.html
     ? props.html
     : 'This is a hbs code block, but no html trickled down from gatsby-node.js to mdx.js to example.js';
   const supportedLangs = getSupportedLanguages(props.className);
   const initialLang = supportedLangs[0];
   const initialCode = props.children.toString();
-  const { noLive, title = 'no title', isFullscreen = false, location, children } = props;
+  const { noLive, title = 'no title', isFullscreen = false, location, hideDarkMode, children } = props;
 
   // https://reactjs.org/docs/hooks-overview.html#state-hook
   const [editorCode, setEditorCode] = React.useState(initialLang === 'html' ? html : initialCode);
@@ -61,7 +61,7 @@ export default props => {
   return (
     <div className="ws-example">
       <AutoLinkHeader size="h4" headingLevel="h3" className="ws-example-heading">
-        {title.replace(/-/g, ' ')}
+        {title.replace(/-/g, ' ').replace(/  /g, '-')}
       </AutoLinkHeader>
       <LiveProvider
         scope={scope}
@@ -84,6 +84,7 @@ export default props => {
           supportedLangs={supportedLangs}
           onLanguageChange={onLanguageChange}
           onDarkmodeChange={() => setDarkMode(!darkMode)}
+          hideDarkMode={hideDarkMode}
           isFullscreen={isFullscreen}
           fullscreenLink={fullscreenLink}
           code={editorCode}
@@ -93,3 +94,5 @@ export default props => {
     </div>
   );
 }
+
+export default Example;
