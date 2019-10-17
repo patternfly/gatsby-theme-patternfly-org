@@ -29,7 +29,7 @@ const getWarning = state => {
 }
 
 export default ({ data, location, pageContext }) => {
-  const { title, cssPrefix, hideTOC, experimentalStage, optIn, propComponents } = data.mdx.frontmatter;
+  const { title, cssPrefix, hideTOC, experimentalStage, optIn, propComponents, hideDarkMode } = data.mdx.frontmatter;
   const { source } = data.mdx.fields;
   const sourceName = source === 'core' ? 'HTML' : 'React';
   const props = data.props && data.props.nodes && propComponents
@@ -97,6 +97,7 @@ export default ({ data, location, pageContext }) => {
               location={location}
               source={source}
               html={props.title && pageContext.htmlExamples && pageContext.htmlExamples[getId(props.title)]}
+              hideDarkMode={hideDarkMode}
               {...props} />,
           ...commonComponents
         }}>
@@ -139,6 +140,7 @@ export const pageQuery = graphql`
         optIn
         experimentalStage
         propComponents
+        hideDarkMode
       }
       fields {
         source

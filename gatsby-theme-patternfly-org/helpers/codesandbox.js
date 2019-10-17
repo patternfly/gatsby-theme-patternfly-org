@@ -75,7 +75,15 @@ ReactDOM.render(<${toRender} />, rootElement);`
       'package.json': {
         content: {
           dependencies: {
+            '@patternfly/react-charts': 'latest',
             '@patternfly/react-core': 'latest',
+            '@patternfly/react-inline-edit-extension': 'latest',
+            '@patternfly/react-styles': 'latest',
+            '@patternfly/react-table': 'latest',
+            '@patternfly/react-tokens': 'latest',
+            '@patternfly/react-toplogy': 'latest',
+            '@patternfly/react-virtualized-extension': 'latest',
+            '@patternfly/react-icons': 'latest',
             'react': '16.9.0',
             'react-dom': '16.9.0'
           }
