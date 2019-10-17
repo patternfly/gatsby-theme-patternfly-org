@@ -5,7 +5,7 @@ import './topNav.css';
 
 const TopNav = ({ location, navItems }) => (
   <Nav aria-label="Nav">
-    <NavList variant={'horizontal'}>
+    <NavList variant={'horizontal'} className="topNav">
       {navItems.map(item => (
         <NavItem key={item.link} isActive={location.pathname.includes(item.link)}>
           <Link to={item.link}>{item.text}</Link>
