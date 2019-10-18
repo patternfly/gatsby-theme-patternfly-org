@@ -10,9 +10,9 @@
     "develop": "gatsby develop -p 8001"
   },
   "dependencies": {
-    "gatsby": "~2.15.14",
+    "gatsby": "^2.16.4",
     "gatsby-source-filesystem": "^2.1.22",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0"
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
   }
 }

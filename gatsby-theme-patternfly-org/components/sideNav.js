@@ -2,7 +2,7 @@ import React from 'react';
 import { graphql, useStaticQuery, Link } from 'gatsby';
 import { Nav, NavList, NavExpandable, NavItem } from '@patternfly/react-core';
 import { capitalize } from '../helpers/capitalize';
-import { removeTrailingSlash } from '../helpers/removeTrailingSlash';
+import { slugger } from '../helpers/slugger';
 
 const SideNav = ({ location }) => {
   const data = useStaticQuery(graphql`
@@ -48,22 +48,26 @@ const SideNav = ({ location }) => {
               <NavExpandable
                 key={section}
                 title={capitalize(section)}
-                isActive={location.pathname.includes(`/${section}/`)}
-                isExpanded={location.pathname.includes(`/${section}/`)}
+                isActive={location.pathname.includes(`/${slugger(section)}/`)}
+                isExpanded={location.pathname.includes(`/${slugger(section)}/`)}
               >
                 {allPages[section].map(node => (
-                  <NavItem key={node.path} isActive={removeTrailingSlash(location.pathname) === node.path}>
-                    <Link to={node.path}>{node.text}</Link>
-                  </NavItem>
+                  <li key={node.path} className="pf-c-nav__item">
+                    <Link to={node.path} className="pf-c-nav__link" activeClassName="pf-m-active">
+                      {node.text}
+                    </Link>
+                  </li>
                 ))}
               </NavExpandable>
             );
           }
 
           return (
-            <NavItem key={link} isActive={removeTrailingSlash(location.pathname) === link}>
-              <Link to={link}>{text}</Link>
-            </NavItem>
+            <li key={link} className="pf-c-nav__item">
+              <Link to={link} className="pf-c-nav__link" activeClassName="pf-m-active">
+                {text}
+              </Link>
+            </li>
           );
         })}
       </NavList>

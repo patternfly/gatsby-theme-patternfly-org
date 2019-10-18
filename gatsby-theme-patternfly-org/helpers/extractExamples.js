@@ -8,7 +8,17 @@ module.exports = {
     const examples = {};
 
     visit(mdxAST, 'code', node => {
-      const id = node.meta ? getId(node.meta.match(/title=(\S*)/)[1]) : 'no-id';
+      let id = 'no-id';
+      if (node.meta) {
+        if (node.meta.includes('noLive')) {
+          // Don't create fullscreen pages for non-live code
+          return;
+        }
+        const match = node.meta.match(/title=(\S*)/);
+        if (match) {
+          id = getId(match[1]);
+        }
+      }
       if (node.lang === 'hbs') {
         try {
           const html = hbsInstance.compile(node.value)({});

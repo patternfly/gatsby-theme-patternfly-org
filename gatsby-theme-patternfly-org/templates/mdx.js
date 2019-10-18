@@ -9,6 +9,7 @@ import Example from '../components/example';
 import CSSVariables from '../components/cssVariables';
 import PropsTable from '../components/propsTable';
 import { getId } from '../helpers/getId';
+import { slugger } from '../helpers/slugger';
 import { commonComponents } from '../helpers/commonComponents';
 import './mdx.css';
 
@@ -30,7 +31,7 @@ const getWarning = state => {
 
 export default ({ data, location, pageContext }) => {
   const { title, cssPrefix, hideTOC, experimentalStage, optIn, propComponents, hideDarkMode } = data.mdx.frontmatter;
-  const { source } = data.mdx.fields;
+  const { source, componentName, navSection } = data.mdx.fields;
   const sourceName = source === 'core' ? 'HTML' : 'React';
   const props = data.props && data.props.nodes && propComponents
     ? propComponents
@@ -44,6 +45,7 @@ export default ({ data, location, pageContext }) => {
       })
       .filter(Boolean)
     : undefined;
+
 
   return (
     <SideNavLayout location={location}>
@@ -73,7 +75,7 @@ export default ({ data, location, pageContext }) => {
             </Alert>
           )}
           {pageContext.tableOfContents.map(heading => (
-            <a key={heading} href={`#${heading.toLowerCase()}`} className="ws-toc">
+            <a key={heading} href={`#${slugger(heading)}`} className="ws-toc">
               {heading}
             </a>
           ))}
@@ -98,6 +100,8 @@ export default ({ data, location, pageContext }) => {
               source={source}
               html={props.title && pageContext.htmlExamples && pageContext.htmlExamples[getId(props.title)]}
               hideDarkMode={hideDarkMode}
+              navSection={navSection}
+              componentName={componentName}
               {...props} />,
           ...commonComponents
         }}>
@@ -144,6 +148,8 @@ export const pageQuery = graphql`
       }
       fields {
         source
+        navSection
+        componentName
       }
     }
     partials: allFile(filter: { fields: { name: { ne: null } } }) {
