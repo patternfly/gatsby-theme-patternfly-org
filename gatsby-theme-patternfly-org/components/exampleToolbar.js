@@ -72,9 +72,9 @@ export default class ExampleToolbar extends React.Component {
                 ? <svg
                   xmlns="http://www.w3.org/2000/svg"
                   xmlnsXlink="http://www.w3.org/1999/xlink"
-                  ariaHidden="true"
+                  aria-hidden="true"
                   focusable="false"
-                  preserveAspectRatio="xMidYMid meet"
+                  preserve-aspect-ratio="xMidYMid meet"
                   style={{ verticalAlign: 'middle' }}
                   width="2.5em"
                   height="1em" 

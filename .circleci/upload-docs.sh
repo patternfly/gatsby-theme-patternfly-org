@@ -12,6 +12,7 @@ then
   DEPLOY_SUBDOMAIN=`echo "${REPONAME}-pr-$PR_NUM" | tr '[\/|\.]' '-' | cut -c1-253`
   ALREADY_DEPLOYED=`npx surge list | grep ${DEPLOY_SUBDOMAIN}`
 elif [ "${BRANCH}" = "master" ]
+then
   DEPLOY_SUBDOMAIN=${REPONAME}
 else
   DEPLOY_SUBDOMAIN=`echo "${REPONAME}-pr-${BRANCH}" | tr '[\/|\.]' '-' | cut -c1-253`

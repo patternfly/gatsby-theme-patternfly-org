@@ -49,12 +49,6 @@ export const getReactParams = (title, code) => {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- Include latest PatternFly CSS via CDN -->
-    <link 
-      rel="stylesheet" 
-      href="https://unpkg.com/@patternfly/patternfly/patternfly-base.css" 
-      crossorigin="anonymous"
-    >
     <title>PatternFly-React ${title} CodeSandbox Example</title>
   </head>
 <body>
@@ -66,7 +60,9 @@ export const getReactParams = (title, code) => {
 </html>`,
       },
       'index.js': {
-        content: `import ReactDOM from "react-dom";
+        content: `import ReactDOM from 'react-dom';
+import "@patternfly/react-core/dist/styles/base.css";
+
 ${code}
 
 const rootElement = document.getElementById("root");
@@ -81,11 +77,11 @@ ReactDOM.render(<${toRender} />, rootElement);`
             '@patternfly/react-styles': 'latest',
             '@patternfly/react-table': 'latest',
             '@patternfly/react-tokens': 'latest',
-            '@patternfly/react-toplogy': 'latest',
+            '@patternfly/react-topology': 'latest',
             '@patternfly/react-virtualized-extension': 'latest',
             '@patternfly/react-icons': 'latest',
-            'react': '16.9.0',
-            'react-dom': '16.9.0'
+            'react': '^16.8.0',
+            'react-dom': '^16.8.0'
           }
         },
       },

@@ -16,13 +16,12 @@ const sizes = {
 
 const AutoLinkHeader = ({
   id,
-  idSuffix = '',
   size,
   headingLevel,
   children,
   ...props
 }) => {
-  const slug = `${slugger(children)}${idSuffix}`;
+  const slug = slugger(children);
 
   return (
     <Title id={slug} size={sizes[size]} headingLevel={headingLevel || size} {...props}>

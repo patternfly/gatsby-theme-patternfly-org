@@ -3,18 +3,17 @@ const fs = require('fs');
 const { extractExamples } = require('./helpers/extractExamples');
 const { extractTableOfContents } = require('./helpers/extractTableOfContents');
 const { createHandlebars } = require('./helpers/createHandlebars');
+const { slugger } = require('./helpers/slugger');
 
 // Add map PR-related environment variables to gatsby nodes
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   const num = process.env.CIRCLE_PR_NUMBER || process.env.PR_NUMBER;
   const url = process.env.CIRCLE_PULL_REQUEST;
-  const lastTag = 'latest';
   // Docs https://www.gatsbyjs.org/docs/actions/#createNode
   actions.createNode({
     name: 'PR_INFO',
     num: num || '',
     url: url || '',
-    lastTag: lastTag || '',
     id: createNodeId('PR_INFO'),
     parent: null,
     children: [],
@@ -31,6 +30,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     // Source comes from gatsby-source-filesystem definition in gatsby-config.js
     const parent = getNode(node.parent);
     const source = parent.sourceInstanceName;
+    const componentName = path.basename(node.fileAbsolutePath, '.md');
 
     let { section = 'root', title, propComponents = [''] } = node.frontmatter;
     createNodeField({
@@ -44,13 +44,18 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       value: `/documentation/${source}${
       section === 'root'
         ? ''
-        : `/${section}`
-      }/${path.basename(node.fileAbsolutePath, '.md')}`.toLowerCase()
+        : `/${slugger(section)}`
+      }/${slugger(componentName)}`.toLowerCase()
     });
     createNodeField({
       node,
       name: 'navSection',
       value: section.toLowerCase()
+    });
+    createNodeField({
+      node,
+      name: 'componentName',
+      value: componentName.toLowerCase()
     });
     createNodeField({
       node,

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'gatsby';
 import { LiveProvider, LiveEditor, LivePreview, LiveError } from 'react-live';
 import { useMDXScope } from 'gatsby-plugin-mdx/context';
 import ExampleToolbar from './exampleToolbar';
@@ -9,8 +8,8 @@ import 'prismjs/themes/prism-coy.css';
 import { slugger } from '../helpers/slugger';
 import './example.css';
 import { transformCode } from '../helpers/transformCode';
-import { removeTrailingSlash } from '../helpers/removeTrailingSlash';
 import { getStaticParams, getReactParams } from '../helpers/codesandbox';
+import Prism from 'prismjs';
 
 const getSupportedLanguages = className => {
   if (typeof className === 'string') {
@@ -32,7 +31,7 @@ const Example = props => {
   const supportedLangs = getSupportedLanguages(props.className);
   const initialLang = supportedLangs[0];
   const initialCode = props.children.toString();
-  const { noLive, title = 'no title', isFullscreen = false, location, hideDarkMode, children } = props;
+  const { noLive, title = 'no title', isFullscreen = false, location, hideDarkMode, children, navSection, componentName } = props;
 
   // https://reactjs.org/docs/hooks-overview.html#state-hook
   const [editorCode, setEditorCode] = React.useState(initialLang === 'html' ? html : initialCode);
@@ -45,14 +44,15 @@ const Example = props => {
   }
 
   if (editorLang === 'unknown') {
+     // Inline code
     return <code className="ws-code">{children}</code>;
+  } else if (noLive) {
+    // Code block
+    const html = Prism.highlight(children, Prism.languages.javascript, 'javascript');
+    return <pre dangerouslySetInnerHTML={{ __html: html }} />;
   }
   const fullscreenLink = `${location.pathname}/${title.toLowerCase()}`;
   const scope = useMDXScope();
-  // /documentation/core/{components,layouts,utilities,experimental}
-  const split = removeTrailingSlash(location.pathname).split('/');
-  const section = split[3];
-  const component = split.pop();
   const codeBoxParams = getParameters(
     props.html
     ? getStaticParams(props.title, html)
@@ -67,7 +67,7 @@ const Example = props => {
         scope={scope}
         code={editorCode}
         transformCode={code => transformCode(code, editorLang, html)}
-        disabled={noLive || isFullscreen || editorLang === 'hbs'}
+        disabled={isFullscreen || editorLang === 'hbs'}
         theme={{
           /* disable theme so we can use the global one imported in gatsby-browser.js */
           plain: {},
@@ -77,8 +77,8 @@ const Example = props => {
         {isFullscreen
           ? <div className="ws-preview">This preview can be accessed in <a href={fullscreenLink} target="_blank">full page mode.</a></div>
           : <LivePreview
-            id={`ws-${props.source}-${section[0]}-${component}-${slugger(title)}`}
-            className={`ws-${props.source}-${section[0]}-${component} ws-preview${darkMode ? ' pf-t-dark pf-m-opaque-200' : ''}`} />}
+            id={`ws-${props.source}-${navSection[0]}-${componentName}-${slugger(title)}`}
+            className={`ws-${props.source}-${navSection[0]}-${componentName} ws-preview${darkMode ? ' pf-t-dark pf-m-opaque-200' : ''}`} />}
         <ExampleToolbar
           editor={<LiveEditor className="ws-editor"/>}
           supportedLangs={supportedLangs}
@@ -89,7 +89,7 @@ const Example = props => {
           fullscreenLink={fullscreenLink}
           code={editorCode}
           codeSandboxLink={`https://codesandbox.io/api/v1/sandboxes/define?parameters=${codeBoxParams}`} />
-        {!noLive && <LiveError />}
+        <LiveError />
       </LiveProvider>
     </div>
   );
