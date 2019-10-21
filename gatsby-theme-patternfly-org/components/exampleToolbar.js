@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, TextContent, Text } from '@patternfly/react-core';
+import { Button, Form, TextContent, Text } from '@patternfly/react-core';
 import { CopyIcon, AsleepIcon, ExternalLinkAltIcon, CodepenIcon } from '@patternfly/react-icons';
 
 export default class ExampleToolbar extends React.Component {
@@ -55,7 +55,7 @@ export default class ExampleToolbar extends React.Component {
   }
 
   render() {
-    const { editor, fullscreenLink, codeSandboxLink, supportedLangs, onDarkmodeChange, isFullscreen, hideDarkMode } = this.props;
+    const { editor, fullscreenLink, codeBoxParams, supportedLangs, onDarkmodeChange, isFullscreen, hideDarkMode } = this.props;
     const { codeOpen, showCopyMessage } = this.state;
     return (
       <React.Fragment>
@@ -104,20 +104,22 @@ export default class ExampleToolbar extends React.Component {
               <AsleepIcon />
             </Button>
           }
-          {/* TODO: Make this a POST request in a form so we can send more than 2k characters */}
-          {/* https://codesandbox.io/docs/importing#define-api */}
-          {codeSandboxLink &&
-            <Button
-              component="a"
-              href={codeSandboxLink} 
-              target="_blank"
-              rel="noopener noreferrer"
-              variant="plain"
-              title="Open in CodeSandbox"
+          {codeBoxParams &&
+            <Form
               aria-label="Open in CodeSandbox"
+              action="https://codesandbox.io/api/v1/sandboxes/define"
+              method="POST"
+              target="_blank"
+              style={{display: "inline-block"}}
             >
-              <CodepenIcon />
-            </Button>
+              <Button
+                variant="plain"
+                type="submit"
+              >
+                <input type="hidden" name="parameters" value={codeBoxParams} />
+                <CodepenIcon />
+              </Button>
+            </Form>
           }
           {fullscreenLink &&
             <Button

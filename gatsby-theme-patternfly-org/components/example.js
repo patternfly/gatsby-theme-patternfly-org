@@ -88,7 +88,7 @@ const Example = props => {
           isFullscreen={isFullscreen}
           fullscreenLink={fullscreenLink}
           code={editorCode}
-          codeSandboxLink={`https://codesandbox.io/api/v1/sandboxes/define?parameters=${codeBoxParams}`} />
+          codeBoxParams={codeBoxParams} />
         <LiveError />
       </LiveProvider>
     </div>
