@@ -1,6 +1,3 @@
----
-path: "/contribute/developers"
----
 # Development contributions
 
 ## Ways to contribute

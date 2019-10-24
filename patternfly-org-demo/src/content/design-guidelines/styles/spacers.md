@@ -1,6 +1,3 @@
----
-path: "/design-guidelines/styles/spacers"
----
 import { Link } from 'gatsby';
 
 # Spacers

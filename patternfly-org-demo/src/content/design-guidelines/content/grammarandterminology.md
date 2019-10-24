@@ -1,6 +1,3 @@
----
-path: "/design-guidelines/content/grammar-and-terminology"
----
 # Style guide
 
 [Common terminology](#common-terminology)

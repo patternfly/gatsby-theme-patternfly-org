@@ -1,26 +1,18 @@
----
-path: "/design-guidelines/styles/typography"
----
 import { Button, Grid, GridItem, Alert } from '@patternfly/react-core';
 import { CheckCircleIcon, TimesCircleIcon } from '@patternfly/react-icons';
 import { styles, TypographyGrid, LineHeightTitle, SpacingContentItem, Spacer, FirstLevelTitle, SecondLevelTitle, ThirdLevelTitle, FourthLevelTitle, BodyText, SmallText, TinyText } from '@content/typography';
 import correct from './typography_correct_spacing.png';
 import incorrect from './typography_incorrect_spacing.png';
 import { Link } from 'gatsby';
-import ShadowDomPreview from '@content/../ShadowDomPreview';
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core';
 
 # Typography
 
-<ShadowDomPreview isReact>
-  <Alert
-    variant="info"
-    title="Opt-in feature"
-    class="pf-u-my-md"
-    isInline
-  >In a future breaking-change release, the font will default to the Red Hat font. You can opt-in and update to use the Red Hat font now by wrapping your application with the ".pf-m-redhat-font" class. For more information visit the <Link to="/documentation/react/red-hat-font">Red Hat font</Link> page.</Alert>
-</ShadowDomPreview>
+<Alert
+  variant="info"
+  title="Opt-in feature"
+  class="pf-u-my-md"
+  isInline
+>In a future breaking-change release, the font will default to the Red Hat font. You can opt-in and update to use the Red Hat font now by wrapping your application with the ".pf-m-redhat-font" class. For more information visit the <Link to="/documentation/react/red-hat-font">Red Hat font</Link> page.</Alert>
 
 ## Our font family
 We use Red Hat Display and Red Hat Text.

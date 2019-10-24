@@ -1,6 +1,3 @@
----
-path: "/documentation/core/overview/red-hat-font/"
----
 # Red Hat font in PatternFly
 
 PR - [https://github.com/patternfly/patternfly-next/pull/1813](https://github.com/patternfly/patternfly-next/pull/1813)

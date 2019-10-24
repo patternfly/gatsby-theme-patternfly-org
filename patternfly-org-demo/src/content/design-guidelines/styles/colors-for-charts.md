@@ -1,6 +1,3 @@
----
-path: "/design-guidelines/styles/chart-colors"
----
 import theSystem from './thesystem.gif';
 import oneFamily from './onefamily.gif';
 import { Alert, Gallery, GalleryItem, Grid, GridItem } from '@patternfly/react-core';

@@ -1,6 +1,3 @@
----
-path: "/design-guidelines/content/writing"
----
 # Writing for user experience
 
 The words we use in our products are just as important as the components or layouts. The right words can drive better design decisions and guide users to succeed.

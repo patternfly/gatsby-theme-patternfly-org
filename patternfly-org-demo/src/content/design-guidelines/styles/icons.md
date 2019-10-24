@@ -1,6 +1,3 @@
----
-path: "/design-guidelines/styles/icons"
----
 import { Button, Grid, GridItem } from '@patternfly/react-core';
 import { CheckCircleIcon, TimesCircleIcon } from '@patternfly/react-icons';
 import Icons from '@content/icons';

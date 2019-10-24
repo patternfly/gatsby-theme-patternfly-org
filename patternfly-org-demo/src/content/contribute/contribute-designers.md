@@ -1,6 +1,3 @@
----
-path: "/contribute/designers"
----
 # Design contributions
 
 ## Ways to contribute
