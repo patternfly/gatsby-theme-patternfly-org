@@ -24,12 +24,25 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   });
 };
 
+const makeSlug = (source, relativePath, section, componentName) => {
+  if (source.includes('pages-')) {
+    return relativePath.replace(/\..*?$/, '').replace('index', '/');
+  }
+
+  let midSection = section === 'root'
+    ? ''
+    : `/${slugger(section)}`;
+
+  return `/documentation/${source}${midSection}/${slugger(componentName)}`;
+}
+
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions;
   if (node.internal.type === 'Mdx') {
     // Source comes from gatsby-source-filesystem definition in gatsby-config.js
     const parent = getNode(node.parent);
     const source = parent.sourceInstanceName;
+    const relativePath = parent.relativePath;
     const componentName = path.basename(node.fileAbsolutePath, '.md');
 
     let { section = 'root', title, propComponents = [''] } = node.frontmatter;
@@ -41,11 +54,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     createNodeField({
       node,
       name: 'slug',
-      value: `/documentation/${source}${
-      section === 'root'
-        ? ''
-        : `/${slugger(section)}`
-      }/${slugger(componentName)}`.toLowerCase()
+      value: makeSlug(source, relativePath, section, componentName).toLowerCase()
     });
     createNodeField({
       node,
@@ -71,22 +80,36 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   } else if (node.internal.type === 'File') {
     if (node.extension === 'hbs' && !node.relativePath.includes('example')) {
       const partial = fs.readFileSync(node.absolutePath, 'utf8');
-      // Exclude empty partials, they bug out 
-      if (partial) {
-        createNodeField({
-          node,
-          name: 'name',
-          value: path.basename(node.absolutePath, '.hbs')
-        });
-        createNodeField({
-          node,
-          name: 'partial',
-          value: partial
-        });
-      }
+
+      createNodeField({
+        node,
+        name: 'name',
+        value: path.basename(node.absolutePath, '.hbs')
+      });
+      createNodeField({
+        node,
+        name: 'partial',
+        value: partial
+      });
+    } else if (node.extension === 'js' && node.sourceInstanceName.includes('pages-')) {
+      createNodeField({
+        node,
+        name: 'slug',
+        value: makeSlug(node.sourceInstanceName, node.relativePath)
+      });
+      createNodeField({
+        node,
+        name: 'source',
+        value: node.sourceInstanceName
+      });
+      // Add dummy field for no errors on `.filter(node => !hidden.includes(node.fields.title.toLowerCase()))`
+      createNodeField({
+        node,
+        name: 'title',
+        value: ''
+      });
     } else {
-      // Add a null field so React's docs don't crash on the GraphQL for
-      // patternfly-next like allFile(filter: { fields: { name: { ne: "" } } })
+      // This is just to add to the schema so GraphQL queries don't fail
       createNodeField({
         node,
         name: 'name',
@@ -95,6 +118,21 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       createNodeField({
         node,
         name: 'partial',
+        value: ''
+      });
+      createNodeField({
+        node,
+        name: 'source',
+        value: ''
+      });
+      createNodeField({
+        node,
+        name: 'slug',
+        value: ''
+      });
+      createNodeField({
+        node,
+        name: 'title',
         value: ''
       });
     }
@@ -117,7 +155,17 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
         }
       }
     }
-    partials: allFile(filter: { fields: { name: { ne: "" } } }) {
+    pages: allFile(filter: { fields: { slug: { nin: ["", null] } } }) {
+      nodes {
+        absolutePath
+        fields {
+          slug
+          source
+          title
+        }
+      }
+    }
+    partials: allFile(filter: { fields: { name: { nin: ["", null] } } }) {
       nodes {
         fields {
           name
@@ -132,34 +180,43 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
     }
     // Create a global CSS Variable page
     actions.createPage({
-      path: '/documentation/global-css-variables',
+      path: '/documentation/overview/global-css-variables',
       component: path.resolve(__dirname, `./pages/globalCSSVariables.js`),
+      context: {
+        navSection: 'overview',
+        title: 'Global CSS variables',
+        source: 'shared'
+      }
     });
 
     const hbsInstance = createHandlebars(result.data.partials.nodes);
     const hidden = (pluginOptions.hiddenPages || []).map(title => title.toLowerCase());
 
     result.data.allMdx.nodes
+      .concat(result.data.pages.nodes)
       .filter(node => !hidden.includes(node.fields.title.toLowerCase()))
       .forEach(node => {
-        const tableOfContents = extractTableOfContents(node.mdxAST) || [];
-        const { slug, navSection, title, source, propComponents = [] } = node.fields;
-
-        const examples = extractExamples(node.mdxAST, hbsInstance, path.relative(__dirname, node.fileAbsolutePath));
+        const { slug, navSection = null, title, source, propComponents = [] } = node.fields;
+        const fileRelativePath = path.relative(__dirname, node.absolutePath || node.fileAbsolutePath);
+        const tableOfContents = extractTableOfContents(node.mdxAST);
+        const examples = extractExamples(node.mdxAST, hbsInstance, fileRelativePath);
+        
         actions.createPage({
           path: slug,
-          component: path.resolve(__dirname, `./templates/mdx.js`),
+          component: node.absolutePath || path.resolve(__dirname, `./templates/mdx.js`),
           context: {
             // Required by template to fetch more MDX/React docgen data
             id: node.id,
             propComponents,
-            // For use in sideNav.js
+            // For TOC
+            tableOfContents,
+            // For sideNav and Example.js (for className)
             navSection,
+            // For TOC and Example.js
             title,
+            source,
             // To render example HTML
             htmlExamples: source === 'core' ? examples : undefined,
-            // To render TOC
-            tableOfContents,
           }
         });
 
@@ -186,3 +243,33 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
         });
       });
   });
+
+// https://www.gatsbyjs.org/docs/schema-customization/
+exports.createSchemaCustomization = ({ actions }) => {
+  // Define types for sideNav if core, react, or org aren't included
+  const sideNavTypeDefs = `
+    type SideNavItem {
+      section: String
+      text: String
+      path: String
+    }
+    type SideNav {
+      core: [SideNavItem]
+      react: [SideNavItem]
+      design: [SideNavItem]
+    }
+    type TopNavItem {
+      text: String
+      path: String
+      context: String
+    }
+    type SitePluginOptions {
+      sideNav: SideNav
+      topNavItems: [TopNavItem]
+    }
+    type SitePlugin implements Node @infer {
+      pluginOptions: SitePluginOptions
+    }
+  `;
+  actions.createTypes(sideNavTypeDefs);
+}

@@ -10,37 +10,59 @@ module.exports = {
     {
       resolve: `gatsby-theme-patternfly-org`,
       options: {
-        sideNavItems: [
-          { section: 'components' },
-          { section: 'layouts' },
-          { section: 'utilities' },
-          { section: 'demos' },
-          { section: 'experimental' },
-        ],
+        context: 'org',
+        hiddenPages: ['withOuia'], // By title
+        sideNav: {
+          core: [
+            { section: 'overview' },
+            { section: 'components' },
+            { section: 'layouts' },
+            { section: 'utilities' },
+            { section: 'demos' },
+            { section: 'experimental' },
+          ],
+          react: [
+            { section: 'overview' },
+            { section: 'charts' },
+            { section: 'components' },
+            { section: 'demos' },
+            { section: 'experimental' },
+            { section: 'inline table' },
+            { section: 'layouts' },
+            { section: 'virtual scroll' },
+          ],
+        },
         topNavItems: [
           {
             text: 'Get started',
-            link: '/get-started/about'
+            path: '/get-started/about'
           },
           {
             text: 'Design guidelines',
-            link: '/design-guidelines/styles/colors'
+            path: '/design-guidelines/styles/colors'
           },
           {
-            text: 'Documentation',
-            link: '/documentation/core/components/aboutmodalbox'
+            text: 'HTML/CSS',
+            path: '/documentation/core/overview/release-notes',
+            context: 'core' // This is for highlighting the top nav
+          },
+          {
+            text: 'React',
+            path: '/documentation/react/overview/release-notes',
+            context: 'react' // This is for highlighting the top nav
           },
           {
             text: 'Contribute',
-            link: '/contribute/about'
+            path: '/contribute/about'
           },
           {
             text: 'Get in touch',
-            link: '/get-in-touch'
+            path: '/get-in-touch'
           },
         ]
       }
     },
+    // Core docs
     {
       resolve: 'gatsby-source-filesystem',
       options: {
@@ -48,11 +70,65 @@ module.exports = {
         path: `${path.resolve(__dirname)}/patternfly-next/src/patternfly`
       }
     },
-    // {
-    //   resolve: 'gatsby-source-filesystem',
-    //   options: {
-    //     path: `${path.resolve(__dirname)}/patternfly-react`
-    //   }
-    // },
+    // Core release notes
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'core', // This goes in URLs
+        path: `${path.resolve(__dirname)}/patternfly-next/RELEASE-NOTES.md`
+      }
+    },
+    // React docs
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'react', // This goes in URLs
+        path: `${path.resolve(__dirname)}/patternfly-react/packages/patternfly-4`,
+        /* Files we never care to pull data from
+         * Matched by https://github.com/paulmillr/chokidar */
+         ignore: [
+          '**/dist',
+          '**/helpers',
+          '**/scripts',
+          '**/styles',
+          '**/build',
+          '**/utils',
+          '**/test-helpers',
+          /.*react-styles.*/,
+          /.*react-docs.*/,
+          /.*react-integration.*/,
+          // eslint-disable-next-line no-useless-escape
+          '**/\..*', // dotfiles
+          '**/*.d.ts',
+          '**/*.test.*',
+          '**/index.*',
+          '**/tsconfig.*',
+          '**/tslint.*',
+          '**/README.*',
+          '**/CHANGELOG.*'
+        ]
+      }
+    },
+    // React release notes
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'react', // This goes in URLs
+        path: `${path.resolve(__dirname)}/patternfly-react/RELEASE-NOTES.md`
+      }
+    },
+    // Our custom plugin for *.js?x *.ts?x files to get prop types
+    {
+      resolve: path.resolve(__dirname, './patternfly-react/packages/patternfly-4/react-docs/plugins/gatsby-transformer-react-docgen-typescript')
+    },
+    // The plugin for package.json files (to get version numbers)
+    'gatsby-transformer-json',
+    // Pipe MDX files through this plugin that spits out React components
+    {
+      resolve: 'gatsby-plugin-mdx',
+      options: {
+        extensions: ['.mdx', '.md'],
+      }
+    },
   ],
 }

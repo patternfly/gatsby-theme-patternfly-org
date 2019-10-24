@@ -12,7 +12,10 @@
     "build:react": "yarn workspace @patternfly/react-lerna-root build:pf4",
     "build:react:docs": "yarn workspace @patternfly/react-lerna-root build:docs",
     "clean:react": "yarn workspace @patternfly/react-docs clean",
-    "develop:react": "yarn workspace @patternfly/react-docs develop -p 8002"
+    "develop:react": "yarn workspace @patternfly/react-docs develop -p 8002",
+    "build:org:docs": "yarn workspace patternfly-org-demo build",
+    "clean:org": "yarn workspace patternfly-org-demo clean",
+    "develop:org": "yarn workspace patternfly-org-demo develop -p 8003"
   },
   "workspaces": {
     "packages": [

@@ -31,8 +31,8 @@ const getWarning = state => {
 
 export default ({ data, location, pageContext }) => {
   const { title, cssPrefix, hideTOC, experimentalStage, optIn, propComponents, hideDarkMode } = data.mdx.frontmatter;
-  const { source, componentName, navSection } = data.mdx.fields;
-  const sourceName = source === 'core' ? 'HTML' : 'React';
+  const { componentName, navSection } = data.mdx.fields;
+  const { source, tableOfContents, htmlExamples } = pageContext;
   const props = data.props && data.props.nodes && propComponents
     ? propComponents
       .map(name => {
@@ -46,12 +46,13 @@ export default ({ data, location, pageContext }) => {
       .filter(Boolean)
     : undefined;
 
-
   return (
-    <SideNavLayout location={location}>
+    <SideNavLayout location={location} context={source}>
       {!hideTOC && (
         <PageSection className="ws-section">
-          <Title size="md" className="ws-framework-title">{sourceName}</Title>
+          <Title size="md" className="ws-framework-title">
+            {source === 'core' ? 'HTML' : 'React'}
+          </Title>
           <Title size="4xl">{title}</Title>
           {optIn && (
             <Alert
@@ -74,7 +75,7 @@ export default ({ data, location, pageContext }) => {
               {getWarning(experimentalStage)}
             </Alert>
           )}
-          {pageContext.tableOfContents.map(heading => (
+          {tableOfContents.map(heading => (
             <a key={heading} href={`#${slugger(heading)}`} className="ws-toc">
               {heading}
             </a>
@@ -98,7 +99,7 @@ export default ({ data, location, pageContext }) => {
             <Example
               location={location}
               source={source}
-              html={props.title && pageContext.htmlExamples && pageContext.htmlExamples[getId(props.title)]}
+              html={props.title && htmlExamples && htmlExamples[getId(props.title)]}
               hideDarkMode={hideDarkMode}
               navSection={navSection}
               componentName={componentName}
@@ -147,7 +148,6 @@ export const pageQuery = graphql`
         hideDarkMode
       }
       fields {
-        source
         navSection
         componentName
       }

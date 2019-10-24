@@ -13,7 +13,7 @@ import SideNav from '../components/sideNav';
 import TopNav from '../components/topNav';
 import './sideNavLayout.css';
 
-const SideNavLayout = ({ children, location }) => {
+const SideNavLayout = ({ children, location, hideSideNav, context }) => {
   const data = useStaticQuery(graphql`
   {
     site {
@@ -25,18 +25,14 @@ const SideNavLayout = ({ children, location }) => {
       num
       url
     }
-    themeOptions: sitePlugin(name: { eq: "gatsby-theme-patternfly-org" }) {
-      pluginOptions {
-        topNavItems {
-          text
-          link
-        }
-      }
-    }
   }
   `);
   const siteTitle = data.site.siteMetadata.title;
-
+  const SideBar = hideSideNav
+    ? undefined
+    : <PageSidebar
+        nav={<SideNav location={location} context={context} />}
+        className="ws-page-sidebar" />;
   const Header = (
     <PageHeader
       className="ws-page-header"
@@ -45,10 +41,9 @@ const SideNavLayout = ({ children, location }) => {
         href: data.prInfo.url || '/'
       }}
       showNavToggle
-      topNav={<TopNav location={location} navItems={data.themeOptions.pluginOptions.topNavItems || []} />}
+      topNav={<TopNav location={location} context={context} />}
     />
   );
-  const SideBar = <PageSidebar nav={<SideNav context="core" location={location} />} className="ws-page-sidebar" />;
 
   return (
     <Page isManagedSidebar header={Header} sidebar={SideBar}>
