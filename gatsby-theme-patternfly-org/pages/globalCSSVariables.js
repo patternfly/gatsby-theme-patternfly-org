@@ -10,7 +10,6 @@ export default ({ location, pageContext }) => {
   let context = location.state && location.state.context
     ? location.state.context
     : pageContext.source;
-  console.log('state', location.state);
   // There is no "org" context for this page
   if (context === 'org') {
     context = 'core';

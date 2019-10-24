@@ -24,17 +24,25 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   });
 };
 
-const makeSlug = (source, relativePath, section, componentName) => {
-  if (source.includes('pages-')) {
-    return relativePath.replace(/\..*?$/, '').replace('index', '/');
+const makeSlug = (source, section, componentName) => {
+  let url = '';
+
+  if (['react', 'core'].includes(source)) {
+    url += `/documentation/${source}`;
+  } else if (!source.includes('pages-')) {
+    url += `/${source}`;
   }
 
-  let midSection = section === 'root'
-    ? ''
-    : `/${slugger(section)}`;
+  if (section !== 'root') {
+    url += `/${slugger(section)}`
+  }
 
-  return `/documentation/${source}${midSection}/${slugger(componentName)}`;
+  url += `/${slugger(componentName)}`;
+
+  return url;
 }
+
+let addedToSchema = false;
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions;
@@ -42,19 +50,18 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     // Source comes from gatsby-source-filesystem definition in gatsby-config.js
     const parent = getNode(node.parent);
     const source = parent.sourceInstanceName;
-    const relativePath = parent.relativePath;
     const componentName = path.basename(node.fileAbsolutePath, '.md');
 
     let { section = 'root', title, propComponents = [''] } = node.frontmatter;
     createNodeField({
       node,
       name: 'source',
-      value: source
+      value: source.replace('pages-', '')
     });
     createNodeField({
       node,
       name: 'slug',
-      value: makeSlug(source, relativePath, section, componentName).toLowerCase()
+      value: makeSlug(source, section, componentName).toLowerCase()
     });
     createNodeField({
       node,
@@ -78,7 +85,17 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       value: propComponents
     });
   } else if (node.internal.type === 'File') {
-    if (node.extension === 'hbs' && !node.relativePath.includes('example')) {
+    if (!addedToSchema) {
+      // This is just to add to the schema so GraphQL queries don't fail
+      createNodeField({ node, name: 'name', value: '' });
+      createNodeField({ node, name: 'partial', value: '' });
+      createNodeField({ node, name: 'source', value: '' });
+      createNodeField({ node, name: 'slug', value: '' });
+      createNodeField({ node, name: 'title', value: '' });
+
+      addedToSchema = true;
+    }
+    if (node.extension === 'hbs') {
       const partial = fs.readFileSync(node.absolutePath, 'utf8');
 
       createNodeField({
@@ -90,50 +107,6 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
         node,
         name: 'partial',
         value: partial
-      });
-    } else if (node.extension === 'js' && node.sourceInstanceName.includes('pages-')) {
-      createNodeField({
-        node,
-        name: 'slug',
-        value: makeSlug(node.sourceInstanceName, node.relativePath)
-      });
-      createNodeField({
-        node,
-        name: 'source',
-        value: node.sourceInstanceName
-      });
-      // Add dummy field for no errors on `.filter(node => !hidden.includes(node.fields.title.toLowerCase()))`
-      createNodeField({
-        node,
-        name: 'title',
-        value: ''
-      });
-    } else {
-      // This is just to add to the schema so GraphQL queries don't fail
-      createNodeField({
-        node,
-        name: 'name',
-        value: ''
-      });
-      createNodeField({
-        node,
-        name: 'partial',
-        value: ''
-      });
-      createNodeField({
-        node,
-        name: 'source',
-        value: ''
-      });
-      createNodeField({
-        node,
-        name: 'slug',
-        value: ''
-      });
-      createNodeField({
-        node,
-        name: 'title',
-        value: ''
       });
     }
   }
@@ -256,7 +229,9 @@ exports.createSchemaCustomization = ({ actions }) => {
     type SideNav {
       core: [SideNavItem]
       react: [SideNavItem]
-      design: [SideNavItem]
+      get_started: [SideNavItem]
+      design_guidelines: [SideNavItem]
+      contribute: [SideNavItem]
     }
     type TopNavItem {
       text: String
@@ -273,3 +248,20 @@ exports.createSchemaCustomization = ({ actions }) => {
   `;
   actions.createTypes(sideNavTypeDefs);
 }
+
+// Exclude CSS-in-JS styles
+exports.onCreateWebpackConfig = ({ actions }) => {
+  actions.setWebpackConfig({
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          include: [
+            /react-styles\/css/
+          ],
+          loader: 'null-loader'
+        }
+      ]
+    }
+  });
+};

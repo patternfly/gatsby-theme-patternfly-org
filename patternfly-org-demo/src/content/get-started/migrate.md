@@ -1,8 +1,6 @@
 ---
-path: "/get-started/migrate"
+title: Migration guide
 ---
-
-# Migration guide
 
 ## Design your migration strategy
 The first step in moving from PatternFly 3 to PatternFly 4 should be a migration strategy. Putting a solid plan in place before you start trying to migrate your codebase will help you prioritize and chunk your work and identify areas where migrating may impact design elements like interaction patterns or spacing.

@@ -1,6 +1,4 @@
----
-path: "/get-in-touch"
----
+
 
 import { ChatIcon, QuestionIcon, BlogIcon, MailBulkIcon } from '@patternfly/react-icons';
 import { Grid, GridItem, Split, SplitItem } from '@patternfly/react-core';

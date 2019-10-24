@@ -1,57 +1,24 @@
 import React from 'react';
-import { graphql, useStaticQuery, Link } from 'gatsby';
-import { Nav, NavList, NavExpandable } from '@patternfly/react-core';
+import { Link } from 'gatsby';
+import { Nav, NavList, NavExpandable, Title } from '@patternfly/react-core';
 import { capitalize } from '../helpers/capitalize';
 import { slugger } from '../helpers/slugger';
 
-
 const renderNavItem = node => (
   <li key={node.path} className="pf-c-nav__item">
-    <Link to={node.path} state={{ context: node.context }} className="pf-c-nav__link" activeClassName="pf-m-active">
+    <Link
+      to={node.path}
+      state={{ context: node.context }} // For keeping context on shared pages
+      className="pf-c-nav__link"
+      activeClassName="pf-m-active"
+      >
       {node.text}
     </Link>
   </li>
 );
 
-const SideNav = ({ location, context = 'core' }) => {
-  const data = useStaticQuery(graphql`
-  {
-    allSitePage(filter: { context: { navSection: { ne: null } } },
-                sort: { fields: context___title }) {
-      nodes {
-        path
-        context {
-          title
-          navSection
-          source
-        }
-      }
-    }
-    sitePlugin(name: { eq: "gatsby-theme-patternfly-org" }) {
-      pluginOptions {
-        sideNav {
-          core {
-            section
-            text
-            path
-          }
-          react {
-            section
-            text
-            path
-          }
-          design {
-            section
-            text
-            path
-          }
-        }
-      }
-    }
-  }
-  `);
-
-  const allNavItems = data.allSitePage.nodes.reduce((accum, node) => {
+const SideNav = ({ location, context = 'core', allPages, sideNavContexts }) => {
+  const allNavItems = allPages.reduce((accum, node) => {
     const navSection = node.context.navSection || 'page';
     accum[navSection] = accum[navSection] || [];
     accum[navSection].push({
@@ -65,11 +32,11 @@ const SideNav = ({ location, context = 'core' }) => {
   }, {});
 
   // The `context` property worked hard to get here
-  context = context.replace('pages-', '');
-  const sideNavItems = data.sitePlugin.pluginOptions.sideNav[context] || [];
+  const sideNavItems = sideNavContexts[context.replace(/-/g, '_')] || [];
 
   return (
     <Nav aria-label="Side Nav">
+      <Title size="xl">{context}</Title>
       <NavList>
         {sideNavItems.map(navItem => {
           const { section } = navItem;

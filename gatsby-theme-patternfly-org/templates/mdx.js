@@ -10,6 +10,7 @@ import CSSVariables from '../components/cssVariables';
 import PropsTable from '../components/propsTable';
 import { getId } from '../helpers/getId';
 import { slugger } from '../helpers/slugger';
+import { capitalize } from '../helpers/capitalize';
 import { commonComponents } from '../helpers/commonComponents';
 import './mdx.css';
 
@@ -51,7 +52,7 @@ export default ({ data, location, pageContext }) => {
       {!hideTOC && (
         <PageSection className="ws-section">
           <Title size="md" className="ws-framework-title">
-            {source === 'core' ? 'HTML' : 'React'}
+            {source === 'core' ? 'HTML' : capitalize(source)}
           </Title>
           <Title size="4xl">{title}</Title>
           {optIn && (

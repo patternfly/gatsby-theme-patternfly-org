@@ -14,6 +14,7 @@ import TopNav from '../components/topNav';
 import './sideNavLayout.css';
 
 const SideNavLayout = ({ children, location, hideSideNav, context }) => {
+  // Put queries for Top and Side navs here for performance
   const data = useStaticQuery(graphql`
   {
     site {
@@ -25,30 +26,86 @@ const SideNavLayout = ({ children, location, hideSideNav, context }) => {
       num
       url
     }
+    allSitePage(filter: { context: { navSection: { ne: null } } },
+                sort: { fields: context___title }) {
+      nodes {
+        path
+        context {
+          title
+          navSection
+          source
+        }
+      }
+    }
+    sitePlugin(name: { eq: "gatsby-theme-patternfly-org" }) {
+      pluginOptions {
+        topNavItems {
+          text
+          path
+          context
+        }
+        sideNav {
+          core {
+            section
+            text
+            path
+          }
+          react {
+            section
+            text
+            path
+          }
+          get_started {
+            section
+            text
+            path
+          }
+          design_guidelines {
+            section
+            text
+            path
+          }
+          contribute {
+            section
+            text
+            path
+          }
+        }
+      }
+    }
   }
   `);
-  const siteTitle = data.site.siteMetadata.title;
+  const { title } = data.site.siteMetadata;
+  const { num, url } = data.prInfo;
+  const { topNavItems, sideNav } = data.sitePlugin.pluginOptions;
   const SideBar = hideSideNav
     ? undefined
     : <PageSidebar
-        nav={<SideNav location={location} context={context} />}
+        nav={<SideNav
+          location={location}
+          context={context}
+          allPages={data.allSitePage.nodes}
+          sideNavContexts={sideNav} />}
         className="ws-page-sidebar" />;
   const Header = (
     <PageHeader
       className="ws-page-header"
-      logo={data.prInfo.num ? `PR #${data.prInfo.num}` : siteTitle}
+      logo={num ? `PR #${num}` : title}
       logoProps={{
-        href: data.prInfo.url || '/'
+        href: url || '/'
       }}
       showNavToggle
-      topNav={<TopNav location={location} context={context} />}
+      topNav={<TopNav
+        location={location}
+        context={context}
+        navItems={topNavItems} />}
     />
   );
 
   return (
     <Page isManagedSidebar header={Header} sidebar={SideBar}>
       <Helmet>
-        <title>{siteTitle}</title>
+        <title>{title}</title>
       </Helmet>
       {children}
     </Page>
