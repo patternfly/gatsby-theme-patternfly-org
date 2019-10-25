@@ -13,7 +13,8 @@ import SideNav from '../components/sideNav';
 import TopNav from '../components/topNav';
 import './sideNavLayout.css';
 
-const SideNavLayout = ({ children, location, hideSideNav, context }) => {
+// ParityComponentName: aboutmodal <=> aboutmodalbox
+const SideNavLayout = ({ children, location, context, hideSideNav = false, parityComponent }) => {
   // Put queries for Top and Side navs here for performance
   const data = useStaticQuery(graphql`
   {
@@ -42,7 +43,7 @@ const SideNavLayout = ({ children, location, hideSideNav, context }) => {
         topNavItems {
           text
           path
-          context
+          contexts
         }
         sideNav {
           core {
@@ -85,7 +86,8 @@ const SideNavLayout = ({ children, location, hideSideNav, context }) => {
           location={location}
           context={context}
           allPages={data.allSitePage.nodes}
-          sideNavContexts={sideNav} />}
+          sideNavContexts={sideNav}
+          parityComponent={parityComponent} />}
         className="ws-page-sidebar" />;
   const Header = (
     <PageHeader

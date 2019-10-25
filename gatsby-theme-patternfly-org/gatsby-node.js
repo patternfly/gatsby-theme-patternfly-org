@@ -114,7 +114,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 
 exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
   {
-    allMdx {
+    docs: allMdx(filter: { fields: { source: { ne: "design-snippets" } } }) {
       nodes {
         id
         fileAbsolutePath
@@ -125,6 +125,16 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
           navSection
           title
           propComponents
+          componentName
+        }
+      }
+    }
+    designSnippets: allMdx(filter: { fields: { source: { eq: "design-snippets" } } }) {
+      nodes {
+        id
+        frontmatter {
+          reactComponentName
+          coreComponentName
         }
       }
     }
@@ -165,14 +175,19 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
     const hbsInstance = createHandlebars(result.data.partials.nodes);
     const hidden = (pluginOptions.hiddenPages || []).map(title => title.toLowerCase());
 
-    result.data.allMdx.nodes
+    result.data.docs.nodes
       .concat(result.data.pages.nodes)
       .filter(node => !hidden.includes(node.fields.title.toLowerCase()))
       .forEach(node => {
-        const { slug, navSection = null, title, source, propComponents = [] } = node.fields;
+        const { componentName, slug, navSection = null, title, source, propComponents = [] } = node.fields;
         const fileRelativePath = path.relative(__dirname, node.absolutePath || node.fileAbsolutePath);
         const tableOfContents = extractTableOfContents(node.mdxAST);
         const examples = extractExamples(node.mdxAST, hbsInstance, fileRelativePath);
+
+        // not a huge fan of this component mapping disaster
+        const designNode = result.data.designSnippets.nodes.find(
+          node => node.frontmatter[`${source}ComponentName`] === componentName
+        );
         
         actions.createPage({
           path: slug,
@@ -180,6 +195,7 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
           context: {
             // Required by template to fetch more MDX/React docgen data
             id: node.id,
+            designId: designNode ? designNode.id : 'undefined',
             propComponents,
             // For TOC
             tableOfContents,
@@ -221,24 +237,24 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
 exports.createSchemaCustomization = ({ actions }) => {
   // Define types for sideNav if core, react, or org aren't included
   const sideNavTypeDefs = `
-    type SideNavItem {
+    type SideNavItem @infer {
       section: String
       text: String
       path: String
     }
-    type SideNav {
+    type SideNav @infer {
       core: [SideNavItem]
       react: [SideNavItem]
       get_started: [SideNavItem]
       design_guidelines: [SideNavItem]
       contribute: [SideNavItem]
     }
-    type TopNavItem {
+    type TopNavItem @infer {
       text: String
       path: String
-      context: String
+      contexts: [String]
     }
-    type SitePluginOptions {
+    type SitePluginOptions @infer {
       sideNav: SideNav
       topNavItems: [TopNavItem]
     }

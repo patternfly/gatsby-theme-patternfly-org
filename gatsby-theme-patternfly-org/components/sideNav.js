@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import { Nav, NavList, NavExpandable, Title } from '@patternfly/react-core';
+import { Nav, NavList, NavExpandable, Title, Dropdown, DropdownToggle, DropdownItem } from '@patternfly/react-core';
+import { CaretDownIcon } from '@patternfly/react-icons';
+
 import { capitalize } from '../helpers/capitalize';
 import { slugger } from '../helpers/slugger';
+import './sideNav.css';
 
 const renderNavItem = node => (
   <li key={node.path} className="pf-c-nav__item">
@@ -17,7 +20,9 @@ const renderNavItem = node => (
   </li>
 );
 
-const SideNav = ({ location, context = 'core', allPages, sideNavContexts }) => {
+const SideNav = ({ location, context = 'core', allPages, sideNavContexts, parityComponent }) => {
+  const [isDropdownOpen, setDropdownOpen] = React.useState(false);
+
   const allNavItems = allPages.reduce((accum, node) => {
     const navSection = node.context.navSection || 'page';
     accum[navSection] = accum[navSection] || [];
@@ -34,9 +39,48 @@ const SideNav = ({ location, context = 'core', allPages, sideNavContexts }) => {
   // The `context` property worked hard to get here
   const sideNavItems = sideNavContexts[context.replace(/-/g, '_')] || [];
 
+  // TODO: Get a better design and get rid of this thing.
+  const contextSwitcher = {
+    core: 'HTML',
+    react: 'React'
+  };
+  const dropdownToggle = (
+    <DropdownToggle
+      onToggle={() => setDropdownOpen(!isDropdownOpen)}
+      iconComponent={CaretDownIcon}
+      >
+      {contextSwitcher[context]}
+    </DropdownToggle>
+  );
+  const dropdownItems = Object.entries(contextSwitcher)
+    .filter(([key]) => key !== context) // Doesn't make sense to be able to switch from "core" to "core"
+    .map(([key, value]) =>
+      <DropdownItem
+        key={key}
+        component={
+          <Link to={`/documentation/${key}/${parityComponent || 'overview/release-notes'}`}
+            className="pf-c-nav__link">
+            {value}
+          </Link>
+        } />
+    );
   return (
     <Nav aria-label="Side Nav">
-      <Title size="xl">{context}</Title>
+      {/* debug */}
+      {/* <Title size="xl">{context}</Title> */}
+      {/* <Title size="xl">{parityComponent}</Title> */}
+      {Object.keys(contextSwitcher).includes(context) && (
+        <div className="ws-org-context-switcher">
+          <label className="">FRAMEWORK</label>
+          <Dropdown
+            className="ws-org-context-switcher-dropdown"
+            onSelect={() => setDropdownOpen(!isDropdownOpen)}
+            toggle={dropdownToggle}
+            isOpen={isDropdownOpen}
+            dropdownItems={dropdownItems}
+          />
+        </div>
+      )}
       <NavList>
         {sideNavItems.map(navItem => {
           const { section } = navItem;

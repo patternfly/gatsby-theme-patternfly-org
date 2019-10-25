@@ -7,12 +7,12 @@ const TopNav = ({ location, context, navItems }) => {
   return (
     <Nav aria-label="Nav">
       <NavList variant="horizontal" className="ws-top-nav">
-        {navItems.map(item => (
+        {navItems.map(({ path, text, contexts }) => (
           <NavItem
-            key={item.path}
-            isActive={location.pathname.includes(item.path) || context === item.context}
+            key={path}
+            isActive={location.pathname.includes(path) || (contexts || []).includes(context)}
             >
-            <Link to={item.path}>{item.text}</Link>
+            <Link to={path}>{text}</Link>
           </NavItem>
         ))}
       </NavList>
