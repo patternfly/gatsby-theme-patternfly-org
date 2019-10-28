@@ -9,6 +9,7 @@ h3.ws-title {
   margin-top: 2rem;
   margin-bottom: 1rem;
   font-size: 1.25em;
+  font-size: 18px;
 }
 
 .ws-section table {
@@ -46,6 +47,10 @@ h3.ws-title {
   table.pf-m-grid-2xl.pf-c-table tr:not(.pf-c-table__expandable-row) {
     border-bottom: 0;
   }
+}
+
+.ws-mdx-p {
+  font-size: 18px;
 }
 
 .ws-mdx-p:not(:last-child) {

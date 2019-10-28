@@ -2,11 +2,11 @@
 
 import { ChatIcon, QuestionIcon, BlogIcon, MailBulkIcon } from '@patternfly/react-icons';
 import { Grid, GridItem, Split, SplitItem } from '@patternfly/react-core';
-import AutoLinkHeader from '@content/AutoLinkHeader';
+import AutoLinkHeader from 'gatsby-theme-patternfly-org/components/autoLinkHeader';
 
-import FooterUnderFoldLayout from '@content/footerUnderFoldLayout';
+<!-- import FooterUnderFoldLayout from '@content/footerUnderFoldLayout'; -->
 
-export default FooterUnderFoldLayout;
+<!-- export default FooterUnderFoldLayout; -->
 
 <AutoLinkHeader is="h1" class="pf-u-mb-lg">Get in touch</AutoLinkHeader>
 

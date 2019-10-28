@@ -81,7 +81,7 @@ export const styleProps = {
 
 export const TypographyGrid = ({title, note, symbol, fontWeight, fontWeightText, fontSize, variableName, lineHeight, fontFamily}) => (
   <>
-    <h3>{title} {symbol && <span className="ws-typography-gridTitleSymbol">{symbol}</span>}</h3>
+    <h3 className="ws-title">{title} {symbol && <span className="ws-typography-gridTitleSymbol">{symbol}</span>}</h3>
     <Grid gutter="sm">
       <GridItem span={12} sm={6}>
         <table className="pf-c-table pf-m-compact ws-typography-tableTypography" aria-label="typography usage guidelines breakout">

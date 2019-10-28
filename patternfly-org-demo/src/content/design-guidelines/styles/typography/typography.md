@@ -24,21 +24,21 @@ Use our typographic styles to communicate visual hierarchy. A consistent and log
   asGrid
   title="First level title*"
   note="*Not to be used in content block (Landing pages, login, etc.)"
-  styleProps={styleProps["first"]} />
-<TitleLevel asGrid title="Second level title" styleProps = {styleProps["second"]} />
-<TitleLevel asGrid title="Third level title" styleProps={styleProps["third"]} />
-<TitleLevel asGrid title="Fourth level title" styleProps = {styleProps["fourth"]} />
+  styleProps={styleProps.first} />
+<TitleLevel asGrid title="Second level title" styleProps = {styleProps.second} />
+<TitleLevel asGrid title="Third level title" styleProps={styleProps.third} />
+<TitleLevel asGrid title="Fourth level title" styleProps = {styleProps.fourth} />
 <TitleLevel
   asGrid
   title="Body*"
   note="*Some components use RedHatText at 700 font weight, which is RedHatText Medium (i.e. alerts, navigation)"
-  styleProps = {styleProps["body"]} />
-<TitleLevel asGrid title="Small text" styleProps = {styleProps["small"]} />
+  styleProps = {styleProps.body} />
+<TitleLevel asGrid title="Small text" styleProps = {styleProps.small} />
 <TitleLevel 
   asGrid 
   title="Tiny text*"
   note="*Not to be used in content block (Only used with data visualizations when 14px is not small enough.)"
-  styleProps = {styleProps["tiny"]} />
+  styleProps = {styleProps.tiny} />
 
 ## Line height
 <div style={{marginBottom: '32px'}}>When laying out text-based content, you need to factor in line-height when measuring spacing. Line height is a relative number used in CSS that represents a ratio to the text size. For example, body text uses a line height of 1.5. Body text size is 16px. 16*1.5 = 24px line height. So, when creating designs in design software, you must include the 24px line height as a part of the text.</div>
@@ -80,11 +80,11 @@ Use our typographic styles to communicate visual hierarchy. A consistent and log
     </div>
     <Spacer size="8" color="8"/>
     <div className="spacingItemStyle">
-      <FirstLevelTitle>Design is a journey of discovery</FirstLevelTitle>
+      <TitleLevel styleProps={styleProps.first}>Design is a journey of discovery</TitleLevel>
     </div>
     <Spacer size="16" color="16" />
     <div className="spacingItemStyle">
-      <BodyText>Body text should be RedHatText at 16px. It should have leading of 24px because of its relative line height of 1.5.</BodyText>
+      <TitleLevel styleProps={styleProps.body}>Body text should be RedHatText at 16px. It should have leading of 24px because of its relative line height of 1.5.</TitleLevel>
     </div>
     <Spacer size="24" color="24" />
     <div className="spacingItemStyle">
@@ -92,11 +92,11 @@ Use our typographic styles to communicate visual hierarchy. A consistent and log
     </div>
     <Spacer size="8" color="8"/>
     <div className="spacingItemStyle">
-      <SecondLevelTitle>Design is a journey of discovery</SecondLevelTitle>
+      <TitleLevel styleProps={styleProps.second}>Design is a journey of discovery</TitleLevel>
     </div>
     <Spacer size="16" color="16" />
     <div className="spacingItemStyle">
-      <BodyText>Body text should be RedHatText at 16px. It should have leading of 24px because of its relative line height of 1.5.</BodyText>
+      <TitleLevel styleProps={styleProps.body}>Body text should be RedHatText at 16px. It should have leading of 24px because of its relative line height of 1.5.</TitleLevel>
     </div>
     <Spacer size="24" color="24" />
     <div className="spacingItemStyle">
@@ -104,23 +104,23 @@ Use our typographic styles to communicate visual hierarchy. A consistent and log
     </div>
     <Spacer size="8" color="8"/>
     <div className="spacingItemStyle">
-      <ThirdLevelTitle>Design is a journey of discovery</ThirdLevelTitle>
+      <TitleLevel styleProps={styleProps.third}>Design is a journey of discovery</TitleLevel>
     </div>
     <Spacer size="16" color="16" />
     <div className="spacingItemStyle">
-      <BodyText>1. Lists should use body text style with 8px between items.</BodyText>
+      <TitleLevel styleProps={styleProps.body}>1. Lists should use body text style with 8px between items.</TitleLevel>
     </div>
     <Spacer size="8" color="8" />
     <div className="spacingItemStyle">
-      <BodyText>2. This is the second item in the list.</BodyText>
+      <TitleLevel styleProps={styleProps.body}>2. This is the second item in the list.</TitleLevel>
     </div>
     <Spacer size="8" color="8" />
     <div className="spacingItemStyle">
-      <BodyText>&nbsp;&nbsp;&nbsp;&nbsp;a. Secondary items in the list should use 8px spacing.</BodyText>
+      <TitleLevel styleProps={styleProps.body}>&nbsp;&nbsp;&nbsp;&nbsp;a. Secondary items in the list should use 8px spacing.</TitleLevel>
     </div>
     <Spacer size="8" color="8" />
     <div className="spacingItemStyle">
-      <BodyText>&nbsp;&nbsp;&nbsp;&nbsp;b. They still use the same text styling, however.</BodyText>
+      <TitleLevel styleProps={styleProps.body}>&nbsp;&nbsp;&nbsp;&nbsp;b. They still use the same text styling, however.</TitleLevel>
     </div>
     <Spacer size="24" color="24" />
     <div className="spacingItemStyle">
@@ -128,15 +128,15 @@ Use our typographic styles to communicate visual hierarchy. A consistent and log
     </div>
     <Spacer size="8" color="8" />
     <div className="spacingItemStyle">
-      <FourthLevelTitle>Design is a journey of discovery</FourthLevelTitle>
+      <TitleLevel styleProps={styleProps.fourth}>Design is a journey of discovery</TitleLevel>
     </div>
     <Spacer size="16" color="16" />
     <div className="spacingItemStyle">
-      <BodyText>Body text should be RedHatText at 16px. It should have leading of 24px because of its relative line height of 1.5.</BodyText>
+      <TitleLevel styleProps={styleProps.body}>Body text should be RedHatText at 16px. It should have leading of 24px because of its relative line height of 1.5.</TitleLevel>
     </div>
     <Spacer size="24" color="24" />
     <div className="spacingItemStyle">
-      <SmallText>Small text style should be RedHatText at 14px.</SmallText>
+      <TitleLevel styleProps={styleProps.small}>Small text style should be RedHatText at 14px.</TitleLevel>
     </div>
   </GridItem>
 </Grid>
