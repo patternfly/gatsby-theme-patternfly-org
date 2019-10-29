@@ -266,7 +266,13 @@ exports.createSchemaCustomization = ({ actions }) => {
 }
 
 // Exclude CSS-in-JS styles
-exports.onCreateWebpackConfig = ({ actions }) => {
+exports.onCreateWebpackConfig = ({ actions, stage }) => {
+  if (stage === 'build-javascript') {
+    // Turn off source-maps
+    actions.setWebpackConfig({
+      devtool: false
+    })
+  }
   actions.setWebpackConfig({
     module: {
       rules: [
