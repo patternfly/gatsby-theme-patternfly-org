@@ -12,6 +12,7 @@
   "dependencies": {
     "@patternfly/patternfly": "2.40.2",
     "@patternfly/react-charts": "5.1.2",
+    "@patternfly/react-catalog-view-extension": "1.1.1",
     "@patternfly/react-core": "3.120.0",
     "@patternfly/react-icons": "3.14.15",
     "@patternfly/react-inline-edit-extension": "2.12.12",

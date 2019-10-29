@@ -33,13 +33,14 @@ const getWarning = state => {
 export default ({ data, location, pageContext }) => {
   const { cssPrefix, hideTOC, experimentalStage, optIn, hideDarkMode } = data.doc.frontmatter;
   const { componentName, navSection } = data.doc.fields;
-  const { title, source, tableOfContents, htmlExamples, propComponents } = pageContext;
+  const { title, source, tableOfContents, htmlExamples, propComponents = [''] } = pageContext;
   const props = data.props && data.props.nodes && propComponents
     ? propComponents
+      .filter(name => name !== '') // Remove default
       .map(name => {
         const propTable = data.props.nodes.find(node => node.name === name);
         if (!propTable) {
-          console.warn(`PropComponent ${name} specified in frontmatter, but not found at runtime.`);
+          console.warn(`PropComponent "${name}" specified in frontmatter, but not found at runtime.`);
         }
         
         return propTable;

@@ -3,8 +3,12 @@ const path = require('path');
 module.exports = {
   siteMetadata: {
     title: 'PatternFly 4',
+    // For SEO
     description: 'Documentation for PatternFly 4',
-    siteUrl: 'https://www.patternfly.org'
+    // For Gatsby plugin sitemap
+    siteUrl: 'https://www.patternfly.org',
+    // For production build
+    pathPrefix: '/v4'
   },
   plugins: [
     {
@@ -183,6 +187,13 @@ module.exports = {
       }
     },
     // For Algogia global doc search
-    'gatsby-plugin-sitemap'
+    {
+      resolve: 'gatsby-plugin-sitemap',
+      options: {
+        // Exclude fullscreen previews from sitemap
+        // See: https://github.com/isaacs/minimatch
+        exclude: ['*/documentation/*/*/*/*'],  
+      }
+    }
   ],
 }

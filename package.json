@@ -29,7 +29,7 @@
       "patternfly-org-demo/patternfly-react/packages/**"
     ],
     "nohoist": [
-      "**/@patternfly/patternfly",
+      "**/@patternfly/*",
       "**/gatsby-theme-patternfly-org"
     ]
   }

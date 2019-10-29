@@ -179,7 +179,7 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
       .concat(result.data.pages.nodes)
       .filter(node => !hidden.includes(node.fields.title.toLowerCase()))
       .forEach(node => {
-        const { componentName, slug, navSection = null, title, source, propComponents = [] } = node.fields;
+        const { componentName, slug, navSection = null, title, source, propComponents = [''] } = node.fields;
         const fileRelativePath = path.relative(__dirname, node.absolutePath || node.fileAbsolutePath);
         const tableOfContents = extractTableOfContents(node.mdxAST);
         const examples = extractExamples(node.mdxAST, hbsInstance, fileRelativePath);
