@@ -20,5 +20,5 @@ export const commonComponents = {
     
 };
 for (let i = 1; i <= 6; i++) {
-  commonComponents[`h${i}`] = props => <AutoLinkHeader size={`h${i}`} className="ws-title" {...props} />;
+  commonComponents[`h${i}`] = props => <AutoLinkHeader size={`h${i}`} className={`ws-title ws-mdx-h${i}`} {...props} />;
 }

@@ -1,15 +1,80 @@
-h2.ws-title {
-  margin-bottom: .5rem;
-  font-size: 24px;
-  font-weight: 500;
-  color: #393f44;
+h1.ws-title,
+h1.ws-title.ws-mdx-h1 {
+  margin-bottom: var(--pf-c-content--h1--MarginBottom);
+  font-size: 36px;
+  font-weight: var(--pf-c-content--h1--FontWeight);
+  line-height: var(--pf-c-content--h1--LineHeight);
+  font-family: RedHatDisplay;
 }
 
-h3.ws-title {
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  font-size: 1.25em;
+h1.ws-title:not(:first-child) {
+  margin-top: var(--pf-c-content--h1--MarginTop);
+}
+
+h2.ws-title,
+h2.ws-title.ws-mdx-h2 {
+  margin-bottom: 8px;
+  font-size: 21px;
+  font-weight: var(--pf-c-content--h2--FontWeight);
+  line-height: var(--pf-c-content--h2--LineHeight); 
+}
+  
+h2.ws-title:not(:first-child),
+h2.ws-title:not(:first-child).ws-mdx-h2 {
+  margin-top: 24px; 
+}
+
+h3.ws-title,
+h3.ws-title.ws-mdx-h3 {
+  margin-bottom: 8px;
   font-size: 18px;
+  font-weight: var(--pf-c-content--h3--FontWeight);
+  line-height: var(--pf-c-content--h3--LineHeight); 
+  font-family: RedHatDisplay;
+}
+  
+h3.ws-title:not(:first-child),
+h3.ws-title:not(:first-child).ws-mdx-h3 {
+  margin-top: 24px; 
+}
+
+h4.ws-title,
+h4.ws-title.ws-mdx-h4 {
+  margin-bottom: var(--pf-c-content--h4--MarginBottom);
+  font-size: var(--pf-c-content--h4--FontSize);
+  font-weight: var(--pf-c-content--h4--FontWeight);
+  line-height: var(--pf-c-content--h4--LineHeight); 
+}
+  
+h4.ws-title:not(:first-child),
+h4.ws-title:not(:first-child).ws-mdx-h4 {
+  margin-top: var(--pf-c-content--h4--MarginTop); 
+}
+
+h5.ws-title,
+h5.ws-title.ws-mdx-h5 {
+  margin-bottom: var(--pf-c-content--h5--MarginBottom);
+  font-size: var(--pf-c-content--h5--FontSize);
+  font-weight: var(--pf-c-content--h5--FontWeight);
+  line-height: var(--pf-c-content--h5--LineHeight); 
+}
+  
+h5.ws-title:not(:first-child),
+h5.ws-title:not(:first-child).ws-mdx-h5 {
+  margin-top: var(--pf-c-content--h5--MarginTop); 
+}
+
+h6.ws-title,
+h6.ws-title.ws-mdx-h6 {
+  margin-bottom: var(--pf-c-content--h6--MarginBottom);
+  font-size: var(--pf-c-content--h6--FontSize);
+  font-weight: var(--pf-c-content--h6--FontWeight);
+  line-height: var(--pf-c-content--h6--LineHeight); 
+}
+  
+h6.ws-title:not(:first-child),
+h6.ws-title:not(:first-child).ws-mdx-h6 {
+  margin-top: var(--pf-c-content--h6--MarginTop);
 }
 
 .ws-section table {
@@ -55,4 +120,8 @@ h3.ws-title {
 
 .ws-mdx-p:not(:last-child) {
   margin-bottom: 1rem;
+}
+
+.ws-section {
+  padding: 32px 64px;
 }

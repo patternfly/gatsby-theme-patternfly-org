@@ -1,8 +1,9 @@
 import React from 'react';
-import { Button, Bullseye, GalleryItem, Popover } from '@patternfly/react-core';
+import { Button, Bullseye, GalleryItem, Popover, TextContent, Text } from '@patternfly/react-core';
 import { copy } from '../helpers/copy';
 import { saveAs } from 'file-saver';
 import ReactDOM from 'react-dom';
+import './iconCard.css';
 
 class IconCard extends React.Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class IconCard extends React.Component {
     this.galleryItemRef = React.createRef();
     this.galleryItemBodyRef = React.createRef();
     this.handleClickOutside = this.handleClickOutside.bind(this);
+    this.state = { showCopyMessage: false };
   }
 
   componentDidMount = () => {
@@ -43,12 +45,28 @@ class IconCard extends React.Component {
     event.stopPropagation();
     const { id } = this.props;
     copy(`import { ${id} } from '@patternfly/react-icons'`);
+    this.setState({
+      showCopyMessage: true
+    });
+    setTimeout(() => {
+      this.setState({
+        showCopyMessage: false
+      });
+    }, 2000);
   };
 
   onCopyHtml = event => {
     event.stopPropagation();
     const { name } = this.props;
     copy(`<i className="pf-icon pf-icon-${name}"></i>`);
+    this.setState({
+      showCopyMessage: true
+    });
+    setTimeout(() => {
+      this.setState({
+        showCopyMessage: false
+      });
+    }, 2000);
   };
 
   onDownloadSvg = () => {
@@ -71,7 +89,7 @@ class IconCard extends React.Component {
   
   render() {
     const { icon: Icon, name } = this.props;
-    const { showBody } = this.state;
+    const { showBody, showCopyMessage } = this.state;
     const popoverBody = (
       <div className="ws-content-popoverBody">
         <div className="ws-content-textDescription" style={{'display': 'none'}}>
@@ -82,6 +100,11 @@ class IconCard extends React.Component {
           <Button variant="link" onClick={this.onCopyHtml}>Copy HTML</Button>
           <Button variant="link" onClick={this.onCopyReact}>Copy React</Button>
         </div>
+        <TextContent className={`message${showCopyMessage ? " messageShow" : ""}`}>
+          <Text component="pre" className="messageText">
+            Copied to clipboard
+          </Text>
+        </TextContent>
       </div>
     );
     return (
