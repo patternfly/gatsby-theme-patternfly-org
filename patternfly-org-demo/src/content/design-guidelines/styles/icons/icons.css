@@ -1,0 +1,22 @@
+.ws-content-icons {
+  --pf-l-gallery--GridTemplateColumns: repeat(auto-fill,minmax(240px,1fr)) !important;
+  grid-auto-flow: dense;
+}
+
+.ws-content-search-icons input {
+  padding-left: 44px;
+  background-color: #fff;
+  background-image: url(search-icon.png);
+  background-position: 14px;
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+  margin-top: 16px;
+  margin-bottom: 64px;
+  border: 1px solid #4D5258;
+}
+.ws-content-search-icons input::placeholder {
+  color: #151515;
+}
+.ws-content-search-icons .pf-c-form__label {
+  --pf-c-form__label--FontSize: var(--pf-global--FontSize--lg);
+}

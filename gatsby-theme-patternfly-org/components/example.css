@@ -10,7 +10,7 @@
 }
 
 .ws-preview {
-  padding: 1rem;
+  margin: 1rem;
   background-color: white;
   border-bottom: 1px solid #f8f8f8;
   transition: width .2s ease-in-out;
@@ -25,4 +25,18 @@
 .ws-editor .token.punctuation,
 .ws-editor .token.operator {
   color: #c9190b;
+}
+
+.ws-preview-fullscreen {
+  position: relative;
+  pointer-events: none;
+  width: 1280px;
+  height: 800px;
+  transform-origin: top left;
+  /* transform: scale added in JS based on parent element width */
+}
+
+.ws-preview-container {
+  position: relative;
+  height: 437.5px;
 }

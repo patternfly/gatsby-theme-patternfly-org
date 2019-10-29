@@ -24,6 +24,26 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   });
 };
 
+const makeSlug = (source, section, componentName) => {
+  let url = '';
+
+  if (['react', 'core'].includes(source)) {
+    url += `/documentation/${source}`;
+  } else if (!source.includes('pages-')) {
+    url += `/${source}`;
+  }
+
+  if (section !== 'root') {
+    url += `/${slugger(section)}`
+  }
+
+  url += `/${slugger(componentName)}`;
+
+  return url;
+}
+
+let addedToSchema = false;
+
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions;
   if (node.internal.type === 'Mdx') {
@@ -36,16 +56,12 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
     createNodeField({
       node,
       name: 'source',
-      value: source
+      value: source.replace('pages-', '')
     });
     createNodeField({
       node,
       name: 'slug',
-      value: `/documentation/${source}${
-      section === 'root'
-        ? ''
-        : `/${slugger(section)}`
-      }/${slugger(componentName)}`.toLowerCase()
+      value: makeSlug(source, section, componentName).toLowerCase()
     });
     createNodeField({
       node,
@@ -69,33 +85,28 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       value: propComponents
     });
   } else if (node.internal.type === 'File') {
-    if (node.extension === 'hbs' && !node.relativePath.includes('example')) {
+    if (!addedToSchema) {
+      // This is just to add to the schema so GraphQL queries don't fail
+      createNodeField({ node, name: 'name', value: '' });
+      createNodeField({ node, name: 'partial', value: '' });
+      createNodeField({ node, name: 'source', value: '' });
+      createNodeField({ node, name: 'slug', value: '' });
+      createNodeField({ node, name: 'title', value: '' });
+
+      addedToSchema = true;
+    }
+    if (node.extension === 'hbs') {
       const partial = fs.readFileSync(node.absolutePath, 'utf8');
-      // Exclude empty partials, they bug out 
-      if (partial) {
-        createNodeField({
-          node,
-          name: 'name',
-          value: path.basename(node.absolutePath, '.hbs')
-        });
-        createNodeField({
-          node,
-          name: 'partial',
-          value: partial
-        });
-      }
-    } else {
-      // Add a null field so React's docs don't crash on the GraphQL for
-      // patternfly-next like allFile(filter: { fields: { name: { ne: "" } } })
+
       createNodeField({
         node,
         name: 'name',
-        value: ''
+        value: path.basename(node.absolutePath, '.hbs')
       });
       createNodeField({
         node,
         name: 'partial',
-        value: ''
+        value: partial
       });
     }
   }
@@ -103,7 +114,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 
 exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
   {
-    allMdx {
+    docs: allMdx(filter: { fields: { source: { ne: "design-snippets" } } }) {
       nodes {
         id
         fileAbsolutePath
@@ -114,10 +125,30 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
           navSection
           title
           propComponents
+          componentName
         }
       }
     }
-    partials: allFile(filter: { fields: { name: { ne: "" } } }) {
+    designSnippets: allMdx(filter: { fields: { source: { eq: "design-snippets" } } }) {
+      nodes {
+        id
+        frontmatter {
+          reactComponentName
+          coreComponentName
+        }
+      }
+    }
+    pages: allFile(filter: { fields: { slug: { nin: ["", null] } } }) {
+      nodes {
+        absolutePath
+        fields {
+          slug
+          source
+          title
+        }
+      }
+    }
+    partials: allFile(filter: { fields: { name: { nin: ["", null] } } }) {
       nodes {
         fields {
           name
@@ -132,34 +163,49 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
     }
     // Create a global CSS Variable page
     actions.createPage({
-      path: '/documentation/global-css-variables',
+      path: '/documentation/overview/global-css-variables',
       component: path.resolve(__dirname, `./pages/globalCSSVariables.js`),
+      context: {
+        navSection: 'overview',
+        title: 'Global CSS variables',
+        source: 'shared'
+      }
     });
 
     const hbsInstance = createHandlebars(result.data.partials.nodes);
     const hidden = (pluginOptions.hiddenPages || []).map(title => title.toLowerCase());
 
-    result.data.allMdx.nodes
+    result.data.docs.nodes
+      .concat(result.data.pages.nodes)
       .filter(node => !hidden.includes(node.fields.title.toLowerCase()))
       .forEach(node => {
-        const tableOfContents = extractTableOfContents(node.mdxAST) || [];
-        const { slug, navSection, title, source, propComponents = [] } = node.fields;
+        const { componentName, slug, navSection = null, title, source, propComponents = [''] } = node.fields;
+        const fileRelativePath = path.relative(__dirname, node.absolutePath || node.fileAbsolutePath);
+        const tableOfContents = extractTableOfContents(node.mdxAST);
+        const examples = extractExamples(node.mdxAST, hbsInstance, fileRelativePath);
 
-        const examples = extractExamples(node.mdxAST, hbsInstance, path.relative(__dirname, node.fileAbsolutePath));
+        // not a huge fan of this component mapping disaster
+        const designNode = result.data.designSnippets.nodes.find(
+          node => node.frontmatter[`${source}ComponentName`] === componentName
+        );
+        
         actions.createPage({
           path: slug,
-          component: path.resolve(__dirname, `./templates/mdx.js`),
+          component: node.absolutePath || path.resolve(__dirname, `./templates/mdx.js`),
           context: {
             // Required by template to fetch more MDX/React docgen data
             id: node.id,
+            designId: designNode ? designNode.id : 'undefined',
             propComponents,
-            // For use in sideNav.js
+            // For TOC
+            tableOfContents,
+            // For sideNav and Example.js (for className)
             navSection,
+            // For TOC and Example.js
             title,
+            source,
             // To render example HTML
             htmlExamples: source === 'core' ? examples : undefined,
-            // To render TOC
-            tableOfContents,
           }
         });
 
@@ -186,3 +232,58 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
         });
       });
   });
+
+// https://www.gatsbyjs.org/docs/schema-customization/
+exports.createSchemaCustomization = ({ actions }) => {
+  // Define types for sideNav if core, react, or org aren't included
+  const sideNavTypeDefs = `
+    type SideNavItem @infer {
+      section: String
+      text: String
+      path: String
+    }
+    type SideNav @infer {
+      core: [SideNavItem]
+      react: [SideNavItem]
+      get_started: [SideNavItem]
+      design_guidelines: [SideNavItem]
+      contribute: [SideNavItem]
+    }
+    type TopNavItem @infer {
+      text: String
+      path: String
+      contexts: [String]
+    }
+    type SitePluginOptions @infer {
+      sideNav: SideNav
+      topNavItems: [TopNavItem]
+    }
+    type SitePlugin implements Node @infer {
+      pluginOptions: SitePluginOptions
+    }
+  `;
+  actions.createTypes(sideNavTypeDefs);
+}
+
+// Exclude CSS-in-JS styles
+exports.onCreateWebpackConfig = ({ actions, stage }) => {
+  if (stage === 'build-javascript') {
+    // Turn off source-maps
+    actions.setWebpackConfig({
+      devtool: false
+    })
+  }
+  actions.setWebpackConfig({
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          include: [
+            /react-styles\/css/
+          ],
+          loader: 'null-loader'
+        }
+      ]
+    }
+  });
+};

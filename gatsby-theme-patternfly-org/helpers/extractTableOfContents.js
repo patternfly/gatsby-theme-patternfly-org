@@ -3,6 +3,10 @@ const visit = require('unist-util-visit');
 module.exports = {
   extractTableOfContents: mdxAST => {
     const toc = [];
+    
+    if (!mdxAST) {
+      return toc;
+    }
 
     visit(mdxAST, 'heading', node => {
       if (node.depth === 2 && node.children.length > 0) { // ## h2 headings

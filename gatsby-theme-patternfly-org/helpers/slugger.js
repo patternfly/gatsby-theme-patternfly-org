@@ -4,12 +4,11 @@ const React = require('react');
 module.exports = {
   slugger: children => {
     const value = React.Children.toArray(children).join('');
-    const whitespace = /\s/g;
-    const specials = /[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,./:;<=>?@[\]^`{|}~]/g;
     return value
       .toLowerCase()
       .trim()
-      .replace(specials, '')
-      .replace(whitespace, '-');
+      .replace(/index$/, '')
+      .replace(/[\u2000-\u206F\u2E00-\u2E7F\\'!"#$%&()*+,./:;<=>?@[\]^`{|}~]/g, '')
+      .replace(/\s/g, '-');
   }
 }

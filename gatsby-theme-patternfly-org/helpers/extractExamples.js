@@ -6,6 +6,10 @@ module.exports = {
   // Map example page urls to HTML
   extractExamples: (mdxAST, hbsInstance, fileName) => {
     const examples = {};
+    
+    if (!mdxAST) {
+      return examples;
+    }
 
     visit(mdxAST, 'code', node => {
       let id = 'no-id';

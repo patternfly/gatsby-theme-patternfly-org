@@ -1,49 +1,89 @@
 import React from 'react';
-import { graphql, useStaticQuery, Link } from 'gatsby';
-import { Nav, NavList, NavExpandable, NavItem } from '@patternfly/react-core';
+import { Link } from 'gatsby';
+import { Nav, NavList, NavExpandable, Title, Dropdown, DropdownToggle, DropdownItem } from '@patternfly/react-core';
+import { CaretDownIcon } from '@patternfly/react-icons';
+
 import { capitalize } from '../helpers/capitalize';
 import { slugger } from '../helpers/slugger';
+import './sideNav.css';
 
-const SideNav = ({ location }) => {
-  const data = useStaticQuery(graphql`
-  {
-    allSitePage(filter: { context: { navSection: { ne: null } } },
-                sort: { fields: context___title }) {
-      nodes {
-        path
-        context {
-          title
-          navSection
-        }
-      }
-    }
-    sitePlugin(name: { eq: "gatsby-theme-patternfly-org" }) {
-      pluginOptions {
-        sideNavItems {
-          section
-          text
-          link
-        }
-      }
-    }
-  }
-  `);
-  const allPages = data.allSitePage.nodes.reduce((accum, node) => {
+const renderNavItem = node => (
+  <li key={node.path} className="pf-c-nav__item">
+    <Link
+      to={node.path}
+      state={{ context: node.context }} // For keeping context on shared pages
+      className="pf-c-nav__link"
+      activeClassName="pf-m-active"
+      >
+      {node.text}
+    </Link>
+  </li>
+);
+
+const SideNav = ({ location, context = 'core', allPages, sideNavContexts, parityComponent, pageSource }) => {
+  const [isDropdownOpen, setDropdownOpen] = React.useState(false);
+
+  const allNavItems = allPages.reduce((accum, node) => {
     const navSection = node.context.navSection || 'page';
     accum[navSection] = accum[navSection] || [];
     accum[navSection].push({
       text: node.context.title,
-      path: node.path
+      path: node.path,
+      source: node.context.source,
+      context
     });
 
     return accum;
   }, {});
 
+  // The `context` property worked hard to get here
+  const sideNavItems = sideNavContexts[context.replace(/-/g, '_')] || [];
+
+  // TODO: Get a better design and get rid of this thing.
+  const contextSwitcher = pageSource === 'org'
+    ? { core: 'HTML', react: 'React'}
+    : {};
+  const dropdownToggle = (
+    <DropdownToggle
+      onToggle={() => setDropdownOpen(!isDropdownOpen)}
+      iconComponent={CaretDownIcon}
+      >
+      {contextSwitcher[context]}
+    </DropdownToggle>
+  );
+  const dropdownItems = Object.entries(contextSwitcher)
+    .filter(([key]) => key !== context) // Doesn't make sense to be able to switch from "core" to "core"
+    .map(([key, value]) =>
+      <DropdownItem
+        key={key}
+        component={
+          <Link to={`/documentation/${key}/${parityComponent || 'overview/release-notes'}`}
+            className="pf-c-nav__link">
+            {value}
+          </Link>
+        } />
+    );
   return (
     <Nav aria-label="Side Nav">
+      {/* debug */}
+      {/* <Title size="xl">{context}</Title> */}
+      {/* <Title size="xl">{parityComponent}</Title> */}
+      {Object.keys(contextSwitcher).includes(context) && (
+        <div className="ws-org-context-switcher">
+          <label className="">FRAMEWORK</label>
+          <Dropdown
+            className="ws-org-context-switcher-dropdown"
+            onSelect={() => setDropdownOpen(!isDropdownOpen)}
+            toggle={dropdownToggle}
+            isOpen={isDropdownOpen}
+            dropdownItems={dropdownItems}
+          />
+        </div>
+      )}
       <NavList>
-        {data.sitePlugin.pluginOptions.sideNavItems.map(({ section, text, link }) => {
-          if (section && allPages[section]) {
+        {sideNavItems.map(navItem => {
+          const { section } = navItem;
+          if (section && allNavItems[section]) {
             return (
               <NavExpandable
                 key={section}
@@ -51,24 +91,14 @@ const SideNav = ({ location }) => {
                 isActive={location.pathname.includes(`/${slugger(section)}/`)}
                 isExpanded={location.pathname.includes(`/${slugger(section)}/`)}
               >
-                {allPages[section].map(node => (
-                  <li key={node.path} className="pf-c-nav__item">
-                    <Link to={node.path} className="pf-c-nav__link" activeClassName="pf-m-active">
-                      {node.text}
-                    </Link>
-                  </li>
-                ))}
+                {allNavItems[section]
+                  .filter(node => node.source === context || node.source === 'shared')
+                  .map(renderNavItem)}
               </NavExpandable>
             );
           }
 
-          return (
-            <li key={link} className="pf-c-nav__item">
-              <Link to={link} className="pf-c-nav__link" activeClassName="pf-m-active">
-                {text}
-              </Link>
-            </li>
-          );
+          return renderNavItem(navItem);
         })}
       </NavList>
     </Nav>

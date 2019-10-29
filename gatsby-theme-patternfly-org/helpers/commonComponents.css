@@ -47,3 +47,7 @@ h3.ws-title {
     border-bottom: 0;
   }
 }
+
+.ws-mdx-p:not(:last-child) {
+  margin-bottom: 1rem;
+}

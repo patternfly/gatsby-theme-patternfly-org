@@ -7,11 +7,28 @@
   "scripts": {
     "build": "gatsby build",
     "clean": "gatsby clean",
-    "develop": "gatsby develop -p 8001"
+    "develop": "gatsby develop"
   },
   "dependencies": {
+    "@patternfly/patternfly": "latest",
+    "@patternfly/react-charts": "prerelease",
+    "@patternfly/react-catalog-view-extension": "prerelease",
+    "@patternfly/react-core": "prerelease",
+    "@patternfly/react-icons": "latest",
+    "@patternfly/react-inline-edit-extension": "prerelease",
+    "@patternfly/react-styled-system": "prerelease",
+    "@patternfly/react-styles": "prerelease",
+    "@patternfly/react-table": "prerelease",
+    "@patternfly/react-tokens": "prerelease",
+    "@patternfly/react-topology": "prerelease",
+    "@patternfly/react-virtualized-extension": "prerelease",
+    "eslint-config-react-app": "^5.0.2",
     "gatsby": "^2.16.4",
+    "gatsby-plugin-sitemap": "^2.2.19",
+    "gatsby-remark-copy-linked-files": "^2.1.28",
     "gatsby-source-filesystem": "^2.1.22",
+    "gatsby-theme-patternfly-org": "^0.0.16",
+    "gatsby-transformer-json": "^2.2.15",
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
   }
