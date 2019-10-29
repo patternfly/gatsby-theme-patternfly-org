@@ -13,6 +13,7 @@ import { SearchIcon } from '@patternfly/react-icons';
 import SideNav from '../components/sideNav';
 import TopNav from '../components/topNav';
 import Banner from '../components/banner';
+import Footer from '../components/Footer';
 import './sideNavLayout.css';
 
 // ParityComponentName: aboutmodal <=> aboutmodalbox
@@ -169,7 +170,7 @@ const SideNavLayout = ({ children, location, context, hideSideNav = false, parit
   }
 
   return (
-    <React.Fragment>
+    <div>
       {isBannerOpen && <Banner onClose={closeBanner} />}
       <Page isManagedSidebar header={Header} sidebar={SideBar}>
         <Helmet>
@@ -177,7 +178,8 @@ const SideNavLayout = ({ children, location, context, hideSideNav = false, parit
         </Helmet>
         {children}
       </Page>
-    </React.Fragment>
+      <Footer />
+    </div>
   );
 }
 
