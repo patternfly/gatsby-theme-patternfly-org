@@ -182,5 +182,7 @@ module.exports = {
         ]
       }
     },
+    // For Algogia global doc search
+    'gatsby-plugin-sitemap'
   ],
 }

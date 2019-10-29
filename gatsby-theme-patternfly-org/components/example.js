@@ -71,7 +71,7 @@ const Example = props => {
         const resizeWidth = Math.min(
           document.getElementsByClassName('ws-example')[0].clientWidth,
           1280
-        ) - 25;
+        ) - 32.5;
 
         const scale = resizeWidth / 1280;
       
