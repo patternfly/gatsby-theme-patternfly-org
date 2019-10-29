@@ -13,17 +13,19 @@ import { SearchIcon } from '@patternfly/react-icons';
 import SideNav from '../components/sideNav';
 import TopNav from '../components/topNav';
 import Banner from '../components/banner';
-import Footer from '../components/Footer';
+import Footer from '../components/footer';
 import './sideNavLayout.css';
 
 // ParityComponentName: aboutmodal <=> aboutmodalbox
 const SideNavLayout = ({ children, location, context, hideSideNav = false, parityComponent }) => {
-  const initialBannerOpen = sessionStorage && sessionStorage.getItem('pf4-banner-closed') === 'true' ? false : true;
+  const initialBannerOpen = typeof window !== 'undefined' && sessionStorage && sessionStorage.getItem('pf4-banner-closed')
+    ? false
+    : true;
   const [ isBannerOpen, setBannerOpen ] = React.useState(initialBannerOpen)
   let docSearchInit = false;
   // Add docsearch
   useEffect(() => {
-    if (!docSearchInit && window && window.docsearch) {
+    if (!docSearchInit && typeof window !== 'undefined' && window.docsearch) {
       window.docsearch({
         apiKey: '06941733239da4f8617d272cf2ed4d5c',
         indexName: 'patternfly',
@@ -34,7 +36,8 @@ const SideNavLayout = ({ children, location, context, hideSideNav = false, parit
     } else {
       console.warn('Search has failed to load');
     }
-  })
+  });
+
   // Put queries for Top and Side navs here for performance
   const data = useStaticQuery(graphql`
   {
@@ -135,13 +138,14 @@ const SideNavLayout = ({ children, location, context, hideSideNav = false, parit
                   color: '#fff',
                   backgroundColor: 'var(--pf-global--BackgroundColor--dark-100)',
                   border: 0,
+                  paddingLeft: '26px'
                 }}
               />
               <SearchIcon
                 style={{
                   position: 'absolute',
                   top: '10px',
-                  left: '-18px'
+                  left: '4px'
                 }} />
             </Form>
           </ToolbarItem>
