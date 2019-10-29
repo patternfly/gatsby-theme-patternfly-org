@@ -40,6 +40,7 @@ const SideNavLayout = ({ children, location, context, hideSideNav = false, parit
     }
     sitePlugin(name: { eq: "gatsby-theme-patternfly-org" }) {
       pluginOptions {
+        context
         topNavItems {
           text
           path
@@ -78,13 +79,14 @@ const SideNavLayout = ({ children, location, context, hideSideNav = false, parit
   `);
   const { title } = data.site.siteMetadata;
   const { num, url } = data.prInfo;
-  const { topNavItems, sideNav } = data.sitePlugin.pluginOptions;
+  const { topNavItems, sideNav, context: pageSource } = data.sitePlugin.pluginOptions;
   const SideBar = hideSideNav
     ? undefined
     : <PageSidebar
         nav={<SideNav
           location={location}
           context={context}
+          pageSource={pageSource}
           allPages={data.allSitePage.nodes}
           sideNavContexts={sideNav}
           parityComponent={parityComponent} />}

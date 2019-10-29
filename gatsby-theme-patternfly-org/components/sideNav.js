@@ -20,7 +20,7 @@ const renderNavItem = node => (
   </li>
 );
 
-const SideNav = ({ location, context = 'core', allPages, sideNavContexts, parityComponent }) => {
+const SideNav = ({ location, context = 'core', allPages, sideNavContexts, parityComponent, pageSource }) => {
   const [isDropdownOpen, setDropdownOpen] = React.useState(false);
 
   const allNavItems = allPages.reduce((accum, node) => {
@@ -40,10 +40,9 @@ const SideNav = ({ location, context = 'core', allPages, sideNavContexts, parity
   const sideNavItems = sideNavContexts[context.replace(/-/g, '_')] || [];
 
   // TODO: Get a better design and get rid of this thing.
-  const contextSwitcher = {
-    core: 'HTML',
-    react: 'React'
-  };
+  const contextSwitcher = pageSource === 'org'
+    ? { core: 'HTML', react: 'React'}
+    : {};
   const dropdownToggle = (
     <DropdownToggle
       onToggle={() => setDropdownOpen(!isDropdownOpen)}
