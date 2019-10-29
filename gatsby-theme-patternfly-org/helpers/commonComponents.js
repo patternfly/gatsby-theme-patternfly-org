@@ -12,9 +12,9 @@ export const commonComponents = {
   p: (props) => <p className="ws-mdx-p" {...props} />,
   a: (props) => {
     // https://www.gatsbyjs.org/docs/gatsby-link/#reminder-use-link-only-for-internal-links
-    if (props.href.includes('//')) {
+    if (props.href.includes('//') || props.href.startsWith("#")) {
       return <a {...props} />;
-    }
+    } 
     return <Link to={props.href} {...props} />;
   }
     
