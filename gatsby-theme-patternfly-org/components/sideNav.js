@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import { Nav, NavList, NavExpandable, Title } from '@patternfly/react-core';
+import { Nav, NavList, NavExpandable, DropdownToggle, DropdownItem, Dropdown } from '@patternfly/react-core';
+import { CaretDownIcon } from '@patternfly/react-icons';
 import { capitalize } from '../helpers/capitalize';
 import { slugger } from '../helpers/slugger';
 import "./sideNav.css";
@@ -18,7 +19,9 @@ const renderNavItem = node => (
   </li>
 );
 
-const SideNav = ({ location, context = 'core', allPages, sideNavContexts }) => {
+const SideNav = ({ location, context = 'core', allPages, sideNavContexts, pageSource, parityComponent }) => {
+  const [isDropdownOpen, setDropdownOpen] = React.useState(false);
+  
   const allNavItems = allPages.reduce((accum, node) => {
     const navSection = node.context.navSection || 'page';
     accum[navSection] = accum[navSection] || [];
