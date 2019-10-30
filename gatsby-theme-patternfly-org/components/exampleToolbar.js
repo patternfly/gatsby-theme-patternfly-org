@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Form, TextContent, Text } from '@patternfly/react-core';
 import { CopyIcon, AsleepIcon, ExternalLinkAltIcon, CodepenIcon } from '@patternfly/react-icons';
 import { copy } from '../helpers/copy';
+import './exampleToolbar.css';
 
 export default class ExampleToolbar extends React.Component {
   constructor(props) {
@@ -121,7 +122,7 @@ export default class ExampleToolbar extends React.Component {
           }
           {showCopyMessage &&
             <TextContent>
-              <Text component="pre" className="messageText">
+              <Text component="pre" className="ws-org-messageText">
                 Copied to clipboard
               </Text>
             </TextContent>
