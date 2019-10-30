@@ -71,6 +71,8 @@ Cards will size down appropriately based on the built-in CSS responsiveness beha
 ![card-view--mobile](./img/card-view-mobile.png)
 
 ## Related components and demos
-### HTML/CSS
-  - [Card view](/documentation/core/demos/cardview)
-  - [Card](/documentation/react/components/card)
+**HTML/CSS**
+* [Card view](/documentation/core/demos/cardview)
+
+**React**
+* [Card](/documentation/react/components/card)

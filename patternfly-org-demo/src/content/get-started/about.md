@@ -16,7 +16,7 @@ Layouts are generic tools that allow you to structure and organize the content o
 ### Demos
 Demos use components and layouts in combination to show you how to build more complex structures and application views.
 
-[**View components, layouts, and demos in HTML/CSS**](/documentation/core/components/aboutmodalbox) <i class="ws-content-blueArrow fas fa-arrow-right pf-u-mx-sm"></i>
+[**View components, layouts, and demos in HTML/CSS**](/documentation/core/overview/release-notes) <i class="ws-content-blueArrow fas fa-arrow-right pf-u-mx-sm"></i>
 
 [**View components, layouts, and demos in React**](/documentation/react/overview/release-notes) <i class="ws-content-blueArrow fas fa-arrow-right pf-u-mx-sm"></i>
 

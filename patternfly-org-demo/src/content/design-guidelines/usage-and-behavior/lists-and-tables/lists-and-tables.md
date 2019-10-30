@@ -20,7 +20,7 @@ PatternFly supports several variations of the data list component.
 
 ![standard data list](./img/standard-list.png)
 
-1. **[Toolbar](../toolbar/design.md):** The toolbar sits above the list and contains controls for manipulating list data. Common actions include filtering, sorting, and pagination.
+1. **[Toolbar](/design-guidelines/usage-and-behavior/toolbar):** The toolbar sits above the list and contains controls for manipulating list data. Common actions include filtering, sorting, and pagination.
 2. **Row:** Row height may be variable and sizes to the content. Rows in a data list may take any supported layout.
 3. **Inline actions:** These actions apply only to the current row/item.
 

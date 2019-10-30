@@ -35,7 +35,7 @@ The most common use case for area charts is to show trending over a continuous s
 #### Example
 ![Area chart](./img/area-chart.png)
 
-1. **Data area fill:** The area fill is presented below the data line. Data area fills use colors that conform with the [Colors for charts](/design-guidelines/styles/chart-colors).
+1. **Data area fill:** The area fill is presented below the data line. Data area fills use colors that conform with the [Colors for charts](/design-guidelines/styles/colors-for-charts).
 2. **Chart tooltip:** Use the chart tooltip to drill into the data related to any data point provided on your area chart.
 
 #### React component
@@ -57,7 +57,7 @@ The orientation of bar charts is dependent on the data and space at hand. Any ba
 
 ![Vertical bar chart](./img/vertbarchart.png)
 
-1. **Bar:** All bars should be the same width. The height of the bar represents its value. The spacing between bars should be equal as well, mimicking the axis value spacing. For recommendations on fill colors, see [Colors for charts](/design-guidelines/styles/chart-colors).
+1. **Bar:** All bars should be the same width. The height of the bar represents its value. The spacing between bars should be equal as well, mimicking the axis value spacing. For recommendations on fill colors, see [Colors for charts](/design-guidelines/styles/colors-for-charts).
 
 #### React component
 [Bar chart](/documentation/react/charts/chartbar)
@@ -71,7 +71,7 @@ Stacked bar charts describe totals while allowing a degree of internal breakdown
 
 ![Vertical stacked bar chart](./img/vertstackedbarchart.png)
 
-1. **Stacked bar:** The first series name is represented by the topmost stacked bar, and the last series name is represented by the bottommost stacked bar. For recommendations on series colors, see [Colors for charts](/design-guidelines/styles/chart-colors).
+1. **Stacked bar:** The first series name is represented by the topmost stacked bar, and the last series name is represented by the bottommost stacked bar. For recommendations on series colors, see [Colors for charts](/design-guidelines/styles/colors-for-charts).
 
 #### React component
 [Stacked bar chart](/documentation/react/charts/chartstack)
@@ -87,7 +87,7 @@ If you need to compare one category to another, consider using a [Bar chart](#ba
 In donut charts, you can choose to use percentages or integer values to compare parts to the whole. When deciding which to use, consider the information that is most important to your user and what makes the most sense for your use case. For example, if a user knows they have 123 farm animals and they’re interested in knowing how many of those animals are cows, it probably makes more sense to use an integer value. If that same user is interested in knowing how much storage space they have left in their grain silo, a percentage might be better.
 
 
-For donut charts, don’t try to represent more than six categories. We recommend using the [Colors for charts](/design-guidelines/styles/chart-colors) guidelines to represent your data when thresholds are not present.
+For donut charts, don’t try to represent more than six categories. We recommend using the [Colors for charts](/design-guidelines/styles/colors-for-charts) guidelines to represent your data when thresholds are not present.
 
 #### Example
 ![Donut chart](./img/donut-chart.png)
@@ -107,7 +107,7 @@ For donut charts, don’t try to represent more than six categories. We recommen
 ![Donut utilization 2](./img/donut-utilization-2.png)
 
 1. **Unused segment fill:** The unused area of the donut chart will always remain at #EDEDED.
-2. **Used segment fill:** We recommend using #0066cc for the used area of the donut chart. See [Colors for charts](/design-guidelines/styles/chart-colors) for other recommended color options.
+2. **Used segment fill:** We recommend using #0066cc for the used area of the donut chart. See [Colors for charts](/design-guidelines/styles/colors-for-charts) for other recommended color options.
 3. **Utilization label:** Both percentages and whole numbers can be used to represent the utilization.
 4. **Chart tooltip:** Since this is a utilization donut chart, the tooltip will display the percentage of data utilized. Chart tooltips only appear on hover over the utilization segment of the chart. We recommend stating the segment name and the utilization value being captured. For example, if the user is tracking GBps utilization, the chart tooltip would state “GBps utilization: 75%.”
 
@@ -129,7 +129,7 @@ For donut charts, don’t try to represent more than six categories. We recommen
 4. **Chart tooltip:** Chart tooltips appear on hover for both threshold segments and utilization segments. We recommend stating the threshold name, the segment name, and the value being represented. For example, if the threshold being met is “Danger,” and the segment represents “Storage capacity,” and the value being represented is 92%, your chart tooltip would state, “Danger: Storage capacity: 92%.” We recommend stating the threshold name “at” the percentage the threshold begins (ex. Warning at 60%).
 
 #### React component
-[Donut utilization](/documentation/react/charts/chartdonututilization/#donut-utilization-chart-with-static-thresholds)
+[Donut utilization](/documentation/react/charts/chartdonututilization/#donut-utilization-threshold-examples)
 
 
 ### Line chart
@@ -144,7 +144,7 @@ Multiple lines on the same chart allow the user to visualize relationships betwe
 #### Example
 ![Line chart](./img/linechart.png)
 
-1. **Line:** Line charts can optionally visually represent data points as dots on the line. If so, the same interaction that occurs when hovering over one in an [Area chart](#area-chart) will occur in line charts. For line colors, we recommend using the [Colors for charts](/design-guidelines/styles/chart-colors).
+1. **Line:** Line charts can optionally visually represent data points as dots on the line. If so, the same interaction that occurs when hovering over one in an [Area chart](#area-chart) will occur in line charts. For line colors, we recommend using the [Colors for charts](/design-guidelines/styles/colors-for-charts).
 
 #### React component
 [Line chart](/documentation/react/charts/chartline)
@@ -161,7 +161,7 @@ A pie chart may be the wrong choice when you need to compare categories to one a
 #### Example
 ![Pie chart](./img/piechart.png)
 
-1. **Pie chart fill:** We recommend that fill colors should be based on the [Colors for charts](/design-guidelines/styles/chart-colors).
+1. **Pie chart fill:** We recommend that fill colors should be based on the [Colors for charts](/design-guidelines/styles/colors-for-charts).
 2. **Legend:** Each variable on the legend should report their current value.
 
 #### React component
@@ -180,7 +180,7 @@ Sparklines are commonly used in tables, reports, and dashboards. A common use ca
 1. **Axis:** We recommend that sparklines are shown without an x or y-axis. Depending on space, a label can be placed underneath or to the left of the sparkline.
 
 #### React component
-[Sparkline](/documentation/react/charts/chartarea/#sparkline-chart)
+[Sparkline](/documentation/react/charts/sparkline)
 
 ### Charts in cards
 If a chart lives in a card, the title of that chart will be placed on the header of that card instead of the chart. The rest of the chart guidelines should be followed for the chart itself.

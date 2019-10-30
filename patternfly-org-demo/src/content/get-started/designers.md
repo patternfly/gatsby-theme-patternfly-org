@@ -29,7 +29,7 @@ The design kit works with Sketch libraries.
 
 ### The template file
 
-The template file contains complex components and demos like charts and forms that make it faster and easier for you to add common design patterns to your wireframes. To view template examples click [here](https://www.patternfly.org/v4/documentation/core/demos/aboutmodal).
+The template file contains complex components and demos like charts and forms that make it faster and easier for you to add common design patterns to your wireframes. To view template examples click [here](documentation/core/demos/aboutmodal).
 
 The contents of the template file are organized alphabetically by component or demo name. If you want to use any of the artboards in the template file to create custom designs, you should follow these rules:
 1. Unhide “padding” group (this group contains all of the spacers we use to create the design)
@@ -61,7 +61,7 @@ The layout for all visual elements in Patternfly is determined by spacers. The s
 
 The [template library](https://sketch.cloud/s/R9k28) also contains examples of spacer use to clarify where elements should be placed within a given page or design.  These templates have been created in a way that reduces a user’s need to think about spacers. An example of a Login form template can be seen here with different sized spacers - demonstrated by their different colors - used to separate each symbol/component within the layout.
 
-To see more information about spacers and their use please click [here](https://www.patternfly.org/v4/design-guidelines/styles/spacers).
+To see more information about spacers and their use please click [here](/design-guidelines/styles/spacers).
 
 ### Layer styles
 Symbols in the symbol are organized by component; after selecting a component, you’ll see the variations and states of that component.
@@ -105,16 +105,16 @@ View content guidelines
 ### Start building with components.
 What does a toolbar look like? What about a filter chip? Components are the building blocks of the design system. Check out individual component pages to view examples, understand states and behaviors, and check out the code samples (if you’re into that kind of thing).
 
-[**View HTML/CSS components**](/documentation/core) <i class="ws-content-blueArrow fas fa-arrow-right pf-u-mx-sm"></i>
+[**View HTML/CSS components**](/documentation/core/components/aboutmodalbox) <i class="ws-content-blueArrow fas fa-arrow-right pf-u-mx-sm"></i>
 
-[**View React components**](/documentation/react) <i class="ws-content-blueArrow fas fa-arrow-right pf-u-mx-sm"></i>
+[**View React components**](/documentation/react/components/aboutmodal) <i class="ws-content-blueArrow fas fa-arrow-right pf-u-mx-sm"></i>
 
 ### Still feeling unsure?
  See all the pieces working together with demos.
 
-[**View HTML/CSS demos**](/documentation/core/demos) <i class="ws-content-blueArrow fas fa-arrow-right pf-u-mx-sm"></i>
+[**View HTML/CSS demos**](/documentation/core/demos/aboutmodal) <i class="ws-content-blueArrow fas fa-arrow-right pf-u-mx-sm"></i>
 
-[**View React demos**](/documentation/react/demos) <i class="ws-content-blueArrow fas fa-arrow-right pf-u-mx-sm"></i>
+[**View React demos**](/documentation/react/demos/bulkselecttable) <i class="ws-content-blueArrow fas fa-arrow-right pf-u-mx-sm"></i>
 
 
 ## Staying up to date
