@@ -1,9 +1,9 @@
 import React from 'react';
-import { Gallery, Form, TextInput, Button, Title, EmptyState, EmptyStateVariant, EmptyStateIcon, EmptyStateBody } from '@patternfly/react-core';
+import { Gallery, Form, TextInput, Title, EmptyState, EmptyStateVariant, EmptyStateIcon, EmptyStateBody } from '@patternfly/react-core';
 import * as icons from '@patternfly/react-icons';
 import IconCard from './iconCard';
 import paramCase from 'param-case';
-import coreIcons from '@patternfly/patternfly/icons/pf-icons.json';
+import coreIcons from './pf-icons.json';
 import './icons.css';
 
 const allIcons = Object.entries(icons).filter(([name]) => name.endsWith('Icon'));
