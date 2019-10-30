@@ -5,7 +5,7 @@ hideTOC: true
 ---
 import { Button, Grid, GridItem } from '@patternfly/react-core';
 import { CheckCircleIcon, TimesCircleIcon } from '@patternfly/react-icons';
-import Icons from 'gatsby-theme-patternfly-org/components/icons';
+<!-- import Icons from 'gatsby-theme-patternfly-org/components/icons'; -->
 
 If you're a developer, [check out our getting started page](/get-started/developers#using-styles) to learn more about how to get and use our icon set.
 
@@ -14,4 +14,4 @@ PatternFly uses custom icons and selections from [FontAwesome](https://fontaweso
 
 The icons you see on this page are a subset of available PatternFly icons. Click on any icon to download or copy a code snippet. To use an icon in your desktop applications, you can install the [PatternFlyIcons-webfont.ttf](https://github.com/patternfly/patternfly-next/blob/master/src/patternfly/assets/pficon/pficon.ttf), set it as the font in your application, and paste the icons into your designs.
 
-<Icons />
+<!-- <Icons /> -->
