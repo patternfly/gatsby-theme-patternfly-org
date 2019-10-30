@@ -8,12 +8,13 @@ import React, { useEffect } from 'react';
 import { graphql, useStaticQuery } from 'gatsby';
 import { Helmet } from 'react-helmet';
 
-import { Page, PageHeader, PageSidebar, Toolbar, ToolbarGroup, ToolbarItem, Form, TextInput } from '@patternfly/react-core';
+import { Page, PageHeader, PageSidebar, Toolbar, ToolbarGroup, ToolbarItem, Form, TextInput, Brand } from '@patternfly/react-core';
 import { SearchIcon } from '@patternfly/react-icons';
 import SideNav from '../components/sideNav';
 import TopNav from '../components/topNav';
 import Banner from '../components/banner';
 import Footer from '../components/footer';
+import logo from '../images/logo.svg';
 import './sideNavLayout.css';
 
 // ParityComponentName: aboutmodal <=> aboutmodalbox
@@ -156,7 +157,7 @@ const SideNavLayout = ({ children, location, context, hideSideNav = false, parit
     <PageHeader
       className="ws-page-header"
       toolbar={PageToolbar}
-      logo={num ? `PR #${num}` : title}
+      logo={num ? `PR #${num}` : <Brand src={logo} alt="Patternfly Logo" />}
       logoProps={{
         href: url || '/'
       }}
