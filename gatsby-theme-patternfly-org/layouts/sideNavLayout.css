@@ -1,5 +1,6 @@
 .ws-page-header {
   background-color: #151515;
+  height: 94px;
   min-height: auto;
 }
 .ws-page-header .pf-c-nav__scroll-button  {
@@ -62,6 +63,11 @@
   left: 0 !important;
   transform: none;
 }
-.ws-page-sidebar {
+.ws-page-sidebar#page-sidebar {
   color: white;
+  box-shadow: none;
+}
+
+.ws-page-sidebar  .pf-c-nav {
+  margin-top: 16px;
 }
