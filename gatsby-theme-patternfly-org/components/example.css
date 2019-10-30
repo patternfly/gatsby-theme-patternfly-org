@@ -10,7 +10,7 @@
 }
 
 .ws-preview {
-  margin: 1rem;
+  padding: 1rem;
   background-color: white;
   border-bottom: 1px solid #f8f8f8;
   transition: width .2s ease-in-out;
@@ -40,3 +40,42 @@
   position: relative;
   display: block;
 }
+
+.ws-preview__thumbnail-link {
+  position: relative;
+  display: inline-block;
+  line-height: 0;
+}
+
+.ws-preview__thumbnail-link::before,
+.ws-preview__thumbnail-link::after {
+  position: absolute;
+  z-index: 500;
+  transition: .2s;
+  opacity: 0;
+}
+
+.ws-preview__thumbnail-link:hover::before,
+.ws-preview__thumbnail-link:hover::after {
+  opacity: 1;
+}
+
+.ws-preview__thumbnail-link::before {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  content: '';
+  background-color: rgba(0,0,0,.5);
+}
+
+.ws-preview__thumbnail-link::after {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: "Font Awesome 5 Free";
+  content: "\f35d";
+  font-size: 52px;
+  color: rgba(255,255,255,.4);
+}
+
