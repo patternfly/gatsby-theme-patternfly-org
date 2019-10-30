@@ -56,11 +56,13 @@ module.exports = {
         topNavItems: [
           {
             text: 'Get started',
-            path: '/get-started/about'
+            path: '/get-started/about',
+            contexts: ['get-started']
           },
           {
             text: 'Design guidelines',
-            path: '/design-guidelines/styles/colors'
+            path: '/design-guidelines/styles/colors',
+            contexts: ['design-guidelines']
           },
           {
             text: 'Documentation',
@@ -69,7 +71,8 @@ module.exports = {
           },
           {
             text: 'Contribute',
-            path: '/contribute/about'
+            path: '/contribute/about',
+            contexts: ['contribute']
           },
           {
             text: 'Get in touch',
