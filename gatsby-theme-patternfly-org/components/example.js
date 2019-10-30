@@ -59,7 +59,7 @@ const Example = props => {
     props.html
     ? getStaticParams(props.title, html)
     : getReactParams(props.title, editorCode));
-  
+
   const className = `ws-${props.source}-${navSection[0]}-${componentName}`;
   const id = `${className}-${slugger(title)}`;
 
@@ -70,13 +70,13 @@ const Example = props => {
         const resizeWidth = Math.min(
           document.getElementsByClassName('ws-example')[0].clientWidth,
           800
-        ) - 32.5;
+        );
 
         const scale = resizeWidth / 1280;
         console.log('resize!', scale, scale*800);
-      
+
         setPreviewStyle({ transform: `scale(${scale})` });
-        setPreviewContainerStyle({ height:`${scale * 800}px` });
+        setPreviewContainerStyle({ height:`${scale * 800}px`, width:`${scale * 1280}px` });
       }
 
       if (!previewStyle.transform) {
@@ -92,9 +92,9 @@ const Example = props => {
     <LivePreview
       id={id}
       style={previewStyle}
-      className={`${className} ws-preview${
+      className={`${className} ${
         darkMode ? ' pf-t-dark pf-m-opaque-200' : ''}${
-        isFullscreen ? ' ws-preview-fullscreen' : ''}`} />
+        isFullscreen ? ' ws-preview-fullscreen' : 'ws-preview'}`} />
   );
 
   return (
@@ -115,13 +115,19 @@ const Example = props => {
       >
         {/* We need this container for fullscreen example styling and popout */}
         {isFullscreen
-          ? <a className="ws-preview-container"
-              href={fullscreenLink}
-              style={previewContainerStyle}>
-              {Preview}
-            </a>
+          ?
+            <div className="ws-preview">
+              <a
+                className="ws-preview__thumbnail-link"
+                href={fullscreenLink}>
+                <div
+                  style={previewContainerStyle}>
+                  {Preview}
+                </div>
+              </a>
+            </div>
           : Preview}
-        
+
         <ExampleToolbar
           editor={<LiveEditor className="ws-editor"/>}
           supportedLangs={supportedLangs}
