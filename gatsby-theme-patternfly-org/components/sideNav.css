@@ -11,7 +11,7 @@
 
 .ws-sideNav-category > .pf-c-nav__link {
   border-left: 4px solid transparent;
-  padding: 8px 16px 8px 46px;
+  padding: 8px 16px;
 }
 
 .ws-sideNav-category > .pf-c-nav__link,
