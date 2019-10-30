@@ -53,7 +53,7 @@ const Example = props => {
     const html = Prism.highlight(children, Prism.languages.javascript, 'javascript');
     return <pre dangerouslySetInnerHTML={{ __html: html }} />;
   }
-  const fullscreenLink = `${location.pathname}/${title.toLowerCase()}`;
+  const fullscreenLink = `${location.pathname}/${title.toLowerCase().replace(/[()]/g,'')}`;
   const scope = useMDXScope();
   const codeBoxParams = getParameters(
     props.html
