@@ -3,13 +3,14 @@ import { Link } from 'gatsby';
 import { Nav, NavList, NavExpandable, Title } from '@patternfly/react-core';
 import { capitalize } from '../helpers/capitalize';
 import { slugger } from '../helpers/slugger';
+import "./sideNav.css";
 
 const renderNavItem = node => (
-  <li key={node.path} className="pf-c-nav__item">
+  <li key={node.path} className="pf-c-nav__item ws-sideNav-item">
     <Link
       to={node.path}
       state={{ context: node.context }} // For keeping context on shared pages
-      className="pf-c-nav__link"
+      className="pf-c-nav__link ws-sideNav-link"
       activeClassName="pf-m-active"
       >
       {node.text}
