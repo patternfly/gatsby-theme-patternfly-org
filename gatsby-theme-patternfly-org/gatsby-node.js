@@ -148,6 +148,16 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
         }
       }
     }
+    pages: allFile(filter: { fields: { slug: { nin: ["", null] } } }) {
+      nodes {
+        absolutePath
+        fields {
+          slug
+          source
+          title
+        }
+      }
+    }
     partials: allFile(filter: { fields: { name: { nin: ["", null] } } }) {
       nodes {
         fields {

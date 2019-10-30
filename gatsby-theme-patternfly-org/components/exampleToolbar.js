@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Form, TextContent, Text } from '@patternfly/react-core';
 import { CopyIcon, AsleepIcon, ExternalLinkAltIcon, CodepenIcon } from '@patternfly/react-icons';
+import { copy } from '../helpers/copy';
 
 export default class ExampleToolbar extends React.Component {
   constructor(props) {
@@ -15,23 +16,7 @@ export default class ExampleToolbar extends React.Component {
   };
 
   onCopy = () => {
-    let el = document.createElement('textarea');
-    // Set value (string to be copied)
-    el.value = this.props.code;
-    // Set non-editable to avoid focus and move outside of view
-    el.setAttribute('readonly', '');
-    el.style = {
-      display: 'none',
-      position: 'absolute',
-      left: '-9999px'
-    };
-    document.body.appendChild(el);
-    // Select text inside element
-    el.select();
-    // Copy text to clipboard
-    document.execCommand('copy');
-    // Remove temporary element
-    document.body.removeChild(el);
+    copy(this.props.code);
 
     this.setState({
       showCopyMessage: true

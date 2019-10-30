@@ -1,18 +1,17 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import { Nav, NavList, NavExpandable, Title, Dropdown, DropdownToggle, DropdownItem } from '@patternfly/react-core';
+import { Nav, NavList, NavExpandable, DropdownToggle, DropdownItem, Dropdown } from '@patternfly/react-core';
 import { CaretDownIcon } from '@patternfly/react-icons';
-
 import { capitalize } from '../helpers/capitalize';
 import { slugger } from '../helpers/slugger';
-import './sideNav.css';
+import "./sideNav.css";
 
 const renderNavItem = node => (
-  <li key={node.path} className="pf-c-nav__item">
+  <li key={node.path} className="pf-c-nav__item ws-sideNav-item">
     <Link
       to={node.path}
       state={{ context: node.context }} // For keeping context on shared pages
-      className="pf-c-nav__link"
+      className="pf-c-nav__link ws-sideNav-link"
       activeClassName="pf-m-active"
       >
       {node.text}
@@ -20,9 +19,9 @@ const renderNavItem = node => (
   </li>
 );
 
-const SideNav = ({ location, context = 'core', allPages, sideNavContexts, parityComponent, pageSource }) => {
+const SideNav = ({ location, context = 'core', allPages, sideNavContexts, pageSource, parityComponent }) => {
   const [isDropdownOpen, setDropdownOpen] = React.useState(false);
-
+  
   const allNavItems = allPages.reduce((accum, node) => {
     const navSection = node.context.navSection || 'page';
     accum[navSection] = accum[navSection] || [];
