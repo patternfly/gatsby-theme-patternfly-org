@@ -90,7 +90,7 @@ const IndexPage = ({ location }) => (
                   </Text>
                   <Text
                     component={TextVariants.a}
-                    href={withPrefix('/design-guidelines')}
+                    href={withPrefix('/design-guidelines/styles/colors')}
                     aria-label="view design guidelines"
                     className="pf-u-pl-0 pf4-c-link__text"
                   >
@@ -105,7 +105,7 @@ const IndexPage = ({ location }) => (
                   </Text>
                   <Text
                     component={TextVariants.a}
-                    href={withPrefix('/documentation/react/layouts')}
+                    href={withPrefix('/documentation/react/layouts/bullseye')}
                     aria-label="view layouts"
                     className="pf-u-pl-0 pf4-c-link__text"
                   >
@@ -120,7 +120,7 @@ const IndexPage = ({ location }) => (
                   </Text>
                   <Text
                     component={TextVariants.a}
-                    href={withPrefix('/documentation/react/components')}
+                    href={withPrefix('/documentation/react/components/aboutmodal')}
                     aria-label="view components"
                     className="pf-u-pl-0 pf4-c-link__text"
                   >
@@ -135,7 +135,7 @@ const IndexPage = ({ location }) => (
                   </Text>
                   <Text
                     component={TextVariants.a}
-                    href={withPrefix('/documentation/react/demos')}
+                    href={withPrefix('/documentation/react/demos/bulkselecttable')}
                     aria-label="view demos"
                     className="pf-u-pl-0 pf4-c-link__text"
                   >

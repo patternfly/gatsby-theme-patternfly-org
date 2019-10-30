@@ -33,7 +33,7 @@ Always provide a way for users to access the full set of documentation for your 
 ![Forms of embedded assistance](./img/ea-forms.png)
 
 1. [Persistent text](#persistent-text)
-2. [Hints](*hints)
+2. [Hints](#hints)
 3. [Popover hints](#popover-hints)
 4. [Popovers](#popovers)
 5. [Tooltips](#tooltips)
@@ -116,13 +116,13 @@ Use tooltips to define new or unfamiliar UI elements that aren’t described dir
 
 ## Related components and demos
 **HTML/CSS**
-* [Button](/documentation/core/component/button)
-* [Content](/documentation/core/component/content)
-* [Popover](/documentation/core/component/popover)
-* [Tooltip](/documentation/core/component/tooltip)
+* [Button](/documentation/core/components/button)
+* [Content](/documentation/core/components/content)
+* [Popover](/documentation/core/components/popover)
+* [Tooltip](/documentation/core/components/tooltip)
 
 **React**
-* [Popover](/documentation/react/components/aboutmodal)
-* [Tooltip](/documentation/react/components/aboutmodal)
+* [Popover](/documentation/react/components/popover)
+* [Tooltip](/documentation/react/components/tooltip)
 * [Button](/documentation/react/components/button)
 * [Text](/documentation/react/component/text)
