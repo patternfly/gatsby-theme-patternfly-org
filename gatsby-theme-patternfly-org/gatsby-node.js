@@ -182,6 +182,17 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
       }
     });
 
+    // Create the Red Hat Font page
+    actions.createPage({
+      path: '/documentation/overview/red-hat-font',
+      component: path.resolve(__dirname, `./pages/redHatFont.js`),
+      context: {
+        navSection: 'overview',
+        title: 'Red Hat font',
+        source: 'shared'
+      }
+    });
+
     const hbsInstance = createHandlebars(result.data.partials.nodes);
     const hidden = (pluginOptions.hiddenPages || []).map(title => title.toLowerCase());
 
