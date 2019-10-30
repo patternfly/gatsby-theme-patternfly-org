@@ -1,5 +1,6 @@
 ---
 title: Develop
+hideTOC: true
 ---
 
 ## Ways to contribute

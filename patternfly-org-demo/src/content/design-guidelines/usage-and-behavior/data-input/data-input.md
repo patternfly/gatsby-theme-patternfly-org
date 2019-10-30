@@ -1,6 +1,7 @@
 ---
 title: Data input
 section: usage and behavior
+hideTOC: true
 ---
 Data input controls allow the user to provide information by selecting from a known set of options or a constrained format/value range.  
 

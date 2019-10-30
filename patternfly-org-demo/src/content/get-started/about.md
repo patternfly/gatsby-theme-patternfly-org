@@ -1,5 +1,6 @@
 ---
 title: About Patternfly
+hideTOC: true
 ---
 import './get-started.css';
 

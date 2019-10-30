@@ -1,6 +1,7 @@
 ---
 title: Filters
 section: usage and behavior
+hideTOC: true
 ---
 
 ## About

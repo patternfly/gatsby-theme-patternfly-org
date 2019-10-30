@@ -1,5 +1,6 @@
 ---
 title: Develop with PatternFly
+hideTOC: true
 ---
 import './get-started.css';
 

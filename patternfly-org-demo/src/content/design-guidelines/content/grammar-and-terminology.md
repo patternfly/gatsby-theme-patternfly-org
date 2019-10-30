@@ -1,6 +1,7 @@
 ---
 title: Style guide
 section: content
+hideTOC: true
 ---
 
 ## Common terminology

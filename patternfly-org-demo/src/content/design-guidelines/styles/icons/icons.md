@@ -1,6 +1,7 @@
 ---
 title: Icons
 section: styles
+hideTOC: true
 ---
 import { Button, Grid, GridItem } from '@patternfly/react-core';
 import { CheckCircleIcon, TimesCircleIcon } from '@patternfly/react-icons';

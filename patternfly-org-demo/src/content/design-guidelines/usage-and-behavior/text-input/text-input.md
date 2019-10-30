@@ -1,6 +1,7 @@
 ---
 title: Text input
 section: usage and behavior
+hideTOC: true
 ---
 Use text input to gather free-form text from a user.
 

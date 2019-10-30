@@ -1,6 +1,7 @@
 ---
 title: Colors for charts
 section: styles
+hideTOC: true
 ---
 
 import theSystem from './thesystem.gif';

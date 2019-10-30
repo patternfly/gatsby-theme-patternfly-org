@@ -1,6 +1,7 @@
 ---
 title: Colors
 section: styles
+hideTOC: true
 ---
 import { Alert, Gallery, GalleryItem, Grid, GridItem } from '@patternfly/react-core';
 import { Link } from 'gatsby';
