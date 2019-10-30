@@ -153,11 +153,17 @@ const SideNavLayout = ({ children, location, context, hideSideNav = false, parit
         </ToolbarGroup>
       </Toolbar>
     : undefined;
+
+  let headerTitle = title;
+  if (pageSource === "org")
+    headerTitle = <Brand src={logo} alt="Patternfly Logo" />;
+  else if (num) headerTitle = `PR #${num}`;
+  
   const Header = (
     <PageHeader
       className="ws-page-header"
       toolbar={PageToolbar}
-      logo={num ? `PR #${num}` : <Brand src={logo} alt="Patternfly Logo" />}
+      logo={headerTitle}
       logoProps={{
         href: url || '/'
       }}
