@@ -3,16 +3,13 @@ import SideNavLayout from 'gatsby-theme-patternfly-org/layouts/sideNavLayout';
 import { ChatIcon, QuestionIcon, BlogIcon, MailBulkIcon } from '@patternfly/react-icons';
 import { Grid, GridItem, PageSection, PageSectionVariants, Split, SplitItem } from '@patternfly/react-core';
 import AutoLinkHeader from 'gatsby-theme-patternfly-org/components/autoLinkHeader';
-
-// import FooterUnderFoldLayout from '@content/footerUnderFoldLayout';
-
-// export default FooterUnderFoldLayout;
+import "./get-in-touch.css";
 
 const GetInTouch = ({ location }) => (
   <SideNavLayout location={location} hideSideNav>
     <PageSection
       variant={PageSectionVariants.light}
-      className="ws-section"
+      className="ws-section ws-get-in-touch"
     >
       <h1 className="pf-u-mb-lg ws-title">Get in touch</h1>
 

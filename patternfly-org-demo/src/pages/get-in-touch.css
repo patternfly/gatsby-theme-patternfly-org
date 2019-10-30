@@ -1,0 +1,9 @@
+.ws-get-in-touch {
+  height: calc(100vh - 70px);
+}
+
+@media (max-width: 991px) {
+  .ws-get-in-touch {
+    height: calc(100vh - 94px);
+  }
+}
