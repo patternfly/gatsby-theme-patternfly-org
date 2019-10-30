@@ -11,8 +11,11 @@ const TopNav = ({ location, context, navItems }) => {
           <NavItem
             key={path}
             isActive={location.pathname.includes(path) || (contexts || []).includes(context)}
-            >
-            <Link to={path}>{text}</Link>
+          >
+            {path.includes('//')
+              ? <a href={path} target="_blank">{text}</a>
+              : <Link to={path}>{text}</Link>
+            }
           </NavItem>
         ))}
       </NavList>
