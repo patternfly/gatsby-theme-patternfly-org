@@ -3,6 +3,7 @@ title: Spacers
 section: styles
 ---
 import { Link } from 'gatsby';
+import './spacers.css';
 
 We use spacers to define fixed amounts of space between elements. Spacers make it easy for designers to maintain consistency across screens. Since the same spacer sizes and values are built into the PatternFly codebase, spacers also majorly simplify the design handoff between designers and developers.
 
