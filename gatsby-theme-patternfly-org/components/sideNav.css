@@ -11,7 +11,7 @@
 
 .ws-sideNav-category > .pf-c-nav__link {
   border-left: 4px solid transparent;
-  padding: 8px 16px;
+  padding: 8px 16px 8px 46px;
 }
 
 .ws-sideNav-category > .pf-c-nav__link,
@@ -28,14 +28,14 @@
 .ws-page-sidebar .ws-sideNav-link {
   font-size: 18px;
   border-left: 4px solid transparent;
-  padding: 8px 16px;
+  padding: 8px 16px 8px 46px;
   font-weight: 500;
   line-height: 27px;
 }
 
 .ws-page-sidebar .ws-sideNav-category .ws-sideNav-link {
   font-size: 16px;
-  padding: 8px 24px;
+  padding: 8px 54px;
   line-height: 24px;
   font-weight: 400;
 }
