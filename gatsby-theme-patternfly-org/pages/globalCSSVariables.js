@@ -1,5 +1,5 @@
 import React from 'react';
-import { PageSection, Title } from '@patternfly/react-core';
+import { PageSection, PageSectionVariants, Title } from '@patternfly/react-core';
 import SideNavLayout from '../layouts/sideNavLayout';
 import CSSVariables from '../components/cssVariables';
 import AutoLinkHeader from '../components/autoLinkHeader';
@@ -17,11 +17,11 @@ export default ({ location, pageContext }) => {
 
   return (
     <SideNavLayout location={location} context={context}>
-      <PageSection className="ws-section">
+      <PageSection className="ws-section" variant={PageSectionVariants.light}>
         <Title size="md" className="ws-framework-title">HTML/React</Title>
         <Title size="4xl">Global CSS variables</Title>
       </PageSection>
-      <PageSection className="ws-section">
+      <PageSection className="ws-section" variant={PageSectionVariants.light}>
         <AutoLinkHeader size="h2">About CSS variables</AutoLinkHeader>
         <p>The CSS variable system is a two-layer theming system where global variables inform component variables.</p>
         <AutoLinkHeader size="h2">Global variables</AutoLinkHeader>

@@ -2,7 +2,11 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import { MDXProvider } from '@mdx-js/react';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
-import { Alert, PageSection, Title } from '@patternfly/react-core';
+import {
+  Alert,
+  PageSection,
+  Title
+} from '@patternfly/react-core';
 import SideNavLayout from '../layouts/sideNavLayout';
 import AutoLinkHeader from '../components/autoLinkHeader';
 import Example from '../components/example';
@@ -42,12 +46,12 @@ export default ({ data, location, pageContext }) => {
         if (!propTable) {
           console.warn(`PropComponent "${name}" specified in frontmatter, but not found at runtime.`);
         }
-        
+
         return propTable;
       })
       .filter(Boolean)
     : undefined;
-  
+
   let parityComponent = undefined;
   if (data.designDoc) {
     const { reactComponentName, coreComponentName } = data.designDoc.frontmatter;
