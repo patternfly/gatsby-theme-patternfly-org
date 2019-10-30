@@ -125,3 +125,7 @@ h6.ws-title:not(:first-child).ws-mdx-h6 {
 .ws-section {
   padding: 32px 64px;
 }
+
+.ws-mdx-a {
+  font-size: 18px;
+}

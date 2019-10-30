@@ -16,7 +16,8 @@ export const commonComponents = {
       return <a {...props} />;
     }
     return <Link to={props.href} {...props} />;
-  }
+  },
+  section: (props) => <section className="ws-section" {...props} />
     
 };
 for (let i = 1; i <= 6; i++) {
