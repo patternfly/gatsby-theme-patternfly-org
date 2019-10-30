@@ -45,20 +45,20 @@ const IndexPage = ({ location }) => (
               >
                 Get started
               </a>
-              <AutoLinkHeader
-                size="h1"
-                text={aboutPatternFly}
+              <a
+                href={withPrefix('#about-patternfly')}
                 type="button"
+                className="pf-c-button pf4-c-button__cta-outline fadeIn animated fadeInFour"
                 aria-label="Why PatternFly"
               >
                 Why PatternFly
-              </AutoLinkHeader>
+              </a>
             </div>
           </TextContent>
         </GridItem>
       </Grid>
     </PageSection>
-    <PageSection className="pf4-m-background-white">
+    <PageSection variant={PageSectionVariants.light}>
       <Grid>
         <GridItem sm={12} md={6} mdOffset={3} className="pf-u-py-2xl pf-u-text-align-center" id="about-patternfly-section">
           <AutoLinkHeader size="h1" className="ws-title pf-u-mb-md">
