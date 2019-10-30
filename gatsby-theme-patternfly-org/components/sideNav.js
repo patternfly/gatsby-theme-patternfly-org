@@ -79,7 +79,7 @@ const SideNav = ({ location, context = 'core', allPages, sideNavContexts, pageSo
           />
         </div>
       )}
-      <NavList>
+      <NavList className="ws-sideNav-list">
         {sideNavItems.map(navItem => {
           const { section } = navItem;
           if (section && allNavItems[section]) {
@@ -89,6 +89,7 @@ const SideNav = ({ location, context = 'core', allPages, sideNavContexts, pageSo
                 title={capitalize(section)}
                 isActive={location.pathname.includes(`/${slugger(section)}/`)}
                 isExpanded={location.pathname.includes(`/${slugger(section)}/`)}
+                className="ws-sideNav-category"
               >
                 {allNavItems[section]
                   .filter(node => node.source === context || node.source === 'shared')

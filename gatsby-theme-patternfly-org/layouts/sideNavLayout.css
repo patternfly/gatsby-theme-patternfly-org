@@ -62,6 +62,11 @@
   left: 0 !important;
   transform: none;
 }
-.ws-page-sidebar {
+.ws-page-sidebar#page-sidebar {
   color: white;
+  box-shadow: none;
+}
+
+.ws-page-sidebar  .pf-c-nav {
+  margin-top: 16px;
 }
