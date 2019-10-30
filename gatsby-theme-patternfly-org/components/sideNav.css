@@ -35,9 +35,13 @@
 }
 
 .ws-org-context-switcher {
-  padding: 32px 0 0 var(--pf-c-nav__list-link--PaddingLeft);
+  padding: 22px 0 0 var(--pf-c-nav__list-link--PaddingLeft);
 }
 
 .ws-org-context-switcher > label {
   font-size: 14px;
+}
+
+.ws-org-context-switcher .pf-c-dropdown__toggle::before {
+  border: 1px solid #979797;
 }
