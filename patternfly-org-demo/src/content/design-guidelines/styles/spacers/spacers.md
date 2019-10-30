@@ -1,6 +1,7 @@
 ---
 title: Spacers
 section: styles
+hideTOC: true
 ---
 import { Link } from 'gatsby';
 

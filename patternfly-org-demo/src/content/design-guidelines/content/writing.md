@@ -1,6 +1,7 @@
 ---
 title: Writing for user experience
 section: content
+hideTOC: true
 ---
 
 The words we use in our products are just as important as the components or layouts. The right words can drive better design decisions and guide users to succeed.

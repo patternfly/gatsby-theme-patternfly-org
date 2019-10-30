@@ -1,5 +1,6 @@
 ---
 title: Migration guide
+hideTOC: true
 ---
 
 ## Design your migration strategy

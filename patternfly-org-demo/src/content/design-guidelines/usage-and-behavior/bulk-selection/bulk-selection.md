@@ -1,6 +1,7 @@
 ---
 title: Bulk selection
 section: usage and behavior
+hideTOC: true
 ---
 
 # Bulk selection

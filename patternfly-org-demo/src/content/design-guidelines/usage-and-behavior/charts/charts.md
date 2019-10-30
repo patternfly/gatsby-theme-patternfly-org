@@ -1,6 +1,7 @@
 ---
 title: Charts
 section: usage and behavior
+hideTOC: true
 ---
 _Charts are only available in React_
 

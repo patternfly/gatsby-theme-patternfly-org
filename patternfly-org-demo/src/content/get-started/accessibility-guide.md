@@ -1,5 +1,6 @@
 ---
 title: Accessibility guide
+hideTOC: true
 ---
 
 *Please note, this guide is a work in progress and will be updated regularly. We welcome your comments and feedback.*

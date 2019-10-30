@@ -1,5 +1,6 @@
 ---
 title: About
+hideTOC: true
 ---
 
 ## Introduction
