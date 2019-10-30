@@ -9,16 +9,18 @@ import './commonComponents.css';
 export const commonComponents = {
   inlineCode: Example,
   pre: React.Fragment,
-  p: (props) => <p className="ws-mdx-p" {...props} />,
+  p: (props) => <p className="ws-p" {...props} />,
+  ul: (props) => <ul className="ws-ul" {...props} />,
+  ul: (props) => <ul className="ws-ul" {...props} />,
   a: (props) => {
-    // https://www.gatsbyjs.org/docs/gatsby-link/#reminder-use-link-only-for-internal-links
+   // https://www.gatsbyjs.org/docs/gatsby-link/#reminder-use-link-only-for-internal-links
     if (props.href.includes('//') || props.href.startsWith("#")) {
       return <a {...props} />;
-    } 
+    }
     return <Link to={props.href} {...props} />;
   }
-    
+
 };
 for (let i = 1; i <= 6; i++) {
-  commonComponents[`h${i}`] = props => <AutoLinkHeader size={`h${i}`} className={`ws-title ws-mdx-h${i}`} {...props} />;
+  commonComponents[`h${i}`] = props => <AutoLinkHeader size={`h${i}`} className={`ws-title ws-h${i}`} {...props} />;
 }
