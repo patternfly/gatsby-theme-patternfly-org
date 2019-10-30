@@ -16,3 +16,28 @@
 .ws-sideNav-item .ws-sideNav-link::after {
   background-color: transparent !important;
 }
+
+.ws-org-context-switcher-dropdown {
+  display: block;
+  /* Same as right/bottom as side nav items padding */
+  margin: 6px var(--pf-c-nav__list-link--PaddingRight) var(--pf-c-nav__list-link--PaddingBottom) 0;
+}
+
+.ws-org-context-switcher-dropdown .pf-c-dropdown__toggle {
+  width: 100%;
+}
+
+.ws-org-context-switcher > label,
+.ws-org-context-switcher .pf-c-dropdown__toggle-text,
+.ws-org-context-switcher .pf-c-dropdown__menu-item {
+  color: var(--pf-global--active-color--100);
+  font-weight: var(--pf-global--FontWeight--bold);
+}
+
+.ws-org-context-switcher {
+  padding: 32px 0 0 var(--pf-c-nav__list-link--PaddingLeft);
+}
+
+.ws-org-context-switcher > label {
+  font-size: 14px;
+}

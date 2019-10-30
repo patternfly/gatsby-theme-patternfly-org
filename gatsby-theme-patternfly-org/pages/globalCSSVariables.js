@@ -11,7 +11,7 @@ export default ({ location, pageContext }) => {
     ? location.state.context
     : pageContext.source;
   // There is no "org" context for this page
-  if (context === 'org') {
+  if (["org", "shared"].includes(context)) {
     context = 'core';
   }
 

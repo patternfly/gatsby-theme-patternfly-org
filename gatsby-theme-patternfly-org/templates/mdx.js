@@ -31,24 +31,36 @@ const getWarning = state => {
 }
 
 export default ({ data, location, pageContext }) => {
-  const { title, cssPrefix, hideTOC, experimentalStage, optIn, propComponents, hideDarkMode } = data.mdx.frontmatter;
-  const { componentName, navSection } = data.mdx.fields;
-  const { source, tableOfContents, htmlExamples } = pageContext;
+  const { cssPrefix, hideTOC, experimentalStage, optIn, hideDarkMode } = data.doc.frontmatter;
+  const { componentName, navSection } = data.doc.fields;
+  const { title, source, tableOfContents, htmlExamples, propComponents = [''] } = pageContext;
   const props = data.props && data.props.nodes && propComponents
     ? propComponents
+      .filter(name => name !== '') // Remove default
       .map(name => {
         const propTable = data.props.nodes.find(node => node.name === name);
         if (!propTable) {
-          console.warn(`PropComponent ${name} specified in frontmatter, but not found at runtime.`);
+          console.warn(`PropComponent "${name}" specified in frontmatter, but not found at runtime.`);
         }
         
         return propTable;
       })
       .filter(Boolean)
     : undefined;
+  
+  let parityComponent = undefined;
+  if (data.designDoc) {
+    const { reactComponentName, coreComponentName } = data.designDoc.frontmatter;
+    if (source === 'core' && reactComponentName) {
+      parityComponent = `${navSection}/${reactComponentName}`;
+    }
+    else if (source === 'react' && coreComponentName) {
+      parityComponent = `${navSection}/${coreComponentName}`;
+    }
+  }
 
   return (
-    <SideNavLayout location={location} context={source}>
+    <SideNavLayout location={location} context={source} parityComponent={parityComponent}>
       {!hideTOC && (
         <PageSection className="ws-section">
           <Title size="md" className="ws-framework-title">
@@ -75,6 +87,11 @@ export default ({ data, location, pageContext }) => {
             >
               {getWarning(experimentalStage)}
             </Alert>
+          )}
+          {data.designDoc && (
+            <a href="#design" className="ws-toc">
+              Design
+            </a>
           )}
           {tableOfContents.map(heading => (
             <a key={heading} href={`#${slugger(heading)}`} className="ws-toc">
@@ -107,8 +124,16 @@ export default ({ data, location, pageContext }) => {
               {...props} />,
           ...commonComponents
         }}>
+          {data.designDoc &&
+            <React.Fragment>
+              <AutoLinkHeader size="h2" id="design" className="ws-title">Design</AutoLinkHeader>
+              <MDXRenderer>
+                {data.designDoc.body}
+              </MDXRenderer>
+            </React.Fragment>
+          }
           <MDXRenderer>
-            {data.mdx.body}
+            {data.doc.body}
           </MDXRenderer>
         </MDXProvider>
       </PageSection>
@@ -136,21 +161,26 @@ export default ({ data, location, pageContext }) => {
 }
 
 export const pageQuery = graphql`
-  query MdxDocsPage($id: String!, $propComponents: [String]!) {
-    mdx(id: { eq: $id }) {
+  query MdxDocsPage($id: String!, $designId: String!, $propComponents: [String]!) {
+    doc: mdx(id: { eq: $id }) {
       body
       frontmatter {
-        title
         cssPrefix
         hideTOC
         optIn
         experimentalStage
-        propComponents
         hideDarkMode
       }
       fields {
         navSection
         componentName
+      }
+    }
+    designDoc: mdx(id: { eq: $designId }) {
+      body
+      frontmatter {
+        reactComponentName
+        coreComponentName
       }
     }
     partials: allFile(filter: { fields: { name: { ne: null } } }) {

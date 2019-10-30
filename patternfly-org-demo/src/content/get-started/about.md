@@ -16,9 +16,9 @@ Layouts are generic tools that allow you to structure and organize the content o
 ### Demos
 Demos use components and layouts in combination to show you how to build more complex structures and application views.
 
-[**View components, layouts, and demos in HTML/CSS**](/documentation/core) <i class="ws-content-blueArrow fas fa-arrow-right pf-u-mx-sm"></i>
+[**View components, layouts, and demos in HTML/CSS**](/documentation/core/components/aboutmodalbox) <i class="ws-content-blueArrow fas fa-arrow-right pf-u-mx-sm"></i>
 
-[**View components, layouts, and demos in React**](/documentation/react) <i class="ws-content-blueArrow fas fa-arrow-right pf-u-mx-sm"></i>
+[**View components, layouts, and demos in React**](/documentation/react/overview/release-notes) <i class="ws-content-blueArrow fas fa-arrow-right pf-u-mx-sm"></i>
 
 ## Design guidelines
 ### Styles
@@ -42,7 +42,7 @@ Global variables define and enforce style elements (like global values for color
 **Component variables**
 Component variables are used to define custom properties at the component level. Component variables are always defined by global variables.
 
-[**Learn more and view CSS variables**](/documentation/react/css-variables/) <i class="ws-content-blueArrow fas fa-arrow-right pf-u-mx-sm"></i>
+[**Learn more and view CSS variables**](/documentation/overview/global-css-variables) <i class="ws-content-blueArrow fas fa-arrow-right pf-u-mx-sm"></i>
 
 ### Utilities
 Utilities are a set of classes that enable you to further customize and modify elements in your project without having to write any custom CSS.

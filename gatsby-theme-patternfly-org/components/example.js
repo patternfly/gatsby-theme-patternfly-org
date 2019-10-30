@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { LiveProvider, LiveEditor, LivePreview, LiveError } from 'react-live';
 import { useMDXScope } from 'gatsby-plugin-mdx/context';
 import ExampleToolbar from './exampleToolbar';
@@ -37,6 +37,8 @@ const Example = props => {
   const [editorCode, setEditorCode] = React.useState(initialLang === 'html' ? html : initialCode);
   const [editorLang, setEditorLang] = React.useState(initialLang);
   const [darkMode, setDarkMode] = React.useState(false);
+  const [previewStyle, setPreviewStyle] = React.useState({});
+  const [previewContainerStyle, setPreviewContainerStyle] = React.useState({ height: '437.5px' });
 
   const onLanguageChange = newLang => {
     setEditorLang(newLang);
@@ -58,6 +60,43 @@ const Example = props => {
     ? getStaticParams(props.title, html)
     : getReactParams(props.title, editorCode));
   
+  const className = `ws-${props.source}-${navSection[0]}-${componentName}`;
+  const id = `${className}-${slugger(title)}`;
+
+  // https://reactjs.org/docs/hooks-effect.html
+  if (isFullscreen) {
+    useEffect(() => {
+      const handleResize = () => {
+        console.log('resize!');
+        const resizeWidth = Math.min(
+          document.getElementsByClassName('ws-example')[0].clientWidth,
+          1280
+        ) - 32.5;
+
+        const scale = resizeWidth / 1280;
+      
+        setPreviewStyle({ transform: `scale(${scale})` });
+        setPreviewContainerStyle({ height:`${scale * 800}px` });
+      }
+
+      if (!previewStyle.transform) {
+        handleResize();
+      }
+      window.addEventListener('resize', handleResize);
+
+      return () => window.removeEventListener('resize', handleResize);
+    });
+  }
+
+  const Preview = (
+    <LivePreview
+      id={id}
+      style={previewStyle}
+      className={`${className} ws-preview${
+        darkMode ? ' pf-t-dark pf-m-opaque-200' : ''}${
+        isFullscreen ? ' ws-preview-fullscreen' : ''}`} />
+  );
+
   return (
     <div className="ws-example">
       <AutoLinkHeader size="h4" headingLevel="h3" className="ws-example-heading">
@@ -74,11 +113,15 @@ const Example = props => {
           styles: []
         }}
       >
+        {/* We need this container for fullscreen example styling and popout */}
         {isFullscreen
-          ? <div className="ws-preview">This preview can be accessed in <a href={fullscreenLink} target="_blank">full page mode.</a></div>
-          : <LivePreview
-            id={`ws-${props.source}-${navSection[0]}-${componentName}-${slugger(title)}`}
-            className={`ws-${props.source}-${navSection[0]}-${componentName} ws-preview${darkMode ? ' pf-t-dark pf-m-opaque-200' : ''}`} />}
+          ? <a className="ws-preview-container"
+              href={fullscreenLink}
+              style={previewContainerStyle}>
+              {Preview}
+            </a>
+          : Preview}
+        
         <ExampleToolbar
           editor={<LiveEditor className="ws-editor"/>}
           supportedLangs={supportedLangs}
