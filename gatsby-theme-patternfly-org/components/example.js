@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 import { LiveProvider, LiveEditor, LivePreview, LiveError } from 'react-live';
 import { useMDXScope } from 'gatsby-plugin-mdx/context';
 import ExampleToolbar from './exampleToolbar';
@@ -65,15 +65,15 @@ const Example = props => {
 
   // https://reactjs.org/docs/hooks-effect.html
   if (isFullscreen) {
-    useEffect(() => {
+    useLayoutEffect(() => {
       const handleResize = () => {
-        console.log('resize!');
         const resizeWidth = Math.min(
           document.getElementsByClassName('ws-example')[0].clientWidth,
-          1280
+          800
         ) - 32.5;
 
         const scale = resizeWidth / 1280;
+        console.log('resize!', scale, scale*800);
       
         setPreviewStyle({ transform: `scale(${scale})` });
         setPreviewContainerStyle({ height:`${scale * 800}px` });

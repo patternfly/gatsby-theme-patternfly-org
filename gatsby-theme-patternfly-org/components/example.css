@@ -38,5 +38,5 @@
 
 .ws-preview-container {
   position: relative;
-  height: 437.5px;
+  display: block;
 }
