@@ -198,8 +198,23 @@ module.exports = {
       resolve: 'gatsby-plugin-sitemap',
       options: {
         // Exclude fullscreen previews from sitemap
-        // See: https://github.com/isaacs/minimatch
-        exclude: ['*/documentation/*/*/*/*'],  
+        query: `
+        {
+          site {
+            siteMetadata {
+              siteUrl
+            }
+          }
+        
+          allSitePage(filter: {context: {isFullscreen: {ne: true}}}) {
+            edges {
+              node {
+                path
+              }
+            }
+          }
+        }
+        `
       }
     }
   ],
