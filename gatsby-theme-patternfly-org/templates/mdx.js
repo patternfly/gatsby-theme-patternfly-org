@@ -66,7 +66,7 @@ export default ({ data, location, pageContext }) => {
   return (
     <SideNavLayout location={location} context={source} parityComponent={parityComponent}>
       {!hideTOC && (
-        <PageSection className="ws-section">
+        <PageSection className="ws-section" style={{ paddingBottom: 0 }}>
           <Title size="md" className="ws-framework-title">
             {source === 'core' ? 'HTML' : capitalize(source)}
           </Title>
