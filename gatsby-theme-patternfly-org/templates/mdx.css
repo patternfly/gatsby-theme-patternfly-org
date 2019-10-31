@@ -1,6 +1,6 @@
 .ws-section {
-  padding: 48px;
-  padding-top: 32px;
+  background-color: #fafafa;
+  padding: 32px 64px 64px;
 }
 
 @media (max-width: 767px) {
@@ -8,10 +8,6 @@
     padding: 16px;
     padding-top: 16px;
   }
-}
-
-.ws-section:first-of-type {
-  padding-bottom: 0;
 }
 
 .ws-framework-title {

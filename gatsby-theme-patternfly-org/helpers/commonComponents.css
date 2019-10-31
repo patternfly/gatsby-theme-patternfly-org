@@ -21,10 +21,6 @@
   --ws-dt--sm--MarginTop: 0;
 }
 
-.ws-section {
-  background-color: #fafafa;
-}
-
 .ws-title {
   margin: 0;
   margin-bottom: var(--ws-title--MarginBottom);
@@ -88,10 +84,6 @@
 
 .ws-p:not(:last-child) {
   margin-bottom: 1rem;
-}
-
-.ws-section {
-  padding: 32px 64px;
 }
 
 .ws-a {
