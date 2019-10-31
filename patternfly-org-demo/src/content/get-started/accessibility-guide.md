@@ -3,7 +3,10 @@ title: Accessibility guide
 hideTOC: true
 ---
 
+import './accessibility-guide.css';
+
 # Accessibility guide
+
 *Please note, this guide is a work in progress and will be updated regularly. We welcome your comments and feedback.*
 
 The goal of software accessibility is to remove barriers and create inclusive product experiences that work for everyone, regardless of physical ability.
