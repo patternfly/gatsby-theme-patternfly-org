@@ -58,7 +58,7 @@ const IndexPage = ({ location }) => (
         </GridItem>
       </Grid>
     </PageSection>
-    <PageSection variant={PageSectionVariants.light}>
+    <PageSection variant={PageSectionVariants.light} className="ws-homepage-main-section">
       <Grid>
         <GridItem sm={12} md={6} mdOffset={3} className="pf-u-py-2xl pf-u-text-align-center" id="about-patternfly-section">
           <AutoLinkHeader size="h1" className="ws-title pf-u-mb-md">
@@ -71,7 +71,7 @@ const IndexPage = ({ location }) => (
         </GridItem>
       </Grid>
     </PageSection>
-    <PageSection variant={PageSectionVariants.light} className="pf4-c-background-lines">
+    <PageSection variant={PageSectionVariants.light} className="pf4-c-background-lines ws-homepage-main-section">
       <Grid gutter="md" className="pf-u-pb-3xl-on-sm">
         <GridItem sm={12}>
           <Grid>
@@ -155,7 +155,7 @@ const IndexPage = ({ location }) => (
         </GridItem>
       </Grid>
     </PageSection>
-    <PageSection variant={PageSectionVariants.darker} className="pf4-c-background-image-principles">
+    <PageSection variant={PageSectionVariants.darker} className="pf4-c-background-image-principles ws-homepage-main-section">
       <Grid gutter="md" className="pf-u-py-3xl">
         <GridItem sm={12}>
           <Grid className="pf-m-white">
