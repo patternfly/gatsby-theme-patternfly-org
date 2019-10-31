@@ -1,0 +1,64 @@
+#designing-and-developing-for-accessibility ~ table {
+  width: 100%;
+  margin-bottom: var(--pf-global--spacer--md);
+}
+#designing-and-developing-for-accessibility ~ table:not(.pf-c-table) td,
+#designing-and-developing-for-accessibility ~ table:not(.pf-c-table) th,
+#designing-and-developing-for-accessibility ~ table:not(.pf-c-table) tr {
+  padding: var(--pf-global--spacer--sm);
+  vertical-align: top;
+  border-bottom: var(--pf-global--BorderWidth--sm) solid #e0e0e0;
+}
+#designing-and-developing-for-accessibility ~ table:not(.pf-c-table) td > code, 
+#designing-and-developing-for-accessibility ~ table:not(.pf-c-table) th > code,
+#designing-and-developing-for-accessibility ~ table:not(.pf-c-table) tr > code {
+  white-space: normal;
+}
+#designing-and-developing-for-accessibility ~ .pf-c-table {
+  margin-bottom: 0;
+}
+#designing-and-developing-for-accessibility ~ .pf-c-table td,
+#designing-and-developing-for-accessibility ~ .pf-c-table th:not(.pf-c-table__sort) {
+  border: none;
+}
+#designing-and-developing-for-accessibility ~ table:not(.pf-c-table) {
+  margin: 0;
+  padding: 0;
+  color: #151515;
+  text-align: left;
+}
+#designing-and-developing-for-accessibility ~ table:not(.pf-c-table) thead {
+  font-size: 16px;
+  white-space: nowrap;
+  vertical-align: top;
+}
+#designing-and-developing-for-accessibility ~ table:not(.pf-c-table) th {
+  padding: 16px 16px 16px 32px;
+  font-size: 14px;
+  line-height: 21px;
+  color: #151515;
+}
+@media only screen and (max-width: 992px) {
+  #designing-and-developing-for-accessibility ~ table:not(.pf-c-table) th {
+    padding-left: 16px;
+  }
+}
+#designing-and-developing-for-accessibility ~ table:not(.pf-c-table) td {
+  padding: 32px 16px 32px 32px;
+  font-size: 16px;
+}
+@media only screen and (max-width: 992px) {
+  #designing-and-developing-for-accessibility ~ table:not(.pf-c-table) td {
+    padding: 16px;
+  }
+}
+#designing-and-developing-for-accessibility ~ table:not(.pf-c-table) tr {
+  height: 1px;
+  border-bottom: 1px solid #d2d2d2;
+}
+#designing-and-developing-for-accessibility ~ table:not(.pf-c-table) tr > * {
+  position: relative;
+  height: inherit;
+  font-weight: 400;
+  vertical-align: baseline;
+}
