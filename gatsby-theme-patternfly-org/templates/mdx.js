@@ -69,6 +69,16 @@ export default ({ data, location, pageContext }) => {
       {showTitle && (
         <PageSection className="ws-section" style={{ paddingBottom: 0 }}>
           <Title size="4xl" className="ws-page-title">{title}</Title>
+          {optIn && (
+            <Alert
+              variant="info"
+              title="Opt-in feature"
+              className="pf-u-my-md"
+              isInline
+            >
+              {optIn}
+            </Alert>
+          )}
         </PageSection>
       )}
       {!hideTOC && (
