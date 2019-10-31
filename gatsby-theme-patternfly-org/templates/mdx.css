@@ -3,6 +3,13 @@
   padding-top: 32px;
 }
 
+@media (max-width: 767px) {
+  .ws-section {
+    padding: 16px;
+    padding-top: 16px;
+  }
+}
+
 .ws-section:first-of-type {
   padding-bottom: 0;
 }
@@ -16,4 +23,12 @@
   padding-bottom: 14px;
   margin-right: 30px;
   display: inline-block;
+}
+
+.ws-page-title {
+  margin: 8px 0 16px;
+}
+
+.ws-page-title ~ p {
+  font-size: 18px;
 }
