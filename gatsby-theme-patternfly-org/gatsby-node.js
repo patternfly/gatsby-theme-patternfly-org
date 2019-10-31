@@ -237,6 +237,7 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
               path: `${slug}/${key}`,
               component: path.resolve(__dirname, `./templates/fullscreenHtml.js`),
               context: {
+                isFullscreen: true,
                 html: example
               }
             })
@@ -246,6 +247,7 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
               path: `${slug}/${key}`,
               component: path.resolve(__dirname, `./templates/fullscreenMdx.js`),
               context: {
+                isFullscreen: true,
                 jsx: example
               }
             })

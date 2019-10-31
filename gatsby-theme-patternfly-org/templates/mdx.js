@@ -50,8 +50,8 @@ export default ({ data, location, pageContext }) => {
         return propTable;
       })
       .filter(Boolean)
-    : undefined;
-
+    : [];
+  
   let parityComponent = undefined;
   if (data.designDoc) {
     const { reactComponentName, coreComponentName } = data.designDoc.frontmatter;
@@ -102,7 +102,7 @@ export default ({ data, location, pageContext }) => {
               {heading}
             </a>
           ))}
-          {props && (
+          {props.length > 0 && (
             <a href="#props" className="ws-toc">
               Props
             </a>
@@ -142,7 +142,7 @@ export default ({ data, location, pageContext }) => {
         </MDXProvider>
       </PageSection>
 
-      {props && (
+      {props.length > 0 && (
         <PageSection className="ws-section">
           <AutoLinkHeader size="h2" id="props" className="ws-title">Props</AutoLinkHeader>
           {props.map(component => (

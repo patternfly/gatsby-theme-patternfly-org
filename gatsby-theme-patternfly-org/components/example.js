@@ -115,13 +115,13 @@ const Example = props => {
       >
         {/* We need this container for fullscreen example styling and popout */}
         {isFullscreen
-          ?
-            <div className="ws-preview">
+          ? <div className="ws-preview">
               <a
                 className="ws-preview__thumbnail-link"
-                href={fullscreenLink}>
-                <div
-                  style={previewContainerStyle}>
+                href={fullscreenLink}
+                target="_blank"
+              >
+                <div style={previewContainerStyle}>
                   {Preview}
                 </div>
               </a>
