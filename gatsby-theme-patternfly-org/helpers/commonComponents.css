@@ -47,6 +47,7 @@
   padding: 1px 8px;
   border: 1px solid #ededed;
   white-space: normal;
+  font-size: var(--pf-global--FontSize--md);
 }
 
 #examples ~ table td,
