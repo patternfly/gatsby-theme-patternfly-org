@@ -2,9 +2,10 @@
 title: Bulk selection
 section: usage and behavior
 hideTOC: true
+showTitle: true
 ---
 
-# Bulk selection
+
 
 Use a bulk selection pattern when you want to select or deselect multiple items in a content view (list, table, or card grid). The bulk selector uses a Split button [link] component to control selection from the Toolbar [link]. Besides controlling selection, the bulk selector reflects the selection status of the related component (partially selected, all items selected, or no items selected).
 

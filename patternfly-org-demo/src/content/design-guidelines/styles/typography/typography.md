@@ -2,6 +2,7 @@
 title: Typography
 section: styles
 hideTOC: true
+showTitle: true
 ---
 
 import { Button, Grid, GridItem, Alert } from '@patternfly/react-core';
@@ -12,7 +13,7 @@ import incorrect from './typography_incorrect_spacing.png';
 import { Link } from 'gatsby';
 import './typography.css';
 
-# Typograhpy
+
 <Alert
   variant="info"
   title="Opt-in feature"

@@ -2,12 +2,13 @@
 title: Colors
 section: styles
 hideTOC: true
+showTitle: true
 ---
 import { Alert, Gallery, GalleryItem, Grid, GridItem } from '@patternfly/react-core';
 import { Link } from 'gatsby';
 import './colors.css';
 
-# Colors
+
 ## Theme colors
 
 <Grid className="colors-theme--light grid-modifier" gutter="md">

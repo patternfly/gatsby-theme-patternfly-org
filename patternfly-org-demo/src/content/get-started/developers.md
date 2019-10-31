@@ -1,10 +1,11 @@
 ---
 title: Develop with PatternFly
 hideTOC: true
+showTitle: true
 ---
 import './get-started.css';
 
-# Develop with PatternFly
+
 Before you begin, check out our [overview of PatternFly](/get-started/about) to get acquainted with the basic elements of the design system.
 
 **Before you begin, install a package manager:**

@@ -2,12 +2,13 @@
 title: Icons
 section: styles
 hideTOC: true
+showTitle: true
 ---
 import { Button, Grid, GridItem } from '@patternfly/react-core';
 import { CheckCircleIcon, TimesCircleIcon } from '@patternfly/react-icons';
 import Icons from 'gatsby-theme-patternfly-org/components/icons';
 
-# Icons
+
 If you're a developer, [check out our getting started page](/get-started/developers#using-styles) to learn more about how to get and use our icon set.
 
 ## All icons

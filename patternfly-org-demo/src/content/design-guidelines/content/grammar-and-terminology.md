@@ -2,8 +2,9 @@
 title: Style guide
 section: content
 hideTOC: true
+showTitle: true
 ---
-# Style guide
+
 ## Common terminology
 
 | Term | Usage | Opposite | Notes |

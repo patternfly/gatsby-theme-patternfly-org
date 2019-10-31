@@ -2,8 +2,9 @@
 title: Embedded assistance
 section: usage and behavior
 hideTOC: true
+showTitle: true
 ---
-# Embedded assistance
+
 Use embedded assistance to provide additional help for users in context. Embedded assistance should be provided in a way that enables the user to find the information they need at the moment they need it while completing a particular step or task.
 
 ## Principles

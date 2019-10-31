@@ -2,8 +2,9 @@
 title: Card view
 section: usage and behavior
 hideTOC: true
+showTitle: true
 ---
-# Card view
+
 Card view organizes content into a grid of cards. It is useful for displaying a small to moderate amount of content in a way that is not visually overwhelming.
 ![card-view--desktop](./img/card-view-desktop.png)
 

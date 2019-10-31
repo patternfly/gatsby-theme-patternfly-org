@@ -35,7 +35,7 @@ const getWarning = state => {
 }
 
 export default ({ data, location, pageContext }) => {
-  const { cssPrefix, hideTOC, experimentalStage, optIn, hideDarkMode } = data.doc.frontmatter;
+  const { cssPrefix, hideTOC, experimentalStage, optIn, hideDarkMode, showTitle } = data.doc.frontmatter;
   const { componentName, navSection } = data.doc.fields;
   const { title, source, tableOfContents, htmlExamples, propComponents = [''] } = pageContext;
   const props = data.props && data.props.nodes && propComponents
@@ -65,6 +65,12 @@ export default ({ data, location, pageContext }) => {
 
   return (
     <SideNavLayout location={location} context={source} parityComponent={parityComponent}>
+      {/* TODO: Remove this hack for content components who we want to hide the TOC, but show the title */}
+      {showTitle && (
+        <PageSection className="ws-section" style={{ paddingBottom: 0 }}>
+          <Title size="4xl" className="ws-page-title">{title}</Title>
+        </PageSection>
+      )}
       {!hideTOC && (
         <PageSection className="ws-section" style={{ paddingBottom: 0 }}>
           <Title size="md" className="ws-framework-title">
@@ -168,6 +174,7 @@ export const pageQuery = graphql`
         optIn
         experimentalStage
         hideDarkMode
+        showTitle
       }
       fields {
         navSection

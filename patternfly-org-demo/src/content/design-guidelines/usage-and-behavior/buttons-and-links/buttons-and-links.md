@@ -2,8 +2,9 @@
 title: Buttons and links
 section: usage and behavior
 hideTOC: true
+showTitle: true
 ---
-# Buttons and links
+
 Buttons communicate and trigger actions a user can take in an application or website. Links are used to take users somewhere, like another page inside of a web application, or an external site such as help or documentation.  
 
 Technically, a button represents a box area that can be clicked or tapped, while a link represents text that can be clicked or tapped.
