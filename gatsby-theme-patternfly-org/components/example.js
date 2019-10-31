@@ -94,7 +94,7 @@ const Example = props => {
       style={previewStyle}
       className={`${className} ${
         darkMode ? ' pf-t-dark pf-m-opaque-200' : ''}${
-        isFullscreen ? ' ws-preview-fullscreen' : 'ws-preview'}`} />
+        isFullscreen ? ' ws-preview-fullscreen' : ' ws-preview'}`} />
   );
 
   return (
