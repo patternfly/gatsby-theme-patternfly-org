@@ -2,6 +2,13 @@
   background-color: #151515;
   min-height: auto;
 }
+
+@media (min-width: 992px) {
+  .ws-page-header .pf-c-page__header-nav {
+    margin-left: 12px;
+  }
+}
+
 .ws-page-header .pf-c-nav__scroll-button  {
   outline-offset: -4px;
   height: 100%;

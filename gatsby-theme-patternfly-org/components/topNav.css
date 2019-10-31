@@ -1,9 +1,3 @@
-@media (min-width: 992px) {
-  .ws-top-nav {
-    margin-left: -20px;
-  }
-}
-
 .ws-top-nav.pf-c-nav__horizontal-list .pf-c-nav__link {
   padding-top: 22px;
   padding-right: var(--pf-global--spacer--md);
