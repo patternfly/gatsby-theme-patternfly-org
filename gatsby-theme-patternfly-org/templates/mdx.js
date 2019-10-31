@@ -70,7 +70,7 @@ export default ({ data, location, pageContext }) => {
           <Title size="md" className="ws-framework-title">
             {source === 'core' ? 'HTML' : capitalize(source)}
           </Title>
-          <Title size="4xl">{title}</Title>
+          <Title size="4xl" className="ws-page-title">{title}</Title>
           {optIn && (
             <Alert
               variant="info"
@@ -92,11 +92,13 @@ export default ({ data, location, pageContext }) => {
               {getWarning(experimentalStage)}
             </Alert>
           )}
-          {data.designDoc && (
-            <a href="#design" className="ws-toc">
-              Design
-            </a>
-          )}
+          {data.designDoc &&
+            <React.Fragment>
+              <MDXRenderer>
+                {data.designDoc.body}
+              </MDXRenderer>
+            </React.Fragment>
+          }
           {tableOfContents.map(heading => (
             <a key={heading} href={`#${slugger(heading)}`} className="ws-toc">
               {heading}
@@ -128,14 +130,6 @@ export default ({ data, location, pageContext }) => {
               {...props} />,
           ...commonComponents
         }}>
-          {data.designDoc &&
-            <React.Fragment>
-              <AutoLinkHeader size="h2" id="design" className="ws-title">Design</AutoLinkHeader>
-              <MDXRenderer>
-                {data.designDoc.body}
-              </MDXRenderer>
-            </React.Fragment>
-          }
           <MDXRenderer>
             {data.doc.body}
           </MDXRenderer>
