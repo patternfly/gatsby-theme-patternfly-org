@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ExclamationCircleIcon } from '@patternfly/react-icons';
+import './propsTable.css';
 
 const renderType = prop => {
   if (prop.type) {
@@ -20,7 +21,7 @@ const renderType = prop => {
 
 // This component is only for our React components
 const PropsTable = ({ caption, propList }) => (
-  <table className="pf-c-table pf-m-compact pf-m-grid-md" role="grid" aria-label="Properties for a component">
+  <table className="ws-props-table pf-c-table pf-m-compact pf-m-grid-md" role="grid" aria-label="Properties for a component">
     <caption>{caption}</caption>
     <thead>
       <tr>
