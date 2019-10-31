@@ -5,6 +5,7 @@ hideTOC: true
 ---
 import { Alert, Gallery, GalleryItem, Grid, GridItem } from '@patternfly/react-core';
 import { Link } from 'gatsby';
+import './colors.css';
 
 ## Theme colors
 
