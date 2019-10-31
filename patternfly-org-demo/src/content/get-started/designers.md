@@ -6,6 +6,7 @@ import './get-started.css';
 
 Whether you are converting from a PatternFly 3 application or starting fresh with the latest and greatest PatternFly design system, this document is intended to help provide designers with information regarding resources and support available.
 
+# Design with PatternFly
 ## Getting the design kit
 
 ### Before you begin

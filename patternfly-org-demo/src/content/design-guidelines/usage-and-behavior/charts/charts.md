@@ -3,6 +3,7 @@ title: Charts
 section: usage and behavior
 hideTOC: true
 ---
+# Charts
 _Charts are only available in React_
 
 Use charts to visualize data in an application. The type of chart you use will depend on your use case and the type of data you need to display.

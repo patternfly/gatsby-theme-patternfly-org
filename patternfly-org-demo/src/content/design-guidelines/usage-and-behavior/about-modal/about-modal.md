@@ -3,6 +3,7 @@ title: About modal
 section: usage and behavior
 hideTOC: true
 ---
+# About modal
 The about modal stores the version number(s) of the application as well as any appropriate legal text.
 
 ## Primary elements

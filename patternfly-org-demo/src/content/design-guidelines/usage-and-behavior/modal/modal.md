@@ -3,6 +3,7 @@ title: Modal dialog
 section: usage and behavior
 hideTOC: true
 ---
+# Modal dialog
 Use modal dialogs load and display important information without navigating away from the current page.
 
 ## Primary elements

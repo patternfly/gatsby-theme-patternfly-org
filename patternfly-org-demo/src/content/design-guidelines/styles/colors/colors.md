@@ -7,6 +7,7 @@ import { Alert, Gallery, GalleryItem, Grid, GridItem } from '@patternfly/react-c
 import { Link } from 'gatsby';
 import './colors.css';
 
+# Colors
 ## Theme colors
 
 <Grid className="colors-theme--light grid-modifier" gutter="md">
