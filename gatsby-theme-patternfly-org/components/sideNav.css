@@ -71,7 +71,7 @@
 }
 
 .ws-org-context-switcher {
-  padding: 22px 0 0 var(--pf-c-nav__list-link--PaddingLeft);
+  padding: 8px 0 0 16px;
 }
 
 .ws-org-context-switcher > label {
