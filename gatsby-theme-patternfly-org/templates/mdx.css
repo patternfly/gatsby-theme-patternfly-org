@@ -1,6 +1,10 @@
 .ws-section {
   background-color: #fafafa;
-  padding: 32px 64px 64px;
+  padding: 16px 64px 64px;
+}
+
+.ws-section:first-child {
+  padding-top: 32px;
 }
 
 @media (max-width: 767px) {

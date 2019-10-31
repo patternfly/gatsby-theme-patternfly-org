@@ -2,6 +2,7 @@
 title:
 section: usage and behavior
 hideTOC: true
+showTitle: true
 ---
 <!--
 Welcome and thanks for contributing to PatternFly's design guidelines! We created this template to help writers contribute content that's useful for our PatternFly users and consistent with our existing content and standards.
@@ -16,7 +17,7 @@ Our design guidelines should answer all of these questions and more.
 
 Thanks again for your contribution and be sure to reach out to us in GitHub or on Slack with any questions. -->
 
-# Design Guideline Name
+
 _Include a short (1-2 sentence) description of the component here and fill out the following sections as needed_
 
 ## Primary elements

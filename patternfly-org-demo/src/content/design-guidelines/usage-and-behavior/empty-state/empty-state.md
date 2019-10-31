@@ -2,8 +2,9 @@
 title: Empty state
 section: usage and behavior
 hideTOC: true
+showTitle: true
 ---
-# Empty state
+
 Use an empty state to educate users and guide them with positive and proactive next steps in any situation where there is no data or information to display.
 
 ## Elements

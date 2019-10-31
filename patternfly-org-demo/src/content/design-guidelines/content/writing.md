@@ -2,8 +2,9 @@
 title: Writing
 section: content
 hideTOC: true
+showTitle: true
 ---
-# Writing
+
 The words we use in our products are just as important as the components or layouts. The right words can drive better design decisions and guide users to succeed.
 
 Our content standards help you use content design and strategy to build better experiences.

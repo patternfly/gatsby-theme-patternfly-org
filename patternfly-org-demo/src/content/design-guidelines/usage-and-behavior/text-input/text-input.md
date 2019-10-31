@@ -2,8 +2,9 @@
 title: Text input
 section: usage and behavior
 hideTOC: true
+showTitle: true
 ---
-# Text input
+
 Use text input to gather free-form text from a user.
 
 ## Elements

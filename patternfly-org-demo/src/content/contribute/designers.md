@@ -1,6 +1,7 @@
 ---
 title: Design
 hideTOC: true
+showTitle: true
 ---
 
 ## Ways to contribute
