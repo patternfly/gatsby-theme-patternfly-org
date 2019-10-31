@@ -3,6 +3,7 @@ title: Alerts and notifications
 section: usage and behavior
 hideTOC: true
 ---
+# Alerts and notifications
 Alerts are used when the system wants to notify the user about some status or other event. These guidelines talk about how to properly use different types of alerts in your designs.
 
 ## Elements

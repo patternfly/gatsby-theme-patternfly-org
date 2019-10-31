@@ -3,7 +3,7 @@ title: Voice
 section: content
 hideTOC: true
 ---
-
+# Voice
 To quote Red Hat’s brand standards, “The more you write, the less they’ll read.” Keep things clear, simple, and action-focused to make your content easy to understand, scan, and act on.
 
 **General principles**

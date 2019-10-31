@@ -3,6 +3,7 @@ title: Develop
 hideTOC: true
 ---
 
+# Develop
 ## Ways to contribute
 1. Pick an open issue in the [pf-next repo](https://github.com/patternfly/patternfly-next/issues) and make a comment that you would like to contribute
 2. Pick up open issue in [pf-react](https://github.com/patternfly/patternfly-react/issues) backlog

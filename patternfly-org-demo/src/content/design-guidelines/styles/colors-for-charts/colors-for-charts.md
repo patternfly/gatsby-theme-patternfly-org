@@ -9,6 +9,7 @@ import oneFamily from './onefamily.gif';
 import { Alert, Gallery, GalleryItem, Grid, GridItem } from '@patternfly/react-core';
 import './colors-for-charts.css';
 
+# Colors for charts
 ## Chart colors
 
 Colors for charts includes a recommended set of colors proposed for bar charts, donut charts and pie charts. There are six base colors (blue to orange) that the system is built on. Each base color has its own color family, which includes lighter and darker hues of the base. These families use a monochromatic color order. They are organized in a way that increases contrast while still looking extremely visually appealing. The variation of colors will depend on the type and amount of data at hand.

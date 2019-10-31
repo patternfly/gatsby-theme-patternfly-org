@@ -3,6 +3,7 @@ title: Forms
 section: usage and behavior
 hideTOC: true
 ---
+# Forms
 A form is a group of elements used to collect information from a user. Forms can be presented to the user in a variety of contexts depending on the use case and scenario.
 
 [View form demos](/documentation/core/demos/basicforms)
