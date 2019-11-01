@@ -87,9 +87,15 @@
   background: transparent;
   transition: 250ms;
 }
+.pf-c-page__header-brand-toggle {
+  display: none;
+}
 @media (max-width: 768px) {
   .pf-site-search {
     width: 100px;
+  }
+  .pf-c-page__header-brand-toggle {
+    display: block;
   }
 }
 .pf-site-search:focus-within {

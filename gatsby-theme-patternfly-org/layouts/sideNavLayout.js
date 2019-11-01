@@ -22,7 +22,7 @@ const SideNavLayout = ({ children, location, context, hideSideNav = false, parit
   const initialBannerOpen = typeof window !== 'undefined' && sessionStorage && sessionStorage.getItem('pf4-banner-closed')
     ? false
     : true;
-  const [ isBannerOpen, setBannerOpen ] = React.useState(initialBannerOpen)
+  const [ isBannerOpen, setBannerOpen ] = React.useState(initialBannerOpen);
   let docSearchInit = false;
   // Add docsearch
   useEffect(() => {
@@ -183,6 +183,7 @@ const SideNavLayout = ({ children, location, context, hideSideNav = false, parit
 
   return (
     <div>
+      {window.innerWidth}
       {isBannerOpen && <Banner onClose={closeBanner} />}
       <Page isManagedSidebar header={Header} sidebar={SideBar}>
         <Helmet>
