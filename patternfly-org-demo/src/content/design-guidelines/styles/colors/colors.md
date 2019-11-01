@@ -40,7 +40,10 @@ import './colors.css';
     </Grid>
   </GridItem>
   <GridItem span={12} lg={5} rowSpan={2} className="grid-modifier-four">
-    <Grid className="colors-in-context">
+    <Grid className="colors-in-context" style={{
+      padding: "16px 32px",
+      backgroundColor: "#fff"
+    }}>
       <GridItem span={12}>
         <h3>Colors in context</h3>
         <button class="pf-c-button pf-m-primary pf-u-mt-sm pf-u-mb-md">See what's possible</button>
@@ -67,7 +70,10 @@ import './colors.css';
     </Grid>
   </GridItem>
   <GridItem span={12} lg={5} rowSpan={2} className="grid-modifier-four">
-    <Grid className="colors-in-context">
+    <Grid className="colors-in-context" style={{
+      padding: "16px 32px",
+      backgroundColor: "#fff"
+    }}>
       <GridItem span={12}>
         <h3>Colors in context</h3>
         <div class="pf-c-chip pf-u-mr-xs pf-u-mb-xs">
@@ -136,7 +142,10 @@ import './colors.css';
     </Grid>
   </GridItem>
     <GridItem xs={12} lg={5} rowSpan={2} className="grid-modifier-four">
-    <Grid className="colors-in-context">
+    <Grid className="colors-in-context" style={{
+      padding: "16px 32px",
+      backgroundColor: "#fff"
+    }}>
       <GridItem span={12}>
         <h3>Colors in context</h3>
         <h2>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
@@ -178,7 +187,10 @@ import './colors.css';
     </Grid>
   </GridItem>
     <GridItem span={12} lg={5} rowSpan={2} className="grid-modifier-four">
-    <Grid className="colors-in-context">
+    <Grid className="colors-in-context" style={{
+      padding: "16px 32px",
+      backgroundColor: "#fff"
+    }}>
       <GridItem span={12}>
         <h3>Colors in context</h3>
         <p>Body text should be Overpass Regular at 16px. <a href="#" className="pf-m-link">This is a link in-content</a>. It should have leading of 24px because of its relative line-height of 1.5.
@@ -205,7 +217,10 @@ import './colors.css';
     </Grid>
   </GridItem>
   <GridItem span={12} lg={5} className="grid-modifier-four">
-    <Grid className="colors-in-context">
+    <Grid className="colors-in-context" style={{
+      padding: "16px 32px",
+      backgroundColor: "#fff"
+    }}>
       <GridItem span={12}>
         <h3>Colors in context</h3>
         <p>Icon color is #72767B unless used in an alert.</p>
@@ -248,7 +263,10 @@ import './colors.css';
     </Grid>
   </GridItem>
   <GridItem span={12} lg={5} rowSpan={2} className="grid-modifier-four">
-    <Grid className="colors-in-context">
+    <Grid className="colors-in-context" style={{
+      padding: "16px 32px",
+      backgroundColor: "#fff"
+    }}>
       <GridItem span={12}>
         <h3>Colors in context</h3>
         <Alert
@@ -292,7 +310,10 @@ import './colors.css';
     </Grid>
   </GridItem>
   <GridItem span={12} lg={5} rowSpan={2} className="grid-modifier-four">
-    <Grid className="colors-in-context">
+    <Grid className="colors-in-context" style={{
+      padding: "16px 32px",
+      backgroundColor: "#fff"
+    }}>
       <GridItem span={12}>
         <h3>Colors in context</h3>
         <Alert
@@ -336,7 +357,10 @@ import './colors.css';
     </Grid>
   </GridItem>
   <GridItem span={12} lg={5} rowSpan={2} className="grid-modifier-four">
-    <Grid className="colors-in-context">
+    <Grid className="colors-in-context" style={{
+      padding: "16px 32px",
+      backgroundColor: "#fff"
+    }}>
       <GridItem span={12}>
         <h3>Colors in context</h3>
         <Alert
@@ -380,7 +404,10 @@ import './colors.css';
     </Grid>
   </GridItem>
   <GridItem span={12} lg={5} rowSpan={2} className="grid-modifier-four">
-    <Grid className="colors-in-context">
+    <Grid className="colors-in-context" style={{
+      padding: "16px 32px",
+      backgroundColor: "#fff"
+    }}>
       <GridItem span={12}>
         <h3>Colors in context</h3>
         <Alert
