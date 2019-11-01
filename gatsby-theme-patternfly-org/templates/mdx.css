@@ -1,6 +1,6 @@
 .ws-section {
   background-color: #fafafa;
-  padding: 16px 64px 64px;
+  padding: 0 64px 64px;
 }
 
 .ws-section:first-child {
@@ -14,13 +14,15 @@
   }
 }
 
-.ws-framework-title {
+.ws-section .ws-framework-title {
   color: #06c;
+  font-family: RedHatText;
+  font-weight: 700;
 }
 
 .ws-toc {
-  padding-top: 14px;
-  padding-bottom: 14px;
+  padding-top: 24px;
+  padding-bottom: 24px;
   margin-right: 30px;
   display: inline-block;
 }
