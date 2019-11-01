@@ -3,7 +3,7 @@ title: Typography
 section: styles
 hideTOC: true
 showTitle: true
-hideTOC: In a future breaking-change release, the font will default to the Red Hat font. You can opt-in and update to use the Red Hat font now by wrapping your application with the ".pf-m-redhat-font" class. For more information visit the Red Hat font page.
+optIn: In a future breaking-change release, the font will default to the Red Hat font. You can opt-in and update to use the Red Hat font now by wrapping your application with the ".pf-m-redhat-font" class. For more information visit the Red Hat font page.
 ---
 
 import { Button, Grid, GridItem } from '@patternfly/react-core';
