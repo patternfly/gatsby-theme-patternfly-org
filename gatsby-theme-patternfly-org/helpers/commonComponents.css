@@ -37,7 +37,8 @@
   list-style: var(--ws-ul--ListStyle);
 }
 
-.ws-code {
+.ws-code,
+code {
   display: inline-block;
   background-color: #fff;
   padding: 1px 8px;
