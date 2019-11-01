@@ -17,7 +17,7 @@ export default ({ location, pageContext }) => {
 
   return (
     <SideNavLayout location={location} context={context}>
-      <PageSection className="ws-section">
+      <PageSection className="ws-section ws-design-content">
         <Title size="md" className="ws-framework-title">
           HTML/React
         </Title>
