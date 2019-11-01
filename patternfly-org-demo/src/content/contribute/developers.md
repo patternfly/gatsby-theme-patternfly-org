@@ -15,7 +15,7 @@ showTitle: true
   - If the bug can be seen on both the React and CSS side, it should be created on the CSS repo.
   - Mention which project the bug was noticed in and if there is a deadline that the fix is needed for
 
-### [Core contribution guidelines](https://github.com/patternfly/patternfly-next#guidelines-for-css-development) & [React contribution guidelines](https://github.com/patternfly/patternfly-react/blob/master/CONTRIBUTING.md#contribution-process)
+[Core contribution guidelines](https://github.com/patternfly/patternfly-next#guidelines-for-css-development) & [React contribution guidelines](https://github.com/patternfly/patternfly-react/blob/master/CONTRIBUTING.md#contribution-process)
 
 ## Lifecycle
 ![Development contribution lifecycle flowchart](developer-flowchart.png)

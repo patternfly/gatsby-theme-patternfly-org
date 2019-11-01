@@ -66,8 +66,10 @@ export default ({ data, location, pageContext }) => {
   return (
     <SideNavLayout location={location} context={source} parityComponent={parityComponent}>
       {/* TODO: Remove this hack for content components who we want to hide the TOC, but show the title */}
+      <PageSection className="ws-section">
+        <div class="pf-c-content">
       {showTitle && (
-        <PageSection className="ws-section" style={{ paddingBottom: 0 }}>
+        <React.Fragment>
           <Title size="4xl" className="ws-page-title">{title}</Title>
           {optIn && (
             <Alert
@@ -79,10 +81,10 @@ export default ({ data, location, pageContext }) => {
               {optIn}
             </Alert>
           )}
-        </PageSection>
+        </React.Fragment>
       )}
       {!hideTOC && (
-        <PageSection className="ws-section" style={{ paddingBottom: 0 }}>
+        <React.Fragment>
           <Title size="md" className="ws-framework-title">
             {source === 'core' ? 'HTML' : capitalize(source)}
           </Title>
@@ -130,10 +132,10 @@ export default ({ data, location, pageContext }) => {
               CSS Variables
             </a>
           )}
-        </PageSection>
+        </React.Fragment>
       )}
 
-      <PageSection className="ws-section">
+      <React.Fragment>
         <MDXProvider components={{
           code: props =>
             <Example
@@ -150,10 +152,10 @@ export default ({ data, location, pageContext }) => {
             {data.doc.body}
           </MDXRenderer>
         </MDXProvider>
-      </PageSection>
+      </React.Fragment>
 
       {props.length > 0 && (
-        <PageSection className="ws-section">
+        <React.Fragment>
           <AutoLinkHeader size="h2" id="props" className="ws-title">Props</AutoLinkHeader>
           {props.map(component => (
             <React.Fragment key={component.name}>
@@ -161,15 +163,17 @@ export default ({ data, location, pageContext }) => {
               <PropsTable caption={`${component.name} properties`} propList={component.props} />
             </React.Fragment>
           ))}
-        </PageSection>
+        </React.Fragment>
       )}
 
       {cssPrefix && (
-        <PageSection className="ws-section">
+        <React.Fragment>
           <AutoLinkHeader size="h2" id="css-variables" className="ws-title">CSS Variables</AutoLinkHeader>
           <CSSVariables prefix={cssPrefix} />
-        </PageSection>
+        </React.Fragment>
       )}
+      </div>
+      </PageSection>
     </SideNavLayout>
   );
 }
