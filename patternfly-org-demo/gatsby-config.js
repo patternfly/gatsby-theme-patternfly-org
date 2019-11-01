@@ -1,14 +1,14 @@
 const path = require('path');
 
 module.exports = {
+  // For production build
+  pathPrefix: '/v4',
   siteMetadata: {
     title: 'PatternFly 4',
     // For SEO
     description: 'Documentation for PatternFly 4',
     // For Gatsby plugin sitemap
-    siteUrl: 'https://www.patternfly.org',
-    // For production build
-    pathPrefix: '/v4'
+    siteUrl: 'https://www.patternfly.org'
   },
   plugins: [
     {

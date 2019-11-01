@@ -17,7 +17,8 @@ export const commonComponents = {
     if (props.href.includes('//') || props.href.startsWith("#")) {
       return <a {...props} />;
     }
-    return <Link to={props.href} {...props} />;
+    // Basically "withoutPrefix" since links are already prefixed coming into here
+    return <Link to={props.href.replace('v4/', '')} {...props} />;
   }
 
 };
