@@ -1,5 +1,5 @@
 ---
-title: About Patternfly
+title: About PatternFly
 hideTOC: true
 showTitle: true
 ---
