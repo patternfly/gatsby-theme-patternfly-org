@@ -129,6 +129,7 @@ const SideNavLayout = ({ children, location, context, hideSideNav = false, parit
               style={{
                 position: 'relative',
               }}
+              className="pf-site-search"
             >
               <TextInput
                 type="text"
