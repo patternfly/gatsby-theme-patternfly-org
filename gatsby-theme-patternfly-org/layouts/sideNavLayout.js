@@ -183,7 +183,6 @@ const SideNavLayout = ({ children, location, context, hideSideNav = false, parit
 
   return (
     <div>
-      {window.innerWidth}
       {isBannerOpen && <Banner onClose={closeBanner} />}
       <Page isManagedSidebar header={Header} sidebar={SideBar}>
         <Helmet>
