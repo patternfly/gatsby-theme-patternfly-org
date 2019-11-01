@@ -146,7 +146,8 @@ export default ({ data, location, pageContext }) => {
               {...props} />,
           ...commonComponents
         }}>
-          <div className={(['design-guidelines', 'get-started'].includes(source)) ? "ws-design-content" : ''}>
+          {/* TODO: Styles design and documentation content the SAME WAY */}
+          <div {...(['design-guidelines', 'get-started'].includes(context) || section === 'overview') && {className="ws-design-content"}}>
             <MDXRenderer>
               {data.doc.body}
             </MDXRenderer>

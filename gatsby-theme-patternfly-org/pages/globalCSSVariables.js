@@ -21,7 +21,7 @@ export default ({ location, pageContext }) => {
         <Title size="md" className="ws-framework-title">HTML/React</Title>
         <Title size="4xl">Global CSS variables</Title>
       </PageSection>
-      <PageSection className="ws-section" variant={PageSectionVariants.light}>
+      <PageSection className="ws-section ws-design-content" variant={PageSectionVariants.light}>
         <AutoLinkHeader size="h2">About CSS variables</AutoLinkHeader>
         <p>The CSS variable system is a two-layer theming system where global variables inform component variables.</p>
         <AutoLinkHeader size="h2">Global variables</AutoLinkHeader>
