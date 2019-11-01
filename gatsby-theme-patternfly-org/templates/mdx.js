@@ -63,109 +63,117 @@ export default ({ data, location, pageContext }) => {
     }
   }
 
+  const isDesignPage = ['design-guidelines', 'get-started'].includes(source) || navSection === 'overview';
+
   return (
     <SideNavLayout location={location} context={source} parityComponent={parityComponent}>
       {/* TODO: Remove this hack for content components who we want to hide the TOC, but show the title */}
       <PageSection className="ws-section">
-        <div class="pf-c-content">
-      {showTitle && (
-        <React.Fragment>
-          <Title size="4xl" className="ws-page-title">{title}</Title>
-        </React.Fragment>
-      )}
-      {!hideTOC && (
-        <React.Fragment>
-          <Title size="md" className="ws-framework-title">
-            {source === 'core' ? 'HTML' : capitalize(source)}
-          </Title>
-          <Title size="4xl" className="ws-page-title">{title}</Title>
-          {optIn && (
-            <Alert
-              variant="info"
-              title="Opt-in feature"
-              className="pf-u-my-md"
-              isInline
-            >
-              {optIn}
-            </Alert>
-          )}
-          {experimentalStage && (
-            <Alert
-              variant={experimentalStage === 'early' ? 'info' : 'warning'}
-              title="Experimental feature"
-              className="pf-u-my-md"
-              style={{ marginBottom: 'var(--pf-global--spacer--md)' }}
-              isInline
-            >
-              {getWarning(experimentalStage)}
-            </Alert>
-          )}
-          {data.designDoc &&
-            <React.Fragment>
-              <MDXRenderer>
-                {data.designDoc.body}
-              </MDXRenderer>
-            </React.Fragment>
-          }
-          {tableOfContents.map(heading => (
-            <a key={heading} href={`#${slugger(heading)}`} className="ws-toc">
-              {heading}
-            </a>
-          ))}
-          {props.length > 0 && (
-            <a href="#props" className="ws-toc">
-              Props
-            </a>
-          )}
-          {cssPrefix && (
-            <a href="#css-variables" className="ws-toc">
-              CSS Variables
-            </a>
-          )}
-        </React.Fragment>
-      )}
+        {showTitle && (
+          <React.Fragment>
+            <Title size="4xl" className="ws-page-title">{title}</Title>
+            {optIn && (
+              <Alert
+                variant="info"
+                title="Opt-in feature"
+                className="pf-u-my-md"
+                isInline
+              >
+                {optIn}
+              </Alert>
+            )}
+          </React.Fragment>
+        )}
+        {!hideTOC && (
+          <React.Fragment>
+            <Title size="md" className="ws-framework-title">
+              {source === 'core' ? 'HTML' : capitalize(source)}
+            </Title>
+            <Title size="4xl" className="ws-page-title">{title}</Title>
+            {optIn && (
+              <Alert
+                variant="info"
+                title="Opt-in feature"
+                className="pf-u-my-md"
+                isInline
+              >
+                {optIn}
+              </Alert>
+            )}
+            {experimentalStage && (
+              <Alert
+                variant={experimentalStage === 'early' ? 'info' : 'warning'}
+                title="Experimental feature"
+                className="pf-u-my-md"
+                style={{ marginBottom: 'var(--pf-global--spacer--md)' }}
+                isInline
+              >
+                {getWarning(experimentalStage)}
+              </Alert>
+            )}
+            {data.designDoc &&
+              <React.Fragment>
+                <MDXRenderer>
+                  {data.designDoc.body}
+                </MDXRenderer>
+              </React.Fragment>
+            }
+            {tableOfContents.map(heading => (
+              <a key={heading} href={`#${slugger(heading)}`} className="ws-toc">
+                {heading}
+              </a>
+            ))}
+            {props.length > 0 && (
+              <a href="#props" className="ws-toc">
+                Props
+              </a>
+            )}
+            {cssPrefix && (
+              <a href="#css-variables" className="ws-toc">
+                CSS Variables
+              </a>
+            )}
+          </React.Fragment>
+        )}
 
-      <React.Fragment>
-        <MDXProvider components={{
-          code: props =>
-            <Example
-              location={location}
-              source={source}
-              html={props.title && htmlExamples && htmlExamples[getId(props.title)]}
-              hideDarkMode={hideDarkMode}
-              navSection={navSection}
-              componentName={componentName}
-              {...props} />,
-          ...commonComponents
-        }}>
-          {/* TODO: Styles design and documentation content the SAME WAY */}
-          <div {...(['design-guidelines', 'get-started'].includes(source) || navSection === 'overview') && {className: "ws-design-content"}}>
+        <div className={`${isDesignPage ? ' pf-c-content' : ''}`}>
+          <MDXProvider components={{
+            code: props =>
+              <Example
+                location={location}
+                source={source}
+                html={props.title && htmlExamples && htmlExamples[getId(props.title)]}
+                hideDarkMode={hideDarkMode}
+                navSection={navSection}
+                componentName={componentName}
+                {...props} />,
+            ...commonComponents
+          }}>
+            {/* TODO: Styles design and documentation content the SAME WAY */}
             <MDXRenderer>
               {data.doc.body}
             </MDXRenderer>
-          </div>
-        </MDXProvider>
-      </React.Fragment>
+          </MDXProvider>
+        </div>
 
-      {props.length > 0 && (
-        <React.Fragment>
-          <AutoLinkHeader size="h2" id="props" className="ws-title">Props</AutoLinkHeader>
-          {props.map(component => (
-            <React.Fragment key={component.name}>
-              {component.description}
-              <PropsTable caption={`${component.name} properties`} propList={component.props} />
-            </React.Fragment>
-          ))}
-        </React.Fragment>
-      )}
+        {props.length > 0 && (
+          <React.Fragment>
+            <AutoLinkHeader size="h2" id="props" className="ws-title">Props</AutoLinkHeader>
+            {props.map(component => (
+              <React.Fragment key={component.name}>
+                {component.description}
+                <PropsTable caption={`${component.name} properties`} propList={component.props} />
+              </React.Fragment>
+            ))}
+          </React.Fragment>
+        )}
 
-      {cssPrefix && (
-        <React.Fragment>
-          <AutoLinkHeader size="h2" id="css-variables" className="ws-title">CSS Variables</AutoLinkHeader>
-          <CSSVariables prefix={cssPrefix} />
-        </React.Fragment>
-      )}
-      </div>
+        {cssPrefix && (
+          <React.Fragment>
+            <AutoLinkHeader size="h2" id="css-variables" className="ws-title">CSS Variables</AutoLinkHeader>
+            <CSSVariables prefix={cssPrefix} />
+          </React.Fragment>
+        )}
       </PageSection>
     </SideNavLayout>
   );

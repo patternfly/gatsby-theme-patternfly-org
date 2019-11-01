@@ -3,24 +3,15 @@ title: Typography
 section: styles
 hideTOC: true
 showTitle: true
+optIn: In a future breaking-change release, the font will default to the Red Hat font. You can opt-in and update to use the Red Hat font now by wrapping your application with the ".pf-m-redhat-font" class. For more information visit the Red Hat font page.
 ---
 
-import { Button, Grid, GridItem, Alert } from '@patternfly/react-core';
+import { Button, Grid, GridItem } from '@patternfly/react-core';
 import { CheckCircleIcon, TimesCircleIcon } from '@patternfly/react-icons';
 import { TypographyGrid, LineHeightTitle, SpacingContentItem, Spacer, TitleLevel, styleProps } from './typography';
 import correct from './typography_correct_spacing.png';
 import incorrect from './typography_incorrect_spacing.png';
-import { Link } from 'gatsby';
 import './typography.css';
-
-<Alert
-  variant="info"
-  title="Opt-in feature"
-  className="pf-u-my-md"
-  isInline
->
-  In a future breaking-change release, the font will default to the Red Hat font. You can opt-in and update to use the Red Hat font now by wrapping your application with the ".pf-m-redhat-font" class. For more information visit the <Link to="/documentation/overview/red-hat-font">Red Hat font</Link> page.
-</Alert>
 
 ## Our font family
 We use Red Hat Display and Red Hat Text.

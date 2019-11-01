@@ -30,65 +30,65 @@
 }
 
 /* Table styles */
-.ws-design-content table {
+.pf-c-content table {
   width: 100%;
   margin-bottom: var(--pf-global--spacer--md);
 }
-.ws-design-content table:not(.pf-c-table) td,
-.ws-design-content table:not(.pf-c-table) th,
-.ws-design-content table:not(.pf-c-table) tr {
+.pf-c-content table:not(.pf-c-table) td,
+.pf-c-content table:not(.pf-c-table) th,
+.pf-c-content table:not(.pf-c-table) tr {
   padding: var(--pf-global--spacer--sm);
   vertical-align: top;
   border-bottom: var(--pf-global--BorderWidth--sm) solid #e0e0e0;
 }
-.ws-design-content table:not(.pf-c-table) td > code, 
-.ws-design-content table:not(.pf-c-table) th > code,
-.ws-design-content table:not(.pf-c-table) tr > code {
+.pf-c-content table:not(.pf-c-table) td > code, 
+.pf-c-content table:not(.pf-c-table) th > code,
+.pf-c-content table:not(.pf-c-table) tr > code {
   white-space: normal;
 }
-.ws-design-content .pf-c-table {
+.pf-c-content .pf-c-table {
   margin-bottom: 0;
 }
-.ws-design-content .pf-c-table td,
-.ws-design-content .pf-c-table th:not(.pf-c-table__sort) {
+.pf-c-content .pf-c-table td,
+.pf-c-content .pf-c-table th:not(.pf-c-table__sort) {
   border: none;
 }
-.ws-design-content table:not(.pf-c-table) {
+.pf-c-content table:not(.pf-c-table) {
   margin: 0;
   padding: 0;
   color: #151515;
   text-align: left;
 }
-.ws-design-content table:not(.pf-c-table) thead {
+.pf-c-content table:not(.pf-c-table) thead {
   font-size: 16px;
   white-space: nowrap;
   vertical-align: top;
 }
-.ws-design-content table:not(.pf-c-table) th {
+.pf-c-content table:not(.pf-c-table) th {
   padding: 16px 16px 16px 32px;
   font-size: 14px;
   line-height: 21px;
   color: #151515;
 }
 @media only screen and (max-width: 992px) {
-  .ws-design-content table:not(.pf-c-table) th {
+  .pf-c-content table:not(.pf-c-table) th {
     padding-left: 16px;
   }
 }
-.ws-design-content table:not(.pf-c-table) td {
+.pf-c-content table:not(.pf-c-table) td {
   padding: 32px 16px 32px 32px;
   font-size: 16px;
 }
 @media only screen and (max-width: 992px) {
-  .ws-design-content table:not(.pf-c-table) td {
+  .pf-c-content table:not(.pf-c-table) td {
     padding: 16px;
   }
 }
-.ws-design-content table:not(.pf-c-table) tr {
+.pf-c-content table:not(.pf-c-table) tr {
   height: 1px;
   border-bottom: 1px solid #d2d2d2;
 }
-.ws-design-content table:not(.pf-c-table) tr > * {
+.pf-c-content table:not(.pf-c-table) tr > * {
   position: relative;
   height: inherit;
   font-weight: 400;
