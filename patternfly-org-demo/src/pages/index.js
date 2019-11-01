@@ -187,21 +187,23 @@ const IndexPage = ({ location }) => (
                 <div className="pf-u-pb-md">
                   <Text
                     component={TextVariants.a}
-                    href="/get-started/developers')}"
                     className="pf-m-white pf4-c-link__text ws-mdx-a"
                     aria-label="Get started for developer"
                   >
-                    Get started for developers <ArrowRightIcon />
+                    <Link to="/get-started/developers">
+                      Get started for developers <ArrowRightIcon />
+                    </Link>
                   </Text>
                 </div>
                 <div className="pf-u-pb-md">
                   <Text
                     component={TextVariants.a}
-                    href="/get-started/designers"
                     className="pf-m-white pf4-c-link__text ws-mdx-a"
                     aria-label="Get started for designers"
                   >
-                    Get started for designers <ArrowRightIcon />
+                    <Link to="/get-started/designers">
+                      Get started for designers <ArrowRightIcon />
+                    </Link>
                   </Text>
                 </div>
               </TextContent>
