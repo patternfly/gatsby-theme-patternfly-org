@@ -63,6 +63,8 @@ export default ({ data, location, pageContext }) => {
     }
   }
 
+  const isDesignPage = ['design-guidelines', 'get-started'].includes(source) || navSection === 'overview';
+
   return (
     <SideNavLayout location={location} context={source} parityComponent={parityComponent}>
       {/* TODO: Remove this hack for content components who we want to hide the TOC, but show the title */}
@@ -123,7 +125,7 @@ export default ({ data, location, pageContext }) => {
         </PageSection>
       )}
 
-      <PageSection className="ws-section">
+      <PageSection className={`ws-section${isDesignPage ? ' pf-c-content' : ''}`}>
         <MDXProvider components={{
           code: props =>
             <Example
@@ -137,11 +139,9 @@ export default ({ data, location, pageContext }) => {
           ...commonComponents
         }}>
           {/* TODO: Styles design and documentation content the SAME WAY */}
-          <div {...(['design-guidelines', 'get-started'].includes(source) || navSection === 'overview') && {className: "ws-design-content"}}>
-            <MDXRenderer>
-              {data.doc.body}
-            </MDXRenderer>
-          </div>
+          <MDXRenderer>
+            {data.doc.body}
+          </MDXRenderer>
         </MDXProvider>
       </PageSection>
 
