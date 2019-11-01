@@ -17,6 +17,7 @@
     "clean:react": "yarn workspace @patternfly/react-docs clean",
     "develop:org": "yarn workspace patternfly-org-demo develop -p 8003",
     "build:org:docs": "yarn workspace patternfly-org-demo build",
+    "build:org:prefix": "yarn workspace patternfly-org-demo build:prefix",
     "serve:org": "yarn workspace patternfly-org-demo gatsby serve -p 8003",
     "clean:org": "yarn workspace patternfly-org-demo clean"
   },

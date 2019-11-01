@@ -49,6 +49,7 @@
   position: relative;
   display: inline-block;
   line-height: 0;
+  overflow: hidden;
 }
 
 .ws-preview__thumbnail-link::before,

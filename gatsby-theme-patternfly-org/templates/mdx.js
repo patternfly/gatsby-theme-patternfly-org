@@ -63,7 +63,7 @@ export default ({ data, location, pageContext }) => {
     }
   }
 
-  const isDesignPage = ['design-guidelines', 'get-started'].includes(source) || navSection === 'overview';
+  const isDesignPage = ['design-guidelines', 'get-started', 'contribute'].includes(source) || navSection === 'overview';
 
   return (
     <SideNavLayout location={location} context={source} parityComponent={parityComponent}>
@@ -158,7 +158,7 @@ export default ({ data, location, pageContext }) => {
 
         {props.length > 0 && (
           <React.Fragment>
-            <AutoLinkHeader size="h2" id="props" className="ws-title">Props</AutoLinkHeader>
+            <AutoLinkHeader size="h2" id="props" className="ws-title ws-h2">Props</AutoLinkHeader>
             {props.map(component => (
               <React.Fragment key={component.name}>
                 {component.description}
@@ -170,7 +170,7 @@ export default ({ data, location, pageContext }) => {
 
         {cssPrefix && (
           <React.Fragment>
-            <AutoLinkHeader size="h2" id="css-variables" className="ws-title">CSS Variables</AutoLinkHeader>
+            <AutoLinkHeader size="h2" id="css-variables" className="ws-title ws-h2">CSS Variables</AutoLinkHeader>
             <CSSVariables prefix={cssPrefix} />
           </React.Fragment>
         )}

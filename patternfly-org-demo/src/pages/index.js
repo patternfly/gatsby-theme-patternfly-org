@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'gatsby';
 import SideNavLayout from 'gatsby-theme-patternfly-org/layouts/sideNavLayout';
 import {
   Grid,
@@ -10,7 +11,6 @@ import {
   Text,
   TextVariants
 } from '@patternfly/react-core';
-import { withPrefix } from 'gatsby';
 import { ArrowRightIcon } from '@patternfly/react-icons';
 import orb from '../images/PF4_logo.svg';
 import principles from '../images/PF4_WIREFRAME.png';
@@ -37,16 +37,16 @@ const IndexPage = ({ location }) => (
               PatternFly is an open source design system built to drive consistency and unify teams.
             </Title>
             <div className="pf-u-display-flex pf-u-justify-content-center pf-u-flex-direction-column pf-u-flex-direction-row-on-md">
-              <a
-                href={withPrefix('/get-started/about')}
+              <Link
+                to="/get-started/about"
                 type="button"
                 className="pf-c-button pf4-c-button__cta-primary pf-u-mr-0 pf-u-mb-md pf-u-mb-0-on-md pf-u-mr-xl-on-md fadeIn animated fadeInFour"
                 aria-label="Get started with PatternFly"
               >
                 Get started
-              </a>
+              </Link>
               <a
-                href={withPrefix('#about-patternfly')}
+                href="#about-patternfly"
                 type="button"
                 className="pf-c-button pf4-c-button__cta-outline fadeIn animated fadeInFour"
                 aria-label="Why PatternFly"
@@ -91,11 +91,12 @@ const IndexPage = ({ location }) => (
                   </Text>
                   <Text
                     component={TextVariants.a}
-                    href={withPrefix('/design-guidelines/styles/colors')}
                     aria-label="view design guidelines"
                     className="pf-u-pl-0 pf4-c-link__text ws-mdx-a"
                   >
-                    View design guidelines <ArrowRightIcon />
+                    <Link to="/design-guidelines/styles/colors">
+                      View design guidelines <ArrowRightIcon />
+                    </Link>
                   </Text>
                 </div>
                 <div className="pf-u-pb-2xl">
@@ -106,11 +107,12 @@ const IndexPage = ({ location }) => (
                   </Text>
                   <Text
                     component={TextVariants.a}
-                    href={withPrefix('/documentation/react/layouts/bullseye')}
                     aria-label="view layouts"
                     className="pf-u-pl-0 pf4-c-link__text ws-mdx-a"
                   >
-                    View layouts <ArrowRightIcon />
+                    <Link to="/documentation/react/layouts/bullseye">
+                      View layouts <ArrowRightIcon />
+                    </Link>
                   </Text>
                 </div>
                 <div className="pf-u-pb-2xl">
@@ -121,11 +123,12 @@ const IndexPage = ({ location }) => (
                   </Text>
                   <Text
                     component={TextVariants.a}
-                    href={withPrefix('/documentation/react/components/aboutmodal')}
                     aria-label="view components"
                     className="pf-u-pl-0 pf4-c-link__text ws-mdx-a"
                   >
-                    View components <ArrowRightIcon />
+                    <Link to="/documentation/react/components/aboutmodal">
+                      View components <ArrowRightIcon />
+                    </Link>
                   </Text>
                 </div>
                 <div className="pf-u-pb-2xl">
@@ -136,11 +139,12 @@ const IndexPage = ({ location }) => (
                   </Text>
                   <Text
                     component={TextVariants.a}
-                    href={withPrefix('/documentation/react/demos/bulkselecttable')}
                     aria-label="view demos"
                     className="pf-u-pl-0 pf4-c-link__text ws-mdx-a"
                   >
-                    View demos <ArrowRightIcon />
+                    <Link to="/documentation/react/demos/bulkselecttable">
+                      View demos <ArrowRightIcon />
+                    </Link>
                   </Text>
                 </div>
               </TextContent>
@@ -183,7 +187,7 @@ const IndexPage = ({ location }) => (
                 <div className="pf-u-pb-md">
                   <Text
                     component={TextVariants.a}
-                    href={withPrefix('/get-started/developers')}
+                    href="/get-started/developers')}"
                     className="pf-m-white pf4-c-link__text ws-mdx-a"
                     aria-label="Get started for developer"
                   >
@@ -193,7 +197,7 @@ const IndexPage = ({ location }) => (
                 <div className="pf-u-pb-md">
                   <Text
                     component={TextVariants.a}
-                    href={withPrefix('/get-started/designers')}
+                    href="/get-started/designers"
                     className="pf-m-white pf4-c-link__text ws-mdx-a"
                     aria-label="Get started for designers"
                   >
