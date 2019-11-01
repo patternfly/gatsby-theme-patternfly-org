@@ -22,7 +22,7 @@ const SideNavLayout = ({ children, location, context, hideSideNav = false, parit
   const initialBannerOpen = typeof window !== 'undefined' && sessionStorage && sessionStorage.getItem('pf4-banner-closed')
     ? false
     : true;
-  const [ isBannerOpen, setBannerOpen ] = React.useState(initialBannerOpen)
+  const [ isBannerOpen, setBannerOpen ] = React.useState(initialBannerOpen);
   let docSearchInit = false;
   // Add docsearch
   useEffect(() => {
@@ -129,6 +129,7 @@ const SideNavLayout = ({ children, location, context, hideSideNav = false, parit
               style={{
                 position: 'relative',
               }}
+              className="pf-site-search"
             >
               <TextInput
                 type="text"

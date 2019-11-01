@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Bullseye, GalleryItem, Popover, TextContent, Text } from '@patternfly/react-core';
 import { copy } from '../helpers/copy';
 import { saveAs } from 'file-saver';
+import ReactDOM from 'react-dom';
 import './iconCard.css';
 
 class IconCard extends React.Component {
@@ -70,7 +71,7 @@ class IconCard extends React.Component {
 
   onDownloadSvg = () => {
     const { name } = this.props;
-    const domNode = this.iconRef.current;
+    const domNode = ReactDOM.findDOMNode(this.iconRef.current);
     domNode.setAttribute("xmlns", "http://www.w3.org/2000/svg");
     domNode.setAttribute("width", "100%");
     domNode.setAttribute("height", "100%");

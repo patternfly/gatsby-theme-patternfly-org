@@ -71,16 +71,6 @@ export default ({ data, location, pageContext }) => {
       {showTitle && (
         <React.Fragment>
           <Title size="4xl" className="ws-page-title">{title}</Title>
-          {optIn && (
-            <Alert
-              variant="info"
-              title="Opt-in feature"
-              className="pf-u-my-md"
-              isInline
-            >
-              {optIn}
-            </Alert>
-          )}
         </React.Fragment>
       )}
       {!hideTOC && (
@@ -148,9 +138,12 @@ export default ({ data, location, pageContext }) => {
               {...props} />,
           ...commonComponents
         }}>
-          <MDXRenderer>
-            {data.doc.body}
-          </MDXRenderer>
+          {/* TODO: Styles design and documentation content the SAME WAY */}
+          <div {...(['design-guidelines', 'get-started'].includes(source) || navSection === 'overview') && {className: "ws-design-content"}}>
+            <MDXRenderer>
+              {data.doc.body}
+            </MDXRenderer>
+          </div>
         </MDXProvider>
       </React.Fragment>
 

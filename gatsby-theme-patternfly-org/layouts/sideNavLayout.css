@@ -77,3 +77,49 @@
 .ws-page-sidebar  .pf-c-nav {
   margin-top: 16px;
 }
+
+.pf-site-search {
+  padding-top: 0;
+  padding-right: 0;
+  padding-bottom: 2px;
+  padding-left: 0;
+  width: 150px;
+  background: transparent;
+  transition: 250ms;
+}
+.pf-c-page__header-brand-toggle {
+  display: none;
+}
+@media (max-width: 768px) {
+  .pf-site-search {
+    width: 100px;
+  }
+  .pf-c-page__header-brand-toggle {
+    display: block;
+  }
+}
+.pf-site-search:focus-within {
+  background: #fff;
+}
+.pf-site-search:focus-within svg path {
+  fill: #aaacb0;
+}
+.pf-site-search .pf-c-form__label {
+  --pf-c-form__label--FontSize: var(--pf-global--FontSize--lg);
+}
+.pf-site-search #global-search-input {
+  background: #151515;
+  border: 0;
+  color: #fff;
+  padding-left: 25px;
+}
+.pf-site-search #global-search-input:focus {
+  outline-offset: 2px;
+}
+.pf-site-search #global-search-input::placeholder,
+.pf-site-search #global-search-input::-webkit-input-placeholder,
+.pf-site-search #global-search-input::-moz-placeholder,
+.pf-site-search #global-search-input:-ms-input-placeholder,
+.pf-site-search #global-search-input:-ms-input-placeholder {
+  color: #d2d3d5;
+}
