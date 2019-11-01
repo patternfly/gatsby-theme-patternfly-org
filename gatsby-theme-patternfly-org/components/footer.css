@@ -86,6 +86,10 @@
   left: 0 !important;
   background-color: transparent !important;
 }
+.ws-org-pfsite-l-footer .pf-c-nav__list .pf-c-nav__link.pf-m-focus::after,
+.ws-org-pfsite-l-footer .pf-c-nav__list .pf-c-nav__link:focus::after {
+  content: none;
+}
 @media screen and (max-width: 768px) {
   .pfsite-l-footer-column {
     margin-left: -16px;
