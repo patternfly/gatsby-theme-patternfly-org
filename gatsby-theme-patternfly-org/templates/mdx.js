@@ -146,9 +146,11 @@ export default ({ data, location, pageContext }) => {
               {...props} />,
           ...commonComponents
         }}>
-          <MDXRenderer>
-            {data.doc.body}
-          </MDXRenderer>
+          <div className={(['design-guidelines', 'get-started'].includes(source)) ? "ws-design-content" : ''}>
+            <MDXRenderer>
+              {data.doc.body}
+            </MDXRenderer>
+          </div>
         </MDXProvider>
       </PageSection>
 
