@@ -24,7 +24,7 @@ const IndexPage = ({ location }) => (
   <SideNavLayout location={location} hideSideNav>
     <PageSection
       variant={PageSectionVariants.light}
-      className="pf4-c-background-image pf-u-display-flex pf-u-justify-content-center pf-u-align-items-center"
+      className="pf4-c-background-image pf-u-display-flex pf-u-justify-content-center pf-u-align-items-center ws-homepage-main-section"
     >
       <Grid>
         <GridItem sm={12} md={8} mdOffset={2} lg={6} lgOffset={3} className="pf-u-py-2xl pf-u-text-align-center">
@@ -161,9 +161,9 @@ const IndexPage = ({ location }) => (
           <Grid className="pf-m-white">
             <GridItem sm={12} md={5} mdOffset={1}>
               <TextContent>
-                <AutoLinkHeader size="h1" className="pf-u-mb-md pf-m-white">
+                <Text component={TextVariants.h1} className="pf-u-mb-4xl pf-m-white" id="patternfly-principles">
                   {patternFlyPrinciples}
-                </AutoLinkHeader>
+                </Text>
                 <Text component={TextVariants.h2}>Modular &amp; flexible</Text>
                 <Text component={TextVariants.p} className="pf-u-mb-3xl ws-mdx-p">
                   Arrange self-contained components in any number of ways to build a variety of applications and
