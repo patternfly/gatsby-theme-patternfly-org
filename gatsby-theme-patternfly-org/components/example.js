@@ -73,7 +73,6 @@ const Example = props => {
         );
 
         const scale = resizeWidth / 1280;
-        console.log('resize!', scale, scale*800);
 
         setPreviewStyle({ transform: `scale(${scale})` });
         setPreviewContainerStyle({ height:`${scale * 800}px`, width:`${scale * 1280}px` });
@@ -133,7 +132,8 @@ const Example = props => {
           supportedLangs={supportedLangs}
           onLanguageChange={onLanguageChange}
           onDarkmodeChange={() => setDarkMode(!darkMode)}
-          hideDarkMode={hideDarkMode}
+          // Dark mode is permanently hidden per patternfly.org design
+          hideDarkMode={true}
           isFullscreen={isFullscreen}
           fullscreenLink={fullscreenLink}
           code={editorCode}

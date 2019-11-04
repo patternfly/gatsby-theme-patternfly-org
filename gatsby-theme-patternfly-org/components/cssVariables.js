@@ -71,8 +71,6 @@ export default class CSSVariables extends React.Component {
       <React.Fragment>
         <TextInput
           type="text"
-          id="primaryIconsSearch"
-          name="primaryIconsSearch"
           aria-label="Filter CSS Variables"
           placeholder="Filter CSS Variables"
           value={this.state.filterValue}

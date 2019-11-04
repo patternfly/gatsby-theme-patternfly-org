@@ -67,7 +67,7 @@ export default ({ data, location, pageContext }) => {
 
   return (
     <SideNavLayout location={location} context={source} parityComponent={parityComponent}>
-      {/* TODO: Remove this hack for content components who we want to hide the TOC, but show the title */}
+      {/* TODO: Remove this hack for content components who we want to hide the TOC, but show the title with styling consistent everywhere else */}
       <PageSection className="ws-section">
         {showTitle && (
           <React.Fragment>
@@ -136,7 +136,8 @@ export default ({ data, location, pageContext }) => {
           </React.Fragment>
         )}
 
-        <div className={`${isDesignPage ? ' pf-c-content' : ''}`}>
+        {/* TODO: Styles design and documentation content the SAME WAY */}
+        <div className={isDesignPage ? ' pf-c-content' : ''}>
           <MDXProvider components={{
             code: props =>
               <Example
@@ -149,7 +150,6 @@ export default ({ data, location, pageContext }) => {
                 {...props} />,
             ...commonComponents
           }}>
-            {/* TODO: Styles design and documentation content the SAME WAY */}
             <MDXRenderer>
               {data.doc.body}
             </MDXRenderer>
@@ -158,7 +158,14 @@ export default ({ data, location, pageContext }) => {
 
         {props.length > 0 && (
           <React.Fragment>
-            <AutoLinkHeader size="h2" id="props" className="ws-title ws-h2">Props</AutoLinkHeader>
+            <AutoLinkHeader
+              size="h2"
+              id="props"
+              className="ws-title ws-h2"
+              style={{ margin: '14px 0 37px 0' }}
+            >
+              Props
+            </AutoLinkHeader>
             {props.map(component => (
               <React.Fragment key={component.name}>
                 {component.description}
@@ -170,7 +177,14 @@ export default ({ data, location, pageContext }) => {
 
         {cssPrefix && (
           <React.Fragment>
-            <AutoLinkHeader size="h2" id="css-variables" className="ws-title ws-h2">CSS Variables</AutoLinkHeader>
+            <AutoLinkHeader
+              size="h2"
+              id="css-variables"
+              className="ws-title ws-h2"
+              style={{ margin: '14px 0 37px 0' }}
+            >
+              CSS Variables
+            </AutoLinkHeader>
             <CSSVariables prefix={cssPrefix} />
           </React.Fragment>
         )}
