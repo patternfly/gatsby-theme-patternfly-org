@@ -173,7 +173,7 @@ const SideNavLayout = ({ children, location, context, hideSideNav = false, parit
   );
 
   return (
-    <React.Fragment>
+    <div>
       <Helmet>
         <title>{title}</title>
       </Helmet>
@@ -182,7 +182,7 @@ const SideNavLayout = ({ children, location, context, hideSideNav = false, parit
         {children}
       </Page>
       <Footer />
-    </React.Fragment>
+    </div>
   );
 }
 
