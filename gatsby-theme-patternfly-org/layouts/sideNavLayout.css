@@ -89,6 +89,7 @@
 }
 .pf-c-page__header-brand-toggle {
   display: none;
+  visibility: hidden;
 }
 @media (max-width: 768px) {
   .pf-site-search {
@@ -96,6 +97,7 @@
   }
   .pf-c-page__header-brand-toggle {
     display: block;
+    visibility: visible;
   }
 }
 .pf-site-search:focus-within {

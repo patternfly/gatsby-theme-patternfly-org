@@ -9,7 +9,9 @@
     "build:prefix": "yarn build:static && gatsby build --prefix-paths",
     "build:static": "node ./copyAssets.js",
     "clean": "gatsby clean",
-    "develop": "yarn build:static && gatsby develop"
+    "develop": "yarn build:static && gatsby develop",
+    "serve": "gatsby serve",
+    "serve:prefix": "gatsby serve --prefix-paths"
   },
   "dependencies": {
     "@patternfly/patternfly": "latest",

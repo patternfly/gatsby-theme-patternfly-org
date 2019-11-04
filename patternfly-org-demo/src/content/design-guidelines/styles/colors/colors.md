@@ -4,7 +4,7 @@ section: styles
 hideTOC: true
 showTitle: true
 ---
-import { Alert, Gallery, GalleryItem, Grid, GridItem } from '@patternfly/react-core';
+import { Alert, Gallery, GalleryItem, Grid, GridItem, AlertActionCloseButton } from '@patternfly/react-core';
 import { Link } from 'gatsby';
 import './colors.css';
 

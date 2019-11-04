@@ -19,10 +19,6 @@ import './sideNavLayout.css';
 
 // ParityComponentName: aboutmodal <=> aboutmodalbox
 const SideNavLayout = ({ children, location, context, hideSideNav = false, parityComponent }) => {
-  const initialBannerOpen = typeof window !== 'undefined' && sessionStorage && sessionStorage.getItem('pf4-banner-closed')
-    ? false
-    : true;
-  const [ isBannerOpen, setBannerOpen ] = React.useState(initialBannerOpen);
   let docSearchInit = false;
   // Add docsearch
   useEffect(() => {
@@ -176,22 +172,17 @@ const SideNavLayout = ({ children, location, context, hideSideNav = false, parit
     />
   );
 
-  const closeBanner = () => {
-    sessionStorage.setItem('pf4-banner-closed', 'true');
-    setBannerOpen(false);
-  }
-
   return (
-    <div>
-      {isBannerOpen && <Banner onClose={closeBanner} />}
+    <React.Fragment>
+      <Helmet>
+        <title>{title}</title>
+      </Helmet>
+      <Banner />
       <Page isManagedSidebar header={Header} sidebar={SideBar}>
-        <Helmet>
-          <title>{title}</title>
-        </Helmet>
         {children}
       </Page>
       <Footer />
-    </div>
+    </React.Fragment>
   );
 }
 
