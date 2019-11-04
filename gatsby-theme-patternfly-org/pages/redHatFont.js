@@ -18,11 +18,13 @@ export default ({ location, pageContext }) => {
   return (
     <SideNavLayout location={location} context={context}>
       <PageSection className="ws-section">
+        <Title size="md" className="ws-framework-title">
+          HTML/React
+        </Title>
+        <Title size="4xl" className="ws-page-title">
+          Red Hat font in PatternFly
+        </Title>
         <div class="pf-c-content">
-          <Title size="md" className="ws-framework-title">
-            HTML/React
-          </Title>
-          <Title size="4xl">Red Hat font in PatternFly</Title>
           <p className="ws-mdx-p">
             PR -{" "}
             <a href="https://github.com/patternfly/patternfly-next/pull/1813">

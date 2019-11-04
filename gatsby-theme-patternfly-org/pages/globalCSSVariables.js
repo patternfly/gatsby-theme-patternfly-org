@@ -18,9 +18,13 @@ export default ({ location, pageContext }) => {
   return (
     <SideNavLayout location={location} context={context}>
       <PageSection className="ws-section" variant={PageSectionVariants.light}>
+        <Title size="md" className="ws-framework-title">
+          HTML/React
+        </Title>
+        <Title size="4xl" className="ws-page-title">
+          Global CSS variables
+        </Title>
         <div class="pf-c-content">
-          <Title size="md" className="ws-framework-title">HTML/React</Title>
-          <Title size="4xl">Global CSS variables</Title>
           <AutoLinkHeader size="h2">About CSS variables</AutoLinkHeader>
           <p>The CSS variable system is a two-layer theming system where global variables inform component variables.</p>
           <AutoLinkHeader size="h2">Global variables</AutoLinkHeader>

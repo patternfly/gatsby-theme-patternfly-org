@@ -25,10 +25,6 @@
   margin: 8px 0 16px;
 }
 
-.ws-page-title ~ p {
-  font-size: 18px;
-}
-
 /* Table styles */
 .pf-c-content table {
   width: 100%;
