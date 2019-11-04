@@ -185,26 +185,22 @@ const IndexPage = ({ location }) => (
                   and build more consistent user experiences.
                 </Text>
                 <div className="pf-u-pb-md">
-                  <Text
-                    component={TextVariants.a}
+                  <Link
+                    to="/get-started/developers"
                     className="pf-m-white pf4-c-link__text ws-mdx-a"
                     aria-label="Get started for developer"
-                  >
-                    <Link to="/get-started/developers">
+                    >
                       Get started for developers <ArrowRightIcon />
-                    </Link>
-                  </Text>
+                  </Link>
                 </div>
                 <div className="pf-u-pb-md">
-                  <Text
-                    component={TextVariants.a}
-                    className="pf-m-white pf4-c-link__text ws-mdx-a"
-                    aria-label="Get started for designers"
-                  >
-                    <Link to="/get-started/designers">
+                    <Link
+                      to="/get-started/designers"
+                      className="pf-m-white pf4-c-link__text ws-mdx-a"
+                      aria-label="Get started for designers"
+                    >
                       Get started for designers <ArrowRightIcon />
                     </Link>
-                  </Text>
                 </div>
               </TextContent>
             </GridItem>

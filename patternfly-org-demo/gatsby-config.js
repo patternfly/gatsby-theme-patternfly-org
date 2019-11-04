@@ -86,13 +86,13 @@ module.exports = {
       }
     },
     // Core docs
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        name: 'core', // This goes in URLs
-        path: `${path.resolve(__dirname)}/patternfly-next/src/patternfly`
-      }
-    },
+    // {
+    //   resolve: 'gatsby-source-filesystem',
+    //   options: {
+    //     name: 'core', // This goes in URLs
+    //     path: `${path.resolve(__dirname)}/patternfly-next/src/patternfly`
+    //   }
+    // },
     // Core release notes
     {
       resolve: 'gatsby-source-filesystem',
@@ -102,36 +102,36 @@ module.exports = {
       }
     },
     // React docs
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        name: 'react', // This goes in URLs
-        path: `${path.resolve(__dirname)}/patternfly-react/packages/patternfly-4`,
-        /* Files we never care to pull data from
-         * Matched by https://github.com/paulmillr/chokidar */
-         ignore: [
-          '**/dist',
-          '**/helpers',
-          '**/scripts',
-          '**/styles',
-          '**/build',
-          '**/utils',
-          '**/test-helpers',
-          /.*react-styles.*/,
-          /.*react-docs.*/,
-          /.*react-integration.*/,
-          // eslint-disable-next-line no-useless-escape
-          '**/\..*', // dotfiles
-          '**/*.d.ts',
-          '**/*.test.*',
-          '**/index.*',
-          '**/tsconfig.*',
-          '**/tslint.*',
-          '**/README.*',
-          '**/CHANGELOG.*'
-        ]
-      }
-    },
+    // {
+    //   resolve: 'gatsby-source-filesystem',
+    //   options: {
+    //     name: 'react', // This goes in URLs
+    //     path: `${path.resolve(__dirname)}/patternfly-react/packages/patternfly-4`,
+    //     /* Files we never care to pull data from
+    //      * Matched by https://github.com/paulmillr/chokidar */
+    //      ignore: [
+    //       '**/dist',
+    //       '**/helpers',
+    //       '**/scripts',
+    //       '**/styles',
+    //       '**/build',
+    //       '**/utils',
+    //       '**/test-helpers',
+    //       /.*react-styles.*/,
+    //       /.*react-docs.*/,
+    //       /.*react-integration.*/,
+    //       // eslint-disable-next-line no-useless-escape
+    //       '**/\..*', // dotfiles
+    //       '**/*.d.ts',
+    //       '**/*.test.*',
+    //       '**/index.*',
+    //       '**/tsconfig.*',
+    //       '**/tslint.*',
+    //       '**/README.*',
+    //       '**/CHANGELOG.*'
+    //     ]
+    //   }
+    // },
     // React release notes
     {
       resolve: 'gatsby-source-filesystem',
