@@ -162,7 +162,6 @@ export default ({ data, location, pageContext }) => {
               size="h2"
               id="props"
               className="ws-title ws-h2"
-              style={{ margin: '14px 0 37px 0' }}
             >
               Props
             </AutoLinkHeader>
@@ -181,7 +180,6 @@ export default ({ data, location, pageContext }) => {
               size="h2"
               id="css-variables"
               className="ws-title ws-h2"
-              style={{ margin: '14px 0 37px 0' }}
             >
               CSS Variables
             </AutoLinkHeader>
