@@ -17,10 +17,10 @@ import Footer from '../components/footer';
 import logo from '../images/logo.svg';
 import './sideNavLayout.css';
 
-// ParityComponentName: aboutmodal <=> aboutmodalbox
+// ParityComponent: aboutmodal <=> aboutmodalbox
 const SideNavLayout = ({ children, location, context, hideSideNav = false, parityComponent }) => {
   let docSearchInit = false;
-  // Add docsearch
+  // Initialize Algogia
   useEffect(() => {
     if (!docSearchInit && typeof window !== 'undefined' && window.docsearch) {
       window.docsearch({
@@ -36,6 +36,8 @@ const SideNavLayout = ({ children, location, context, hideSideNav = false, parit
   });
 
   // Put queries for Top and Side navs here for performance
+  // We should consider passing down the `sitePlugin` data in pageContext
+  // rather than fetching the GraphQL here
   const data = useStaticQuery(graphql`
   {
     site {
@@ -113,7 +115,8 @@ const SideNavLayout = ({ children, location, context, hideSideNav = false, parit
         className="ws-page-sidebar" />;
   
   const PageToolbar = pageSource === 'org'
-    ? <Toolbar>
+    ? (
+      <Toolbar>
         <ToolbarGroup>
           <ToolbarItem>
             {/* We can afford to use style tags because this is only on the site ONCE */}
@@ -149,12 +152,15 @@ const SideNavLayout = ({ children, location, context, hideSideNav = false, parit
           </ToolbarItem>
         </ToolbarGroup>
       </Toolbar>
+    )
     : undefined;
 
   let headerTitle = title;
-  if (pageSource === "org")
+  if (pageSource === 'org') {
     headerTitle = <Brand src={logo} alt="Patternfly Logo" />;
-  else if (num) headerTitle = `PR #${num}`;
+  } else if (num) {
+    headerTitle = `PR #${num}`;
+  }
   
   const Header = (
     <PageHeader
@@ -172,6 +178,8 @@ const SideNavLayout = ({ children, location, context, hideSideNav = false, parit
     />
   );
 
+  // Wrap in a div to force scrolling the same content
+  // TODO: SEO
   return (
     <div>
       <Helmet>

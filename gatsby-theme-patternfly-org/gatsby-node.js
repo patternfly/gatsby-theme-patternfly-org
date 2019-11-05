@@ -5,7 +5,7 @@ const { extractTableOfContents } = require('./helpers/extractTableOfContents');
 const { createHandlebars } = require('./helpers/createHandlebars');
 const { slugger } = require('./helpers/slugger');
 
-// Add map PR-related environment variables to gatsby nodes
+// Add map PR-related environment variables to GraphQL
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   const num = process.env.CIRCLE_PR_NUMBER || process.env.PR_NUMBER;
   const url = process.env.CIRCLE_PULL_REQUEST;
@@ -24,9 +24,13 @@ exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   });
 };
 
+// Build URL an MDX page should be created at
+// We support a `pages-*` source for Core, where we won't prefix the slug.
+// This allows them to create urls like `/accessibility-guide`, etc.
 const makeSlug = (source, section, componentName) => {
   let url = '';
 
+  // We know these belong in the "documentation" section of the site
   if (['react', 'core'].includes(source)) {
     url += `/documentation/${source}`;
   } else if (!source.includes('pages-')) {
@@ -42,37 +46,45 @@ const makeSlug = (source, section, componentName) => {
   return url;
 }
 
-let addedToSchema = false;
-
+let addedFileFieldsToSchema = false;
+// Here we transform all the data we later need for `createPages`
+// We handle creating slugs and navigation abstraction
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions;
   if (node.internal.type === 'Mdx') {
-    // Source comes from gatsby-source-filesystem definition in gatsby-config.js
+    // Parent comes from gatsby-source-filesystem definition in gatsby-config.js
     const parent = getNode(node.parent);
     const source = parent.sourceInstanceName;
     const componentName = path.basename(node.fileAbsolutePath, '.md');
 
     let { section = 'root', title, propComponents = [''] } = node.frontmatter;
+    // Source determines sideNav context and some features like context switcher
     createNodeField({
       node,
       name: 'source',
       value: source.replace('pages-', '')
     });
+    // Slug is the URL we create the page at
     createNodeField({
       node,
       name: 'slug',
       value: makeSlug(source, section, componentName).toLowerCase()
     });
+    // What sideNav menu to include items under
     createNodeField({
       node,
       name: 'navSection',
       value: section.toLowerCase()
     });
+    // The page's name to be used for context switching and the URL.
+    // We don't make the assumption this will always be the last part of the URL
+    // so that we can make changes to the slugger later.
     createNodeField({
       node,
       name: 'componentName',
       value: componentName.toLowerCase()
     });
+    // The <h1> to put at the top of the page
     createNodeField({
       node,
       name: 'title',
@@ -85,19 +97,20 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       value: propComponents
     });
   } else if (node.internal.type === 'File') {
-    if (!addedToSchema) {
-      // This is just to add to the schema so GraphQL queries don't fail
+    if (!addedFileFieldsToSchema) {
+      // This is just to add the Handlbars file fields
+      // to the schema so GraphQL queries don't fail
+      // TODO: Is there a way to do this in createSchemaCustomization?
       createNodeField({ node, name: 'name', value: '' });
       createNodeField({ node, name: 'partial', value: '' });
       createNodeField({ node, name: 'source', value: '' });
       createNodeField({ node, name: 'slug', value: '' });
       createNodeField({ node, name: 'title', value: '' });
 
-      addedToSchema = true;
+      addedFileFieldsToSchema = true;
     }
     if (node.extension === 'hbs') {
-      const partial = fs.readFileSync(node.absolutePath, 'utf8');
-
+      // Partial name has always come from file name in patternfly-next
       createNodeField({
         node,
         name: 'name',
@@ -106,11 +119,32 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       createNodeField({
         node,
         name: 'partial',
-        value: partial
+        value: fs.readFileSync(node.absolutePath, 'utf8')
       });
     }
   }
 };
+
+const createGlobalPages = actions => {
+  actions.createPage({
+    path: '/documentation/overview/global-css-variables',
+    component: path.resolve(__dirname, `./pages/globalCSSVariables.js`),
+    context: {
+      navSection: 'overview',
+      title: 'Global CSS variables',
+      source: 'shared'
+    }
+  });
+  actions.createPage({
+    path: '/documentation/overview/red-hat-font',
+    component: path.resolve(__dirname, `./pages/redHatFont.js`),
+    context: {
+      navSection: 'overview',
+      title: 'Red Hat font',
+      source: 'shared'
+    }
+  });
+}
 
 exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
   {
@@ -148,16 +182,6 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
         }
       }
     }
-    pages: allFile(filter: { fields: { slug: { nin: ["", null] } } }) {
-      nodes {
-        absolutePath
-        fields {
-          slug
-          source
-          title
-        }
-      }
-    }
     partials: allFile(filter: { fields: { name: { nin: ["", null] } } }) {
       nodes {
         fields {
@@ -171,94 +195,78 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
     if (result.errors) {
       return Promise.reject(result.errors);
     }
-    // Create a global CSS Variable page
-    actions.createPage({
-      path: '/documentation/overview/global-css-variables',
-      component: path.resolve(__dirname, `./pages/globalCSSVariables.js`),
-      context: {
-        navSection: 'overview',
-        title: 'Global CSS variables',
-        source: 'shared'
-      }
-    });
-
-    // Create the Red Hat Font page
-    actions.createPage({
-      path: '/documentation/overview/red-hat-font',
-      component: path.resolve(__dirname, `./pages/redHatFont.js`),
-      context: {
-        navSection: 'overview',
-        title: 'Red Hat font',
-        source: 'shared'
-      }
-    });
-
     const hbsInstance = createHandlebars(result.data.partials.nodes);
-    const hidden = (pluginOptions.hiddenPages || []).map(title => title.toLowerCase());
+    const hiddenTitles = (pluginOptions.hiddenPages || []).map(title => title.toLowerCase());
 
+    // Create our global pages
+    createGlobalPages(actions);
+    // Create our per-MDX file pages
     result.data.docs.nodes
       .concat(result.data.pages.nodes)
-      .filter(node => !hidden.includes(node.fields.title.toLowerCase()))
+      .filter(node => !hiddenTitles.includes(node.fields.title.toLowerCase()))
       .forEach(node => {
         const { componentName, slug, navSection = null, title, source, propComponents = [''] } = node.fields;
         const fileRelativePath = path.relative(__dirname, node.absolutePath || node.fileAbsolutePath);
+        // Process the MDX AST to dynamically create a TOC and per-example fullscreen pages
         const tableOfContents = extractTableOfContents(node.mdxAST);
         const examples = extractExamples(node.mdxAST, hbsInstance, fileRelativePath);
 
-        // not a huge fan of this component mapping disaster
+        // Not a huge fan of this component mapping disaster
         const designNode = result.data.designSnippets.nodes.find(
           node => node.frontmatter[`${source}ComponentName`] === componentName
         );
         
+        // Create our dynamic templated pages
         actions.createPage({
           path: slug,
           component: node.absolutePath || path.resolve(__dirname, `./templates/mdx.js`),
           context: {
-            // Required by template to fetch more MDX/React docgen data
+            // Required by template to fetch more MDX/React docgen data from GraphQL
             id: node.id,
             designId: designNode ? designNode.id : 'undefined',
             propComponents,
-            // For TOC
+            // For dynamic TOC on templated page
             tableOfContents,
-            // For sideNav and Example.js (for className)
+            // For sideNav GraphQL query and dynamic classNames in Example.js
             navSection,
-            // For TOC and Example.js
+            // For top of TOC
             title,
+            // For top of TOC, dynamic classNames in Example.js, and some feature flags
             source,
-            // To render example HTML
+            // To render static example HTML from patternfly-next
             htmlExamples: source === 'core' ? examples : undefined,
           }
         });
 
-        // Create per-example fullscreen pages
-        Object.entries(examples).forEach(([key, example]) => {
+        // Create per-example fullscreen pages for documentation pages
+        if (['core', 'react'].includes(source)) {
+          let component;
           if (source === 'core') {
-            actions.createPage({
-              path: `${slug}/${key}`,
-              component: path.resolve(__dirname, `./templates/fullscreenHtml.js`),
-              context: {
-                isFullscreen: true,
-                html: example
-              }
-            })
+            component = path.resolve(__dirname, `./templates/fullscreenHtml.js`);
           }
           else if (source === 'react') {
-            actions.createPage({
-              path: `${slug}/${key}`,
-              component: path.resolve(__dirname, `./templates/fullscreenMdx.js`),
-              context: {
-                isFullscreen: true,
-                jsx: example
-              }
-            })
+            component = path.resolve(__dirname, `./templates/fullscreenMdx.js`);
           }
-        });
+          
+          Object.entries(examples).forEach(([key, example]) => {
+              actions.createPage({
+                path: `${slug}/${key}`,
+                component,
+                context: {
+                  // To exclude fullscreen pages from sitemap
+                  isFullscreen: true,
+                  // The HTML or JSX to render
+                  code: example
+                }
+              });
+          });
+        }
       });
   });
 
 // https://www.gatsbyjs.org/docs/schema-customization/
 exports.createSchemaCustomization = ({ actions }) => {
-  // Define types for sideNav if core, react, or org aren't included
+  // Define types for sideNav if any of core, react, or org aren't included
   const sideNavTypeDefs = `
     type SideNavItem @infer {
       section: String
@@ -288,14 +296,15 @@ exports.createSchemaCustomization = ({ actions }) => {
   actions.createTypes(sideNavTypeDefs);
 }
 
-// Exclude CSS-in-JS styles
 exports.onCreateWebpackConfig = ({ actions, stage }) => {
   if (stage === 'build-javascript') {
-    // Turn off source-maps
+    // Turn off source-maps because dist sizes are huge
     actions.setWebpackConfig({
       devtool: false
     })
   }
+  // Exclude CSS-in-JS styles included from React. They override
+  // the patternfly.css styles
   actions.setWebpackConfig({
     module: {
       rules: [

@@ -1,5 +1,5 @@
 import React from 'react';
-import { graphql } from 'gatsby';
+import { graphql, Link } from 'gatsby';
 import { MDXProvider } from '@mdx-js/react';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import {
@@ -18,19 +18,20 @@ import { capitalize } from '../helpers/capitalize';
 import { commonComponents } from '../helpers/commonComponents';
 import './mdx.css';
 
-const getWarning = state => {
+const getExperimentalWarning = (state, componentName) => {
   switch(state) {
-    case 'early':
-      return "This is an experimental feature in the early stages of testing. It's not intended for production use.";
-    case 'deprecated':
-      return "This experimental feature has been deprecated and will be removed in a future release. We recommend you avoid or move away from using this feature in your projects.";
-    default:
+    case 'promoted':
       return (
-        <React.Fragment>
-          This experimental feature has been promoted to a <a href={`../../components/${state}`}>production-level component</a> and will be removed in a future release.
+        <p>
+          This experimental feature has been promoted to a <Link href={`../../components/${componentName}`}>production-level component</Link> and will be removed in a future release.
           Use the production-ready version of this feature instead.
-        </React.Fragment>
+        </p>
       );
+    case 'deprecated':
+      return 'This experimental feature has been deprecated and will be removed in a future release. We recommend you avoid or move away from using this feature in your projects.';
+    case 'early':
+    default:
+      return "This is an experimental feature in the early stages of testing. It's not intended for production use.";
   }
 }
 
@@ -40,7 +41,7 @@ export default ({ data, location, pageContext }) => {
   const { title, source, tableOfContents, htmlExamples, propComponents = [''] } = pageContext;
   const props = data.props && data.props.nodes && propComponents
     ? propComponents
-      .filter(name => name !== '') // Remove default
+      .filter(name => name !== '') // Filter default entry we make for GraphQL schema
       .map(name => {
         const propTable = data.props.nodes.find(node => node.name === name);
         if (!propTable) {
@@ -63,81 +64,119 @@ export default ({ data, location, pageContext }) => {
     }
   }
 
-  const isDesignPage = ['design-guidelines', 'get-started', 'contribute'].includes(source) || navSection === 'overview';
+  // This is to please our designer with custom content styles
+  const isDesignPage = ['design-guidelines', 'get-started', 'contribute'].includes(source)
+    || navSection === 'overview';
+
+  // TODO: Stop hiding TOC in design pages
+  const TableOfContents = () => (
+    <React.Fragment>
+      {showTitle && (
+        <React.Fragment>
+          <Title size="4xl" className="ws-page-title">{title}</Title>
+          {optIn && (
+            <Alert
+              variant="info"
+              title="Opt-in feature"
+              className="pf-u-my-md"
+              isInline
+            >
+              {optIn}
+            </Alert>
+          )}
+        </React.Fragment>
+      )}
+      {!hideTOC && (
+        <React.Fragment>
+          <Title size="md" className="ws-framework-title">
+            {source === 'core' ? 'HTML' : capitalize(source)}
+          </Title>
+          <Title size="4xl" className="ws-page-title">{title}</Title>
+          {optIn && (
+            <Alert
+              variant="info"
+              title="Opt-in feature"
+              className="pf-u-my-md"
+              isInline
+            >
+              {optIn}
+            </Alert>
+          )}
+          {experimentalStage && (
+            <Alert
+              variant={experimentalStage === 'early' ? 'info' : 'warning'}
+              title="Experimental feature"
+              className="pf-u-my-md"
+              style={{ marginBottom: 'var(--pf-global--spacer--md)' }}
+              isInline
+            >
+              {getExperimentalWarning(experimentalStage)}
+            </Alert>
+          )}
+          {data.designDoc &&
+            <MDXRenderer>
+              {data.designDoc.body}
+            </MDXRenderer>
+          }
+          {tableOfContents.map(heading => (
+            <a key={heading} href={`#${slugger(heading)}`} className="ws-toc">
+              {heading}
+            </a>
+          ))}
+          {props.length > 0 && (
+            <a href="#props" className="ws-toc">
+              Props
+            </a>
+          )}
+          {cssPrefix && (
+            <a href="#css-variables" className="ws-toc">
+              CSS Variables
+            </a>
+          )}
+        </React.Fragment>
+      )}
+    </React.Fragment>
+  );
+
+  const PropsSection = () => (
+    <React.Fragment>
+      <AutoLinkHeader
+        size="h2"
+        id="props"
+        className="ws-title ws-h2"
+      >
+        Props
+      </AutoLinkHeader>
+      {props.map(component => (
+        <React.Fragment key={component.name}>
+          {component.description}
+          <PropsTable caption={`${component.name} properties`} propList={component.props} />
+        </React.Fragment>
+      ))}
+    </React.Fragment>
+  );
+
+  const CSSVariablesSection = () => (
+    <React.Fragment>
+      <AutoLinkHeader
+        size="h2"
+        id="css-variables"
+        className="ws-title ws-h2"
+      >
+        CSS Variables
+      </AutoLinkHeader>
+      <CSSVariables prefix={cssPrefix} />
+    </React.Fragment>
+  );
 
   return (
     <SideNavLayout location={location} context={source} parityComponent={parityComponent}>
-      {/* TODO: Remove this hack for content components who we want to hide the TOC, but show the title with styling consistent everywhere else */}
       <PageSection className="ws-section">
-        {showTitle && (
-          <React.Fragment>
-            <Title size="4xl" className="ws-page-title">{title}</Title>
-            {optIn && (
-              <Alert
-                variant="info"
-                title="Opt-in feature"
-                className="pf-u-my-md"
-                isInline
-              >
-                {optIn}
-              </Alert>
-            )}
-          </React.Fragment>
-        )}
-        {!hideTOC && (
-          <React.Fragment>
-            <Title size="md" className="ws-framework-title">
-              {source === 'core' ? 'HTML' : capitalize(source)}
-            </Title>
-            <Title size="4xl" className="ws-page-title">{title}</Title>
-            {optIn && (
-              <Alert
-                variant="info"
-                title="Opt-in feature"
-                className="pf-u-my-md"
-                isInline
-              >
-                {optIn}
-              </Alert>
-            )}
-            {experimentalStage && (
-              <Alert
-                variant={experimentalStage === 'early' ? 'info' : 'warning'}
-                title="Experimental feature"
-                className="pf-u-my-md"
-                style={{ marginBottom: 'var(--pf-global--spacer--md)' }}
-                isInline
-              >
-                {getWarning(experimentalStage)}
-              </Alert>
-            )}
-            {data.designDoc &&
-              <React.Fragment>
-                <MDXRenderer>
-                  {data.designDoc.body}
-                </MDXRenderer>
-              </React.Fragment>
-            }
-            {tableOfContents.map(heading => (
-              <a key={heading} href={`#${slugger(heading)}`} className="ws-toc">
-                {heading}
-              </a>
-            ))}
-            {props.length > 0 && (
-              <a href="#props" className="ws-toc">
-                Props
-              </a>
-            )}
-            {cssPrefix && (
-              <a href="#css-variables" className="ws-toc">
-                CSS Variables
-              </a>
-            )}
-          </React.Fragment>
-        )}
 
-        {/* TODO: Styles design and documentation content the SAME WAY */}
-        <div className={isDesignPage ? ' pf-c-content' : ''}>
+        <TableOfContents />
+
+        {/* TODO: Style design and documentation content the SAME WAY */}
+        <div className={isDesignPage ? 'pf-c-content' : ''}>
           <MDXProvider components={{
             code: props =>
               <Example
@@ -156,36 +195,10 @@ export default ({ data, location, pageContext }) => {
           </MDXProvider>
         </div>
 
-        {props.length > 0 && (
-          <React.Fragment>
-            <AutoLinkHeader
-              size="h2"
-              id="props"
-              className="ws-title ws-h2"
-            >
-              Props
-            </AutoLinkHeader>
-            {props.map(component => (
-              <React.Fragment key={component.name}>
-                {component.description}
-                <PropsTable caption={`${component.name} properties`} propList={component.props} />
-              </React.Fragment>
-            ))}
-          </React.Fragment>
-        )}
+        {props.length > 0 && <PropsSection />}
 
-        {cssPrefix && (
-          <React.Fragment>
-            <AutoLinkHeader
-              size="h2"
-              id="css-variables"
-              className="ws-title ws-h2"
-            >
-              CSS Variables
-            </AutoLinkHeader>
-            <CSSVariables prefix={cssPrefix} />
-          </React.Fragment>
-        )}
+        {cssPrefix && <CSSVariablesSection />}
+        
       </PageSection>
     </SideNavLayout>
   );

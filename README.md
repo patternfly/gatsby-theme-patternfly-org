@@ -1,64 +1,48 @@
-<p align="center">
-  <a href="https://www.gatsbyjs.org">
-    <img alt="Gatsby" src="https://www.gatsbyjs.org/monogram.svg" width="60" />
-  </a>
-</p>
-<h1 align="center">
-  Starter for creating a Gatsby Theme workspace
-</h1>
+# gatsby-theme-patternfly-org
 
-```shell
-gatsby new my-theme https://github.com/gatsbyjs/gatsby-starter-theme-workspace
-cd my-theme
-yarn workspace example develop
-```
+This theme consolidates [Gatsby](https://www.gatsbyjs.org/) documentation configuration across [patternfly-next](https://github.com/patternfly/patternfly-next/), [patternfly-react](https://github.com/patternfly/patternfly-react/), and [patternfly.org.](https://github.com/patternfly/gatsby-theme-patternfly-org/tree/master/patternfly-org-demo)
 
-## Layout
+## Getting started
 
-```shell
-.
-├── README.md
-├── gatsby-theme-minimal
-│   ├── README.md
-│   ├── gatsby-config.js
-│   ├── index.js
-│   └── package.json
-├── example
-│   ├── README.md
-│   ├── gatsby-config.js
-│   ├── package.json
-│   └── src
-├── package.json
-└── yarn.lock
+Our repo uses submodules, so make sure to pull those down:
 
-3 directories, 10 files
-```
+`git clone --recurse-submodules -j8 https://github.com/patternfly/gatsby-theme-patternfly-org`
 
-### `gatsby-theme-minimal`
+Make sure to install all the repo's dependencies. It takes a while.
 
-This directory is the theme package itself. You should rename this at
-some point to be `gatsby-theme-{my-theme-name}`. Also change the
-`package.json` name field and the corresponding dependency in the
-example directory's `package.json`/`gatsby-config.js` to match the chosen name.
+`yarn install`
 
-- `gatsby-theme-minimal/`
-  - `gatsby-config.js`: An empty gatsby-config that you can use as a starting point for building functionality into your theme.
-  - `index.js`: Since themes also function as plugins, this is an empty file that
-    gatsby needs to use this theme as a plugin.
-  - `package.json`: The dependencies that your theme will pull in when people install it. `gatsby` should be a `peerDependency`.
+Build React.
 
-### `example`
+`yarn build:react`
 
-This is an example usage of your theme. It should look the same as the
-site of someone who installed and used your theme from npm.
+Now you can develop Core, React, and Org:
 
-- `example/`
-  - `gatsby-config.js`: Specifies which theme to use and any other one-off config a site might need.
-  - `src/`: Source code such as one-off pages or components that might live in
-    a user's site.
+`yarn develop:next`
 
-You can run the example with:
+`yarn develop:react`
 
+`yarn develop:org`
+
+## patternfly-org-demo
 ```sh
-yarn workspace example develop
+patternfly-org-demo
+├── gatsby-browser.js
+├── gatsby-config.js
+├── gatsby-node.js
+├── gatsby-ssr.js
+├── package.json
+├── patternfly-next
+│   └── package.json
+├── patternfly-react
+│   └── package.json
+├── public
+├── src
+│   ├── content
+│   ├── images
+│   └── pages
+└── static
+    └── assets
 ```
+
+`patternfly-org-demo` is what houses the [Gatsby](https://www.gatsbyjs.org/) patternfly.org project. `patternfly-next` contains the submodule used for developing [pf4.patternfly.org](https://pf4.patternfly.org/). `patternfly-react` contains the submodule used for developing [patternfly-react.surge.sh.](https://patternfly-react.surge.sh/patternfly-4/)

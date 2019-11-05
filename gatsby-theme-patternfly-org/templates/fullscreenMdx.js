@@ -8,7 +8,7 @@ const FullscreenMDXTemplate = ({ pageContext }) => {
   return (
     <LiveProvider
       scope={useMDXScope()}
-      code={pageContext.jsx}
+      code={pageContext.code}
       transformCode={code => transformCode(code, 'jsx')}>
       <LivePreview />
     </LiveProvider>
