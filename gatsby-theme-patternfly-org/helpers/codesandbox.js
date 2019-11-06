@@ -3,7 +3,7 @@ export const getStaticParams = (title, html) => ({
   files: {
     'index.html': {
       content: `<!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="pf-m-redhat-font">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -45,7 +45,7 @@ export const getReactParams = (title, code) => {
     files: {
       'index.html': {
         content: `<!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="pf-m-redhat-font">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
