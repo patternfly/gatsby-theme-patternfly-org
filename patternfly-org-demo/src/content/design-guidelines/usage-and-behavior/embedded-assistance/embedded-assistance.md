@@ -128,4 +128,4 @@ Use tooltips to define new or unfamiliar UI elements that aren’t described dir
 * [Popover](/documentation/react/components/popover)
 * [Tooltip](/documentation/react/components/tooltip)
 * [Button](/documentation/react/components/button)
-* [Text](/documentation/react/component/text)
+* [Text](/documentation/react/components/text)
