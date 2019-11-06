@@ -15,8 +15,8 @@
   },
   "dependencies": {
     "@patternfly/patternfly": "latest",
-    "@patternfly/react-charts": "*",
     "@patternfly/react-catalog-view-extension": "*",
+    "@patternfly/react-charts": "*",
     "@patternfly/react-core": "*",
     "@patternfly/react-icons": "*",
     "@patternfly/react-inline-edit-extension": "*",
@@ -28,6 +28,7 @@
     "@patternfly/react-virtualized-extension": "*",
     "eslint-config-react-app": "^5.0.2",
     "gatsby": "^2.16.4",
+    "gatsby-plugin-s3": "^0.3.2",
     "gatsby-plugin-sitemap": "^2.2.19",
     "gatsby-remark-copy-linked-files": "^2.1.28",
     "gatsby-source-filesystem": "^2.1.22",

@@ -32,7 +32,8 @@
     ],
     "nohoist": [
       "**/@patternfly/patternfly",
-      "**/gatsby-theme-patternfly-org"
+      "**/gatsby-theme-patternfly-org",
+      "**/gatsby"
     ]
   }
 }

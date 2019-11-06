@@ -4,6 +4,7 @@ const { extractExamples } = require('./helpers/extractExamples');
 const { extractTableOfContents } = require('./helpers/extractTableOfContents');
 const { createHandlebars } = require('./helpers/createHandlebars');
 const { slugger } = require('./helpers/slugger');
+const webpack = require('webpack');
 
 // Add map PR-related environment variables to GraphQL
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
@@ -306,16 +307,8 @@ exports.onCreateWebpackConfig = ({ actions, stage }) => {
   // Exclude CSS-in-JS styles included from React. They override
   // the patternfly.css styles
   actions.setWebpackConfig({
-    module: {
-      rules: [
-        {
-          test: /\.css$/,
-          include: [
-            /react-styles\/css/
-          ],
-          loader: 'null-loader'
-        }
-      ]
-    }
+    plugins: [
+      new webpack.NormalModuleReplacementPlugin(/react-styles\/css\/.*\.css/, path.resolve(__dirname, './empty.css'))
+    ]
   });
 };

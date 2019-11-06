@@ -216,6 +216,14 @@ module.exports = {
         }
         `
       }
-    }
-  ],
+    },
+    {
+      resolve: `gatsby-plugin-s3`,
+      options: {
+        bucketName: 's3://patternfly-org-staging/v4',
+        protocol: "https",
+        hostname: "www.patternfly.org",
+      },
+    },
+  ]
 }
