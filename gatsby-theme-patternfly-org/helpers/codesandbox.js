@@ -1,3 +1,5 @@
+import versions from '../versions.json';
+
 // TODO: Use a template that has our assets.
 export const getStaticParams = (title, html) => ({
   files: {
@@ -41,6 +43,13 @@ export const getReactParams = (title, code) => {
     toRender = equalityMatch[1];
     code = code.replace(/(\w+) =/, `const ${toRender} =`)
   }
+
+  const dependencies = {};
+
+  Object.entries(versions.Releases[0].versions)
+    .filter(([pkg]) => code.includes(pkg))
+    .forEach(([pkg, version]) => dependencies[pkg] = version);
+
   return {
     files: {
       'index.html': {
@@ -71,15 +80,7 @@ ReactDOM.render(<${toRender} />, rootElement);`
       'package.json': {
         content: {
           dependencies: {
-            '@patternfly/react-charts': 'latest',
-            '@patternfly/react-core': 'latest',
-            '@patternfly/react-inline-edit-extension': 'latest',
-            '@patternfly/react-styles': 'latest',
-            '@patternfly/react-table': 'latest',
-            '@patternfly/react-tokens': 'latest',
-            '@patternfly/react-topology': 'latest',
-            '@patternfly/react-virtualized-extension': 'latest',
-            '@patternfly/react-icons': 'latest',
+            ...dependencies,
             'react': '^16.8.0',
             'react-dom': '^16.8.0'
           }
