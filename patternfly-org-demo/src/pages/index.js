@@ -12,8 +12,8 @@ import {
   TextVariants
 } from '@patternfly/react-core';
 import { ArrowRightIcon } from '@patternfly/react-icons';
-import orb from '../images/PF4_logo.svg';
-import principles from '../images/PF4_WIREFRAME.png';
+import orb from '../images/pf4-logo.svg';
+import principles from '../images/pf4-wireframe.png';
 import AutoLinkHeader from 'gatsby-theme-patternfly-org/components/autoLinkHeader';
 import './homepage.css';
 
