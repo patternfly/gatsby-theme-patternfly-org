@@ -175,25 +175,22 @@ export default ({ data, location, pageContext }) => {
 
         <TableOfContents />
 
-        {/* TODO: Style design and documentation content the SAME WAY */}
-        <div className={isDesignPage ? 'pf-c-content' : ''}>
-          <MDXProvider components={{
-            code: props =>
-              <Example
-                location={location}
-                source={source}
-                html={props.title && htmlExamples && htmlExamples[getId(props.title)]}
-                hideDarkMode={hideDarkMode}
-                navSection={navSection}
-                componentName={componentName}
-                {...props} />,
-            ...commonComponents
-          }}>
-            <MDXRenderer>
-              {data.doc.body}
-            </MDXRenderer>
-          </MDXProvider>
-        </div>
+        <MDXProvider components={{
+          code: props =>
+            <Example
+              location={location}
+              source={source}
+              html={props.title && htmlExamples && htmlExamples[getId(props.title)]}
+              hideDarkMode={hideDarkMode}
+              navSection={navSection}
+              componentName={componentName}
+              {...props} />,
+          ...commonComponents
+        }}>
+          <MDXRenderer>
+            {data.doc.body}
+          </MDXRenderer>
+        </MDXProvider>
 
         {props.length > 0 && <PropsSection />}
 

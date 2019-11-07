@@ -26,65 +26,65 @@
 }
 
 /* Table styles */
-.pf-c-content table {
+.ws-table {
   width: 100%;
   margin-bottom: var(--pf-global--spacer--md);
 }
-.pf-c-content table:not(.pf-c-table) td,
-.pf-c-content table:not(.pf-c-table) th,
-.pf-c-content table:not(.pf-c-table) tr {
+.ws-table:not(.pf-c-table) td,
+.ws-table:not(.pf-c-table) th,
+.ws-table:not(.pf-c-table) tr {
   padding: var(--pf-global--spacer--sm);
   vertical-align: top;
   border-bottom: var(--pf-global--BorderWidth--sm) solid #e0e0e0;
 }
-.pf-c-content table:not(.pf-c-table) td > code, 
-.pf-c-content table:not(.pf-c-table) th > code,
-.pf-c-content table:not(.pf-c-table) tr > code {
+.ws-table:not(.pf-c-table) td > code, 
+.ws-table:not(.pf-c-table) th > code,
+.ws-table:not(.pf-c-table) tr > code {
   white-space: normal;
 }
-.pf-c-content .pf-c-table {
+.ws-.pf-c-table {
   margin-bottom: 0;
 }
-.pf-c-content .pf-c-table td,
-.pf-c-content .pf-c-table th:not(.pf-c-table__sort) {
+.ws-.pf-c-table td,
+.ws-.pf-c-table th:not(.pf-c-table__sort) {
   border: none;
 }
-.pf-c-content table:not(.pf-c-table) {
+.ws-table:not(.pf-c-table) {
   margin: 0;
   padding: 0;
   color: #151515;
   text-align: left;
 }
-.pf-c-content table:not(.pf-c-table) thead {
+.ws-table:not(.pf-c-table) thead {
   font-size: 16px;
   white-space: nowrap;
   vertical-align: top;
 }
-.pf-c-content table:not(.pf-c-table) th {
+.ws-table:not(.pf-c-table) th {
   padding: 16px 16px 16px 32px;
   font-size: 14px;
   line-height: 21px;
   color: #151515;
 }
 @media only screen and (max-width: 992px) {
-  .pf-c-content table:not(.pf-c-table) th {
+  .ws-table:not(.pf-c-table) th {
     padding-left: 16px;
   }
 }
-.pf-c-content table:not(.pf-c-table) td {
+.ws-table:not(.pf-c-table) td {
   padding: 32px 16px 32px 32px;
   font-size: 16px;
 }
 @media only screen and (max-width: 992px) {
-  .pf-c-content table:not(.pf-c-table) td {
+  .ws-table:not(.pf-c-table) td {
     padding: 16px;
   }
 }
-.pf-c-content table:not(.pf-c-table) tr {
+.ws-table:not(.pf-c-table) tr {
   height: 1px;
   border-bottom: 1px solid #d2d2d2;
 }
-.pf-c-content table:not(.pf-c-table) tr > * {
+.ws-table:not(.pf-c-table) tr > * {
   position: relative;
   height: inherit;
   font-weight: 400;
