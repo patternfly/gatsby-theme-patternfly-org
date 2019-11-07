@@ -19,8 +19,16 @@ export const commonComponents = {
     }
     // Basically "withoutPrefix" since links are already prefixed coming into here
     return <Link to={props.href.replace('v4/', '')} {...props} />;
-  }
-
+  },
+  // Matching up with commonComponents.css pf-c-content copy
+  ul: (props) => <ul className="ws-ul" {...props} />,
+  ol: (props) => <ol className="ws-ol" {...props} />,
+  li: (props) => <li className="ws-li" {...props} />,
+  dl: (props) => <dl className="ws-dl" {...props} />,
+  blockquote: (props) => <blockquote className="ws-blockquote" {...props} />,
+  small: (props) => <small className="ws-small" {...props} />,
+  hr: (props) => <hr className="ws-hr" {...props} />,
+  dt: (props) => <dt className="ws-dt" {...props} />,
 };
 for (let i = 1; i <= 6; i++) {
   commonComponents[`h${i}`] = props => <AutoLinkHeader size={`h${i}`} className={`ws-title ws-h${i}`} {...props} />;

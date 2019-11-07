@@ -7,6 +7,6 @@ exports.onRenderBody = ({ setHtmlAttributes }) => {
   });
   // Always use new Red Hat font
   setHtmlAttributes({
-    className: 'pf-m-redhat-font ws'
+    className: 'pf-m-redhat-font'
   });
 }
