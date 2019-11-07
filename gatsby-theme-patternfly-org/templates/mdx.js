@@ -35,6 +35,17 @@ const getExperimentalWarning = (state, componentName) => {
   }
 }
 
+const getSourceTitle = source => {
+  switch(source) {
+    case 'core':
+      return 'HTML';
+    case 'shared':
+      return 'HTML/React';
+    default:
+      return capitalize(source);
+  }
+}
+
 export default ({ data, location, pageContext }) => {
   const { cssPrefix, hideTOC, experimentalStage, optIn, hideDarkMode, showTitle } = data.doc.frontmatter;
   const { componentName, navSection } = data.doc.fields;
@@ -64,10 +75,6 @@ export default ({ data, location, pageContext }) => {
     }
   }
 
-  // This is to please our designer with custom content styles
-  const isDesignPage = ['design-guidelines', 'get-started', 'contribute'].includes(source)
-    || navSection === 'overview';
-
   // TODO: Stop hiding TOC in design pages
   const TableOfContents = () => (
     <React.Fragment>
@@ -89,7 +96,7 @@ export default ({ data, location, pageContext }) => {
       {!hideTOC && (
         <React.Fragment>
           <Title size="md" className="ws-framework-title">
-            {source === 'core' ? 'HTML' : capitalize(source)}
+            {getSourceTitle(source)}
           </Title>
           <Title size="4xl" className="ws-page-title">{title}</Title>
           {optIn && (
@@ -143,7 +150,7 @@ export default ({ data, location, pageContext }) => {
       <AutoLinkHeader
         size="h2"
         id="props"
-        className="ws-title ws-h2"
+        className="ws-h2"
       >
         Props
       </AutoLinkHeader>
@@ -161,7 +168,7 @@ export default ({ data, location, pageContext }) => {
       <AutoLinkHeader
         size="h2"
         id="css-variables"
-        className="ws-title ws-h2"
+        className="ws-h2"
       >
         CSS Variables
       </AutoLinkHeader>
@@ -171,6 +178,7 @@ export default ({ data, location, pageContext }) => {
 
   const MDXContent = () => (
     <MDXProvider components={{
+      ...commonComponents,
       code: props =>
         <Example
           location={location}
@@ -179,8 +187,7 @@ export default ({ data, location, pageContext }) => {
           hideDarkMode={hideDarkMode}
           navSection={navSection}
           componentName={componentName}
-          {...props} />,
-      ...commonComponents
+          {...props} />
     }}>
       <MDXRenderer>
         {data.doc.body}
@@ -194,12 +201,13 @@ export default ({ data, location, pageContext }) => {
 
         <TableOfContents />
 
-        <MDXContent />
+        <div>
+          <MDXContent />
+        </div>
 
         {props.length > 0 && <PropsSection />}
 
         {cssPrefix && <CSSVariablesSection />}
-
       </PageSection>
     </SideNavLayout>
   );

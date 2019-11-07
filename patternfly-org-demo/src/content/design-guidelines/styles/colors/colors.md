@@ -98,7 +98,7 @@ import './colors.css';
   </GridItem>
 </Grid>
 
-<h2 className="pf-c-title pf-m-3xl pf-u-mb-lg" style={{marginTop: '80px'}}>Typography colors</h2>
+<h2>Typography colors</h2>
 
 <Grid className="colors-theme--light grid-modifier" gutter="md">
   <GridItem xs={12}>
@@ -232,7 +232,7 @@ import './colors.css';
   </GridItem>
 </Grid>
 
-<h2 className="pf-c-title pf-m-3xl pf-u-mb-lg" style={{marginTop: '80px'}}>Alert statuses</h2>
+<h2>Alert statuses</h2>
 
 <Grid className="colors-theme--light grid-modifier" gutter="md" style={{marginTop: '24px'}}>
   <GridItem xs={12}>
@@ -422,18 +422,11 @@ import './colors.css';
   </GridItem>
 </Grid>
 
-<h2 className="pf-c-title pf-m-3xl pf-u-mb-lg" style={{marginTop: '80px'}}>Contrast ratios</h2>
+## Contrast ratios
+<p>
+  <a href="https://www.w3.org/WAI/standards-guidelines/wcag/new-in-21/" target="_blank" className="pf-m-link">Level AA in the Web Content Accessibility Guildelines 2.1</a> requires a contrast ratio of at least 4.5:1 for normal text and 3:1 for large text, and a contrast ratio of at least 3:1 for graphics and user interface components (such as form input borders).
+</p>
 
-<Grid className="colors-theme--light" gutter="md" style={{marginTop: '24px'}}>
-  <GridItem sm={12} md={6}>
-    <p>
-      <a href="https://www.w3.org/WAI/standards-guidelines/wcag/new-in-21/" target="_blank" className="pf-m-link">Level AA in the Web Content Accessibility Guildelines 2.1</a> requires a contrast ratio of at least 4.5:1 for normal text and 3:1 for large text, and a contrast ratio of at least 3:1 for graphics and user interface components (such as form input borders).
-    </p>
-    <p>
-      Check color contrast between background color and text color using a <a href="https://color.a11y.com/?wc3" target="_blank" className="pf-m-link">WCAG AA-compliance tool.</a>
-    </p>
-    <p>
-      Make sure that, on hover, link texts provides ample contrast from both background color and from the default state of link text.
-    </p>
-  </GridItem>
-</Grid>
+Check color contrast between background color and text color using a <a href="https://color.a11y.com/?wc3" target="_blank" className="pf-m-link">WCAG AA-compliance tool.</a>
+
+Make sure that, on hover, link texts provides ample contrast from both background color and from the default state of link text.

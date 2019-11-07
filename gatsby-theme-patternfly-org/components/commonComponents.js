@@ -29,6 +29,13 @@ export const commonComponents = {
   small: (props) => <small className="ws-small" {...props} />,
   hr: (props) => <hr className="ws-hr" {...props} />,
   dt: (props) => <dt className="ws-dt" {...props} />,
+  code: (props) => <code className="ws-code" {...props} />,
+  table: (props) => <table className="ws-table" {...props} />,
+  // th: (props) => <th className="ws-th" {...props} />,
+  // tr: (props) => <tr className="ws-tr" {...props} />,
+  // tbody: (props) => <tbody className="ws-tbody" {...props} />,
+  // thead: (props) => <thead className="ws-thead" {...props} />,
+  // td: (props) => <td className="ws-td" {...props} />,
 };
 for (let i = 1; i <= 6; i++) {
   commonComponents[`h${i}`] = props => <AutoLinkHeader size={`h${i}`} className={`ws-title ws-h${i}`} {...props} />;

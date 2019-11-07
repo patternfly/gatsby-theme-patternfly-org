@@ -32,9 +32,13 @@ const makeSlug = (source, section, componentName) => {
   let url = '';
 
   // We know these belong in the "documentation" section of the site
-  if (['react', 'core'].includes(source)) {
+  if (['react', 'core',].includes(source)) {
     url += `/documentation/${source}`;
-  } else if (!source.includes('pages-')) {
+  }
+  else if (source === 'shared') {
+    url += '/documentation';
+  }
+  else if (!source.includes('pages-')) {
     url += `/${source}`;
   }
 
@@ -126,27 +130,6 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   }
 };
 
-const createGlobalPages = actions => {
-  actions.createPage({
-    path: '/documentation/overview/global-css-variables',
-    component: path.resolve(__dirname, `./pages/globalCSSVariables.js`),
-    context: {
-      navSection: 'overview',
-      title: 'Global CSS variables',
-      source: 'shared'
-    }
-  });
-  actions.createPage({
-    path: '/documentation/overview/red-hat-font',
-    component: path.resolve(__dirname, `./pages/redHatFont.js`),
-    context: {
-      navSection: 'overview',
-      title: 'Red Hat font',
-      source: 'shared'
-    }
-  });
-}
-
 exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
   {
     docs: allMdx(filter: { fields: { source: { ne: "design-snippets" } } }) {
@@ -199,8 +182,6 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
     const hbsInstance = createHandlebars(result.data.partials.nodes);
     const hiddenTitles = (pluginOptions.hiddenPages || []).map(title => title.toLowerCase());
 
-    // Create our global pages
-    createGlobalPages(actions);
     // Create our per-MDX file pages
     result.data.docs.nodes
       .concat(result.data.pages.nodes)

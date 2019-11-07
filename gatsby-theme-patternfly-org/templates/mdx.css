@@ -15,16 +15,28 @@
 }
 
 .ws-toc {
-  padding-top: 14px;
-  padding-bottom: 14px;
-  margin-right: 30px;
+  margin-bottom: var(--pf-global--spacer--lg);
+  margin-right: var(--pf-global--spacer--lg);
   display: inline-block;
 }
 
-.ws-page-title {
-  margin: 8px 0 16px;
+p ~ .ws-toc {
+  margin-top: var(--pf-global--spacer--lg);
 }
 
+.ws-page-title {
+  margin-top: var(--pf-global--spacer--sm);
+  margin-bottom: var(--pf-global--spacer--lg);
+}
+
+.ws-code {
+  display: inline-block;
+  background-color: #fff;
+  padding: 1px 8px;
+  border: 1px solid #ededed;
+  white-space: normal;
+  font-size: var(--pf-global--FontSize--md);
+}
 
 /* Table styles */
 .ws-table {
@@ -43,11 +55,11 @@
 .ws-table:not(.pf-c-table) tr > code {
   white-space: normal;
 }
-.ws-.pf-c-table {
+.pf-c-table {
   margin-bottom: 0;
 }
-.ws-.pf-c-table td,
-.ws-.pf-c-table th:not(.pf-c-table__sort) {
+.pf-c-table td,
+.pf-c-table th:not(.pf-c-table__sort) {
   border: none;
 }
 .ws-table:not(.pf-c-table) {
@@ -93,8 +105,84 @@
 }
 
 /*
- * Lots of copying from pf-c-content.
+ * Copied from pf-c-content.
  */
+:root {
+  --pf-c-content--MarginBottom: var(--pf-global--spacer--md);
+  --pf-c-content--LineHeight: var(--pf-global--LineHeight--md);
+  --pf-c-content--FontSize: var(--pf-global--FontSize--md);
+  --pf-c-content--FontWeight: var(--pf-global--FontWeight--normal);
+  --pf-c-content--Color: var(--pf-global--Color--100);
+  --pf-c-content--heading--FontFamily: var(--pf-global--FontFamily--heading--sans-serif);
+  --pf-c-content--h1--MarginTop: var(--pf-global--spacer--lg);
+  --pf-c-content--h1--MarginBottom: var(--pf-global--spacer--sm);
+  --pf-c-content--h1--LineHeight: var(--pf-global--LineHeight--sm);
+  --pf-c-content--h1--FontSize: var(--pf-global--FontSize--2xl);
+  --pf-c-content--h1--FontWeight: var(--pf-global--FontWeight--normal);
+  --pf-c-content--h2--MarginTop: var(--pf-global--spacer--lg);
+  --pf-c-content--h2--MarginBottom: var(--pf-global--spacer--sm);
+  --pf-c-content--h2--LineHeight: var(--pf-global--LineHeight--sm);
+  --pf-c-content--h2--FontSize: var(--pf-global--FontSize--xl);
+  --pf-c-content--h2--FontWeight: var(--pf-global--FontWeight--normal);
+  --pf-c-content--h3--MarginTop: var(--pf-global--spacer--lg);
+  --pf-c-content--h3--MarginBottom: var(--pf-global--spacer--sm);
+  --pf-c-content--h3--LineHeight: var(--pf-global--LineHeight--md);
+  --pf-c-content--h3--FontSize: var(--pf-global--FontSize--lg);
+  --pf-c-content--h3--FontWeight: var(--pf-global--FontWeight--normal);
+  --pf-c-content--h4--MarginTop: var(--pf-global--spacer--lg);
+  --pf-c-content--h4--MarginBottom: var(--pf-global--spacer--sm);
+  --pf-c-content--h4--LineHeight: var(--pf-global--LineHeight--md);
+  --pf-c-content--h4--FontSize: var(--pf-global--FontSize--md);
+  --pf-c-content--h4--FontWeight: var(--pf-global--FontWeight--semi-bold);
+  --pf-c-content--h5--MarginTop: var(--pf-global--spacer--lg);
+  --pf-c-content--h5--MarginBottom: var(--pf-global--spacer--sm);
+  --pf-c-content--h5--LineHeight: var(--pf-global--LineHeight--md);
+  --pf-c-content--h5--FontSize: var(--pf-global--FontSize--md);
+  --pf-c-content--h5--FontWeight: var(--pf-global--FontWeight--semi-bold);
+  --pf-c-content--h6--MarginTop: var(--pf-global--spacer--lg);
+  --pf-c-content--h6--MarginBottom: var(--pf-global--spacer--sm);
+  --pf-c-content--h6--LineHeight: var(--pf-global--LineHeight--md);
+  --pf-c-content--h6--FontSize: var(--pf-global--FontSize--md);
+  --pf-c-content--h6--FontWeight: var(--pf-global--FontWeight--semi-bold);
+  --pf-c-content--small--MarginBottom: var(--pf-global--spacer--md);
+  --pf-c-content--small--LineHeight: var(--pf-global--LineHeight--md);
+  --pf-c-content--small--FontSize: var(--pf-global--FontSize--sm);
+  --pf-c-content--small--Color: var(--pf-global--Color--200);
+  --pf-c-content--small--FontWeight: var(--pf-global--FontWeight--semi-bold);
+  --pf-c-content--a--Color: var(--pf-global--link--Color);
+  --pf-c-content--a--TextDecoration: var(--pf-global--link--TextDecoration);
+  --pf-c-content--a--hover--Color: var(--pf-global--link--Color--hover);
+  --pf-c-content--a--hover--TextDecoration: var(--pf-global--link--TextDecoration--hover);
+  --pf-c-content--blockquote--PaddingTop: var(--pf-global--spacer--md);
+  --pf-c-content--blockquote--PaddingRight: var(--pf-global--spacer--md);
+  --pf-c-content--blockquote--PaddingBottom: var(--pf-global--spacer--md);
+  --pf-c-content--blockquote--PaddingLeft: var(--pf-global--spacer--md);
+  --pf-c-content--blockquote--FontWeight: var(--pf-global--FontWeight--light);
+  --pf-c-content--blockquote--Color: var(--pf-global--Color--200);
+  --pf-c-content--blockquote--BorderLeftColor: var(--pf-global--BorderColor--100);
+  --pf-c-content--blockquote--BorderLeftWidth: var(--pf-global--BorderWidth--lg);
+  --pf-c-content--ol--PaddingLeft: var(--pf-global--spacer--lg);
+  --pf-c-content--ol--MarginTop: var(--pf-global--spacer--md);
+  --pf-c-content--ol--MarginLeft: var(--pf-global--spacer--lg);
+  --pf-c-content--ol--nested--MarginTop: var(--pf-global--spacer--sm);
+  --pf-c-content--ol--nested--MarginLeft: var(--pf-global--spacer--sm);
+  --pf-c-content--ul--PaddingLeft: var(--pf-global--spacer--lg);
+  --pf-c-content--ul--MarginTop: var(--pf-global--spacer--md);
+  --pf-c-content--ul--MarginLeft: var(--pf-global--spacer--lg);
+  --pf-c-content--ul--nested--MarginTop: var(--pf-global--spacer--sm);
+  --pf-c-content--ul--nested--MarginLeft: var(--pf-global--spacer--sm);
+  --pf-c-content--ul--ListStyle: var(--pf-global--ListStyle);
+  --pf-c-content--li--MarginTop: var(--pf-global--spacer--sm);
+  --pf-c-content--dl--ColumnGap: var(--pf-global--spacer--2xl);
+  --pf-c-content--dl--RowGap: var(--pf-global--spacer--md);
+  --pf-c-content--dt--FontWeight: var(--pf-global--FontWeight--semi-bold);
+  --pf-c-content--dt--MarginTop: var(--pf-global--spacer--md);
+  --pf-c-content--dt--sm--MarginTop: 0;
+  --pf-c-content--hr--Height: var(--pf-global--BorderWidth--sm);
+  --pf-c-content--hr--BackgroundColor: var(--pf-global--BorderColor--100);
+  font-size: var(--pf-c-content--FontSize);
+  line-height: var(--pf-c-content--LineHeight);
+  color: var(--pf-c-content--Color); }
 .ws-li + li {
   margin-top: var(--pf-c-content--li--MarginTop); }
 .ws-p:not(:last-child),
@@ -217,3 +305,6 @@
 @media screen and (min-width: 576px) {
   .ws-dd {
     grid-column: 2; } }
+
+
+/* Special designer styles */
