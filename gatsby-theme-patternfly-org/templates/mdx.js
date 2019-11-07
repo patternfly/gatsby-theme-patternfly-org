@@ -169,28 +169,32 @@ export default ({ data, location, pageContext }) => {
     </React.Fragment>
   );
 
+  const MDXContent = () => (
+    <MDXProvider components={{
+      code: props =>
+        <Example
+          location={location}
+          source={source}
+          html={props.title && htmlExamples && htmlExamples[getId(props.title)]}
+          hideDarkMode={hideDarkMode}
+          navSection={navSection}
+          componentName={componentName}
+          {...props} />,
+      ...commonComponents
+    }}>
+      <MDXRenderer>
+        {data.doc.body}
+      </MDXRenderer>
+    </MDXProvider>
+  );
+
   return (
     <SideNavLayout location={location} context={source} parityComponent={parityComponent}>
       <PageSection className="ws-section">
 
         <TableOfContents />
 
-        <MDXProvider components={{
-          code: props =>
-            <Example
-              location={location}
-              source={source}
-              html={props.title && htmlExamples && htmlExamples[getId(props.title)]}
-              hideDarkMode={hideDarkMode}
-              navSection={navSection}
-              componentName={componentName}
-              {...props} />,
-          ...commonComponents
-        }}>
-          <MDXRenderer>
-            {data.doc.body}
-          </MDXRenderer>
-        </MDXProvider>
+        <MDXContent />
 
         {props.length > 0 && <PropsSection />}
 
