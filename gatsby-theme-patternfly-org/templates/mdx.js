@@ -12,10 +12,10 @@ import AutoLinkHeader from '../components/autoLinkHeader';
 import Example from '../components/example';
 import CSSVariables from '../components/cssVariables';
 import PropsTable from '../components/propsTable';
+import { commonComponents } from '../components/commonComponents';
 import { getId } from '../helpers/getId';
 import { slugger } from '../helpers/slugger';
 import { capitalize } from '../helpers/capitalize';
-import { commonComponents } from '../helpers/commonComponents';
 import './mdx.css';
 
 const getExperimentalWarning = (state, componentName) => {
@@ -198,7 +198,7 @@ export default ({ data, location, pageContext }) => {
         {props.length > 0 && <PropsSection />}
 
         {cssPrefix && <CSSVariablesSection />}
-        
+
       </PageSection>
     </SideNavLayout>
   );
