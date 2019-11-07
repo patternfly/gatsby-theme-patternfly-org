@@ -80,7 +80,7 @@ export const styleProps = {
 }
 
 export const TypographyGrid = ({title, note, symbol, fontWeight, fontWeightText, fontSize, variableName, lineHeight, fontFamily}) => (
-  <>
+  <React.Fragment>
     <h3 className="ws-title">{title} {symbol && <span className="ws-typography-gridTitleSymbol">{symbol}</span>}</h3>
     <Grid gutter="sm">
       <GridItem span={12} sm={6}>
@@ -116,7 +116,7 @@ export const TypographyGrid = ({title, note, symbol, fontWeight, fontWeightText,
       </GridItem>
       {note && <GridItem span={12}><div className="ws-typography-textColor">{note}</div></GridItem>}
     </Grid>
-  </>
+  </React.Fragment>
 );
 
 export const LineHeightTitle = ({ children }) => (

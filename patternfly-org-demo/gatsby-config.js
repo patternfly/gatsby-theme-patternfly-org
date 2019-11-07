@@ -162,6 +162,15 @@ module.exports = {
         path: `${path.resolve(__dirname)}/src/content/design-guidelines`
       }
     },
+    // Shared pages
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'shared', // This goes in URLs
+        // TODO: prettier way to do this
+        path: require.resolve('gatsby-theme-patternfly-org').replace('index.js', 'pages')
+      }
+    },
     // Design snippets to inject in template
     {
       resolve: 'gatsby-source-filesystem',

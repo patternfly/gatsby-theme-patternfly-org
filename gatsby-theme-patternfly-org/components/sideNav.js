@@ -22,6 +22,9 @@ const renderNavItem = node => (
 const SideNav = ({ location, context = 'core', allPages, sideNavContexts, pageSource, parityComponent }) => {
   const [isDropdownOpen, setDropdownOpen] = React.useState(false);
   
+  if (context === 'shared') {
+    context = 'core';
+  }
   const allNavItems = allPages.reduce((accum, node) => {
     const navSection = node.context.navSection || 'page';
     accum[navSection] = accum[navSection] || [];

@@ -12,10 +12,10 @@ import AutoLinkHeader from '../components/autoLinkHeader';
 import Example from '../components/example';
 import CSSVariables from '../components/cssVariables';
 import PropsTable from '../components/propsTable';
+import { commonComponents } from '../components/commonComponents';
 import { getId } from '../helpers/getId';
 import { slugger } from '../helpers/slugger';
 import { capitalize } from '../helpers/capitalize';
-import { commonComponents } from '../helpers/commonComponents';
 import './mdx.css';
 
 const getExperimentalWarning = (state, componentName) => {
@@ -32,6 +32,17 @@ const getExperimentalWarning = (state, componentName) => {
     case 'early':
     default:
       return "This is an experimental feature in the early stages of testing. It's not intended for production use.";
+  }
+}
+
+const getSourceTitle = source => {
+  switch(source) {
+    case 'core':
+      return 'HTML';
+    case 'shared':
+      return 'HTML/React';
+    default:
+      return capitalize(source);
   }
 }
 
@@ -64,10 +75,6 @@ export default ({ data, location, pageContext }) => {
     }
   }
 
-  // This is to please our designer with custom content styles
-  const isDesignPage = ['design-guidelines', 'get-started', 'contribute'].includes(source)
-    || navSection === 'overview';
-
   // TODO: Stop hiding TOC in design pages
   const TableOfContents = () => (
     <React.Fragment>
@@ -89,7 +96,7 @@ export default ({ data, location, pageContext }) => {
       {!hideTOC && (
         <React.Fragment>
           <Title size="md" className="ws-framework-title">
-            {source === 'core' ? 'HTML' : capitalize(source)}
+            {getSourceTitle(source)}
           </Title>
           <Title size="4xl" className="ws-page-title">{title}</Title>
           {optIn && (
@@ -143,7 +150,7 @@ export default ({ data, location, pageContext }) => {
       <AutoLinkHeader
         size="h2"
         id="props"
-        className="ws-title ws-h2"
+        className="ws-h2"
       >
         Props
       </AutoLinkHeader>
@@ -161,12 +168,31 @@ export default ({ data, location, pageContext }) => {
       <AutoLinkHeader
         size="h2"
         id="css-variables"
-        className="ws-title ws-h2"
+        className="ws-h2"
       >
         CSS Variables
       </AutoLinkHeader>
       <CSSVariables prefix={cssPrefix} />
     </React.Fragment>
+  );
+
+  const MDXContent = () => (
+    <MDXProvider components={{
+      ...commonComponents,
+      code: props =>
+        <Example
+          location={location}
+          source={source}
+          html={props.title && htmlExamples && htmlExamples[getId(props.title)]}
+          hideDarkMode={hideDarkMode}
+          navSection={navSection}
+          componentName={componentName}
+          {...props} />
+    }}>
+      <MDXRenderer>
+        {data.doc.body}
+      </MDXRenderer>
+    </MDXProvider>
   );
 
   return (
@@ -175,30 +201,13 @@ export default ({ data, location, pageContext }) => {
 
         <TableOfContents />
 
-        {/* TODO: Style design and documentation content the SAME WAY */}
-        <div className={isDesignPage ? 'pf-c-content' : ''}>
-          <MDXProvider components={{
-            code: props =>
-              <Example
-                location={location}
-                source={source}
-                html={props.title && htmlExamples && htmlExamples[getId(props.title)]}
-                hideDarkMode={hideDarkMode}
-                navSection={navSection}
-                componentName={componentName}
-                {...props} />,
-            ...commonComponents
-          }}>
-            <MDXRenderer>
-              {data.doc.body}
-            </MDXRenderer>
-          </MDXProvider>
+        <div>
+          <MDXContent />
         </div>
 
         {props.length > 0 && <PropsSection />}
 
         {cssPrefix && <CSSVariablesSection />}
-        
       </PageSection>
     </SideNavLayout>
   );
