@@ -1,4 +1,5 @@
 import versions from '../versions.json';
+import overpass from './fonts';
 
 // TODO: Use a template that has our assets.
 export const getStaticParams = (title, html) => ({
@@ -24,6 +25,9 @@ export const getStaticParams = (title, html) => ({
     },
     'package.json': {
       content: {},
+    },
+    'fonts.css': {
+      content: overpass
     },
     'sandbox.config.json': {
       content: { template: 'static' }
@@ -71,11 +75,15 @@ export const getReactParams = (title, code) => {
       'index.js': {
         content: `import ReactDOM from 'react-dom';
 import "@patternfly/react-core/dist/styles/base.css";
+import './fonts.css';
 
 ${code}
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(<${toRender} />, rootElement);`
+      },
+      'fonts.css': {
+        content: overpass
       },
       'package.json': {
         content: {
