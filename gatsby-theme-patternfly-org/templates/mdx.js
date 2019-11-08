@@ -155,10 +155,10 @@ export default ({ data, location, pageContext }) => {
         Props
       </AutoLinkHeader>
       {props.map(component => (
-        <React.Fragment key={component.name}>
-          {component.description}
-          <PropsTable caption={`${component.name} properties`} propList={component.props} />
-        </React.Fragment>
+        <PropsTable
+          key={component.name}
+          caption={`${component.name} properties`}
+          rows={component.props} />
       ))}
     </React.Fragment>
   );
