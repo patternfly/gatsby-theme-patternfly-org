@@ -37,7 +37,7 @@ __4. Document__
   - Add the design guidelines of the component to the PF site
   - The PF team will review the PR and make it available for consumption
 
-![Contribution guide](about-flowchart.png)
+![Contribution guide](./about-flowchart.png)
 
 ## Get help
 If you run into trouble and need support, the PatternFly team is here to help. Simply go to the [PatternFly forum](https://forum.patternfly.org/c/support) and add a new topic to get in touch with us. We'll always do our best to answer your questions and connect you with the right people quickly.

@@ -18,4 +18,4 @@ showTitle: true
 [Core contribution guidelines](https://github.com/patternfly/patternfly-next#guidelines-for-css-development) & [React contribution guidelines](https://github.com/patternfly/patternfly-react/blob/master/CONTRIBUTING.md#contribution-process)
 
 ## Lifecycle
-![Development contribution lifecycle flowchart](developer-flowchart.png)
+![Development contribution lifecycle flowchart](./developer-flowchart.png)

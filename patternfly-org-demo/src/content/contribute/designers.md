@@ -47,4 +47,4 @@ __2. Propose a design__
 __3. Submit your designs__
   - The PatternFly team will help you throughout this process. If accepted, you will be assigned a buddy to assist you throughout the rest of the process
 
-![Design contribution lifecycle flowchart](design-flowchart.png)
+![Design contribution lifecycle flowchart](./design-flowchart.png)

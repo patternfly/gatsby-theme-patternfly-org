@@ -123,7 +123,9 @@ We use spacers to define fixed amounts of space between elements. Spacers make i
 <p>
   Certain components or elements like icons, buttons, and input fields, have a fixed amount of padding built-in. Remember to take that extra space around each element into account when laying the content out on your page. You may not have as much horizontal or vertical room as you think.
 </p>
-![Spacers Example](padding-example.png)
+
+![Spacers Example](./padding-example.png)
+
 <p class="pf-u-mt-3xl ws-content-p">
   When laying out text-based content, remember to take line height into account so you’re leaving the right amount of vertical space between each line of text.
 </p>
