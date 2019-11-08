@@ -1,3 +1,0 @@
-.ws-props-table:not(:last-child) {
-  margin-bottom: var(--pf-global--spacer--lg);
-}
