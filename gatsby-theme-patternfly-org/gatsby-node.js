@@ -286,7 +286,7 @@ exports.onCreateWebpackConfig = ({ actions, stage }) => {
     })
   }
   // Exclude CSS-in-JS styles included from React. They override
-  // the patternfly.css styles
+  // the patternfly.css styles which we would rather have.
   actions.setWebpackConfig({
     plugins: [
       new webpack.NormalModuleReplacementPlugin(/react-styles\/css\/.*\.css/, path.resolve(__dirname, './empty.css'))

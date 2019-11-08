@@ -1,5 +1,5 @@
 {
-  "name": "gatsby-starter-theme-workspace",
+  "name": "gatsby-theme-patternfly-org-workspace",
   "private": true,
   "version": "0.0.1",
   "main": "index.js",
@@ -24,16 +24,13 @@
   },
   "workspaces": {
     "packages": [
-      "gatsby-theme-patternfly-org",
-      "patternfly-org-demo",
       "patternfly-org-demo/patternfly-next",
       "patternfly-org-demo/patternfly-react",
-      "patternfly-org-demo/patternfly-react/packages/**"
+      "patternfly-org-demo/patternfly-react/packages/**",
+      "patternfly-org-demo"
     ],
     "nohoist": [
-      "**/@patternfly/patternfly",
-      "**/gatsby-theme-patternfly-org",
-      "**/gatsby"
+      "**/@patternfly/patternfly"
     ]
   }
 }
