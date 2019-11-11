@@ -182,6 +182,11 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
     const hbsInstance = createHandlebars(result.data.partials.nodes);
     const hiddenTitles = (pluginOptions.hiddenPages || []).map(title => title.toLowerCase());
 
+    // Create 404 page
+    actions.createPage({
+      path: '/404',
+      component: path.resolve(__dirname, './pages/404.js')
+    });
     // Create our per-MDX file pages
     result.data.docs.nodes
       .concat(result.data.pages.nodes)
@@ -222,18 +227,12 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
 
         // Create per-example fullscreen pages for documentation pages
         if (['core', 'react'].includes(source)) {
-          let component;
-          if (source === 'core') {
-            component = path.resolve(__dirname, `./templates/fullscreenHtml.js`);
-          }
-          else if (source === 'react') {
-            component = path.resolve(__dirname, `./templates/fullscreenMdx.js`);
-          }
-          
           Object.entries(examples).forEach(([key, example]) => {
               actions.createPage({
                 path: `${slug}/${key}`,
-                component,
+                component: source === 'core'
+                  ? path.resolve(__dirname, './templates/fullscreenHtml.js')
+                  : path.resolve(__dirname, './templates/fullscreenMdx.js'),
                 context: {
                   // To exclude fullscreen pages from sitemap
                   isFullscreen: true,

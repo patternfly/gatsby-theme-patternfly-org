@@ -8,19 +8,19 @@
     "develop:next": "yarn workspace @patternfly/patternfly gatsby develop -p 8001",
     "build:next": "yarn workspace @patternfly/patternfly build-patternfly",
     "build:next:docs": "yarn workspace @patternfly/patternfly build:site",
-    "serve:next": "yarn workspace @patternfly/patternfly gatsby serve  -p 8001",
     "clean:next": "yarn workspace @patternfly/patternfly clean",
+    "serve:next": "yarn workspace @patternfly/patternfly gatsby serve  -p 8001",
     "develop:react": "yarn workspace @patternfly/react-docs develop -p 8002",
     "build:react": "yarn workspace @patternfly/react-lerna-root build:pf4",
-    "build:react:docs": "yarn workspace @patternfly/react-lerna-root build:docs",
-    "serve:react": "yarn workspace @patternfly/react-docs gatsby serve  -p 8002",
+    "build:react:docs": "yarn workspace @patternfly/react-docs gatsby build",
     "clean:react": "yarn workspace @patternfly/react-docs clean",
+    "serve:react": "yarn workspace @patternfly/react-docs gatsby serve  -p 8002",
     "develop:org": "yarn workspace patternfly-org-demo develop -p 8003",
     "build:org:docs": "yarn workspace patternfly-org-demo build",
     "build:org:prefix": "yarn workspace patternfly-org-demo build:prefix",
+    "clean:org": "yarn workspace patternfly-org-demo clean",
     "serve:org": "yarn workspace patternfly-org-demo serve",
-    "serve:org:prefix": "yarn workspace patternfly-org-demo serve:prefix",
-    "clean:org": "yarn workspace patternfly-org-demo clean"
+    "serve:org:prefix": "yarn workspace patternfly-org-demo serve:prefix"
   },
   "workspaces": {
     "packages": [
