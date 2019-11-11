@@ -13755,22 +13755,6 @@ gatsby-telemetry@^1.1.35:
     stack-utils "1.0.2"
     uuid "3.3.3"
 
-gatsby-theme-patternfly-org@^0.0.19:
-  version "0.0.19"
-  resolved "https://registry.yarnpkg.com/gatsby-theme-patternfly-org/-/gatsby-theme-patternfly-org-0.0.19.tgz#027cea10e8590c08a4a3f462d4ef8164f0dfe9ef"
-  integrity sha512-t0wF7sxPa6I32N80IOr74vx2wPIZbSFaSmOe44WPI09o36KUkBV/U0KyKmpRXPDVvr6awZAnvrv8cPDzDdXsMA==
-  dependencies:
-    "@mdx-js/mdx" "^1.1.5"
-    "@mdx-js/react" "^1.1.5"
-    codesandbox "^2.1.10"
-    gatsby-plugin-mdx "^1.0.40"
-    gatsby-plugin-react-helmet "^3.1.7"
-    handlebars "^4.2.0"
-    html-formatter "0.1.9"
-    prismjs "^1.17.1"
-    react-helmet "^5.2.1"
-    react-live "^2.2.0"
-
 gatsby-transformer-json@^2.2.15:
   version "2.2.16"
   resolved "https://registry.yarnpkg.com/gatsby-transformer-json/-/gatsby-transformer-json-2.2.16.tgz#dbeccfcc44e9f96482635fb58dc0e307c9e121cc"

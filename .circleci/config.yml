@@ -10,23 +10,6 @@ references:
   - patternfly-org-demo/patternfly-next/node_modules/
   - patternfly-org-demo/patternfly-react/packages/patternfly-4/react-docs/node_modules/
   - patternfly-org-demo/patternfly-react/packages/patternfly-4/react-docs/plugins/gatsby-transformer-react-docgen-typescript/node_modules/
-  build_cache_paths: &build_cache_paths
-  - patternfly-org-demo/patternfly-react/.cache/
-  - patternfly-org-demo/patternfly-react/packages/patternfly-3/patternfly-react-extensions/dist/
-  - patternfly-org-demo/patternfly-react/packages/patternfly-3/patternfly-react-wooden-tree/dist/
-  - patternfly-org-demo/patternfly-react/packages/patternfly-3/patternfly-react/dist/
-  - patternfly-org-demo/patternfly-react/packages/patternfly-3/react-console/dist/
-  - patternfly-org-demo/patternfly-react/packages/patternfly-4/react-charts/dist/
-  - patternfly-org-demo/patternfly-react/packages/patternfly-4/react-core/dist/
-  - patternfly-org-demo/patternfly-react/packages/patternfly-4/react-inline-edit-extension/dist/
-  - patternfly-org-demo/patternfly-react/packages/patternfly-4/react-styled-system/dist/
-  - patternfly-org-demo/patternfly-react/packages/patternfly-4/react-styles/css/
-  - patternfly-org-demo/patternfly-react/packages/patternfly-4/react-styles/dist/
-  - patternfly-org-demo/patternfly-react/packages/patternfly-4/react-table/dist/
-  - patternfly-org-demo/patternfly-react/packages/patternfly-4/react-tokens/dist/
-  - patternfly-org-demo/patternfly-react/packages/patternfly-4/react-topology/dist/
-  - patternfly-org-demo/patternfly-react/packages/patternfly-4/react-virtualized-extension/dist/
-  - patternfly-org-demo/patternfly-react/packages/react-icons/dist/
   js_deps_cache_key: &js_deps_cache_key
     js-deps-v{{.Environment.CACHE_VERSION}}-{{checksum "yarn.lock"}}
   build_cache_key: &build_cache_key
@@ -40,20 +23,25 @@ workflows:
   install_build_deploy:
     jobs:
     - install
+    - build_next:
+        requires:
+        - install
     - build_react:
         requires:
         - install
-    - build_next:
+    - build_org:
         requires:
         - install
     - upload_docs:
         requires:
         - build_react
         - build_next
+        - build_org
     - deploy:
         requires:
         - build_react
         - build_next
+        - build_org
         filters:
           branches:
             only: master
@@ -81,30 +69,6 @@ jobs:
     - save_cache:
         paths: *js_deps_paths
         key: *js_deps_cache_key
-  build_react:
-    docker:
-    - image: circleci/node:10
-    steps:
-    - *attach_workspace
-    - restore_cache:
-        keys:
-        - *js_deps_cache_key
-    - restore_cache:
-        keys:
-        - *build_cache_key
-    - run:
-        name: Incremental Build Dist
-        command: yarn build:react
-    - save_cache:
-        paths: *build_cache_paths
-        key: *build_cache_key
-    - run:
-        name: Build Docs
-        command: yarn build:react:docs
-    - persist_to_workspace:
-        root: ~/project
-        paths: 
-        - patternfly-org-demo/patternfly-react/packages/react-docs/public/
   build_next:
     docker:
     - image: circleci/node:10
@@ -114,16 +78,13 @@ jobs:
         keys:
         - *js_deps_cache_key
     - run:
-        name: Build Dist
-        command: yarn build:next
-    - run:
-        name: Build Docs
+        name: Build patternfly-next docs
         command: yarn build:next:docs
     - persist_to_workspace:
         root: ~/project
         paths: 
         - patternfly-org-demo/patternfly-next/public/
-  upload_docs:
+  build_react:
     docker:
     - image: circleci/node:10
     steps:
@@ -131,6 +92,33 @@ jobs:
     - restore_cache:
         keys:
         - *js_deps_cache_key
+    - run:
+        name: Build patternfly-react docs
+        command: yarn build:react:docs
+    - persist_to_workspace:
+        root: ~/project
+        paths: 
+        - patternfly-org-demo/patternfly-react/packages/react-docs/public/
+  build_org:
+    docker:
+    - image: circleci/node:10
+    steps:
+    - *attach_workspace
+    - restore_cache:
+        keys:
+        - *js_deps_cache_key
+    - run:
+        name: Build patternfly.org docs
+        command: yarn build:react:docs
+    - persist_to_workspace:
+        root: ~/project
+        paths: 
+        - patternfly-org-demo/public/
+  upload_docs:
+    docker:
+    - image: circleci/node:10
+    steps:
+    - *attach_workspace
     - run:
         name: Upload docs
         command: ./circleci/upload-docs.sh
