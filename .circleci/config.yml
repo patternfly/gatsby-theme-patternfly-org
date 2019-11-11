@@ -69,7 +69,10 @@ jobs:
           - "*"
     - run:
         name: debug
-        command: tree -L 2 patternfly-org-demo
+        command: git clean -ndfx
+    - run:
+        name: debug2
+        command: git submodule foreach --recursive git clean -dfxn
   build_next:
     docker:
     - image: circleci/node:10
