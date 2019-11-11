@@ -79,7 +79,7 @@ jobs:
         - *js_deps_cache_key
     - run:
         name: Build patternfly-next docs
-        command: yarn build:next:docs
+        command: yarn build:next
     - persist_to_workspace:
         root: ~/project
         paths: 
@@ -94,7 +94,7 @@ jobs:
         - *js_deps_cache_key
     - run:
         name: Build patternfly-react docs
-        command: yarn build:react:docs
+        command: yarn build:react
     - persist_to_workspace:
         root: ~/project
         paths: 
@@ -109,7 +109,7 @@ jobs:
         - *js_deps_cache_key
     - run:
         name: Build patternfly.org docs
-        command: yarn build:react:docs
+        command: yarn build:org
     - persist_to_workspace:
         root: ~/project
         paths: 
