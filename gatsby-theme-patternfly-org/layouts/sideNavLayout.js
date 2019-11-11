@@ -18,7 +18,7 @@ import logo from '../images/logo.svg';
 import './sideNavLayout.css';
 
 // ParityComponent: aboutmodal <=> aboutmodalbox
-const SideNavLayout = ({ children, location, context, hideSideNav = false, parityComponent }) => {
+const SideNavLayout = ({ children, location, context, hideSideNav = false, showBanner = false, parityComponent }) => {
   let docSearchInit = false;
   // Initialize Algogia
   useEffect(() => {
@@ -185,7 +185,9 @@ const SideNavLayout = ({ children, location, context, hideSideNav = false, parit
       <Helmet>
         <title>{title}</title>
       </Helmet>
-      <Banner />
+      {showBanner && (
+        <Banner />
+      )}
       <Page isManagedSidebar header={Header} sidebar={SideBar}>
         {children}
       </Page>

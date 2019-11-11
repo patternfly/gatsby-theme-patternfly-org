@@ -27,7 +27,8 @@
     "@patternfly/react-topology": "latest",
     "@patternfly/react-virtualized-extension": "latest",
     "eslint-config-react-app": "^5.0.2",
-    "gatsby": "^2.17.10",
+    "gatsby": "2.17.10",
+    "gatsby-cli": "2.8.8",
     "gatsby-plugin-google-analytics": "^2.1.24",
     "gatsby-plugin-manifest": "^2.2.26",
     "gatsby-plugin-remove-serviceworker": "^1.0.0",
@@ -35,7 +36,7 @@
     "gatsby-plugin-sitemap": "^2.2.19",
     "gatsby-remark-copy-linked-files": "^2.1.28",
     "gatsby-source-filesystem": "^2.1.22",
-    "gatsby-theme-patternfly-org": "^0.0.17",
+    "gatsby-theme-patternfly-org": "^0.0.20",
     "gatsby-transformer-json": "^2.2.15",
     "react": "^16.8.0",
     "react-dom": "^16.8.0"

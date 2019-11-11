@@ -19,11 +19,12 @@ const renderNavItem = node => (
   </li>
 );
 
-const SideNav = ({ location, context = 'core', allPages, sideNavContexts, pageSource, parityComponent }) => {
+const SideNav = ({ location, context, allPages, sideNavContexts, pageSource, parityComponent }) => {
   const [isDropdownOpen, setDropdownOpen] = React.useState(false);
   
+  // The `context` property worked hard to get here
   if (context === 'shared') {
-    context = 'core';
+    context = pageSource;
   }
   const allNavItems = allPages.reduce((accum, node) => {
     const navSection = node.context.navSection || 'page';
@@ -38,7 +39,6 @@ const SideNav = ({ location, context = 'core', allPages, sideNavContexts, pageSo
     return accum;
   }, {});
 
-  // The `context` property worked hard to get here
   const sideNavItems = sideNavContexts[context.replace(/-/g, '_')] || [];
 
   // TODO: Get a better design and get rid of this thing.
@@ -68,8 +68,9 @@ const SideNav = ({ location, context = 'core', allPages, sideNavContexts, pageSo
   return (
     <Nav aria-label="Side Nav">
       {/* debug */}
-      {/* <Title size="xl">{context}</Title> */}
-      {/* <Title size="xl">{parityComponent}</Title> */}
+      {/* <p>{context}</p> */}
+      {/* <p>{pageSource}</p> */}
+      {/* <p>{parityComponent}</p> */}
       {Object.keys(contextSwitcher).includes(context) && (
         <div className="ws-org-context-switcher">
           <label className="">FRAMEWORK</label>

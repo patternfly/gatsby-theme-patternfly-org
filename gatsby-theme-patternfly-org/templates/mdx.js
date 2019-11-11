@@ -49,7 +49,7 @@ const getSourceTitle = source => {
 export default ({ data, location, pageContext }) => {
   const { cssPrefix, hideTOC, experimentalStage, optIn, hideDarkMode, showTitle } = data.doc.frontmatter;
   const { componentName, navSection } = data.doc.fields;
-  const { title, source, tableOfContents, htmlExamples, propComponents = [''] } = pageContext;
+  const { title, source, tableOfContents, htmlExamples, propComponents = [''], showBanner } = pageContext;
   const props = data.props && data.props.nodes && propComponents
     ? propComponents
       .filter(name => name !== '') // Filter default entry we make for GraphQL schema
@@ -196,11 +196,17 @@ export default ({ data, location, pageContext }) => {
   );
 
   return (
-    <SideNavLayout location={location} context={source} parityComponent={parityComponent}>
+    <SideNavLayout
+      location={location}
+      context={source}
+      parityComponent={parityComponent}
+      showBanner={showBanner}
+    >
       <PageSection className="ws-section">
 
         <TableOfContents />
 
+        {/* Wrap in div for :last-child CSS selectors */}
         <div>
           <MDXContent />
         </div>

@@ -181,6 +181,7 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
     }
     const hbsInstance = createHandlebars(result.data.partials.nodes);
     const hiddenTitles = (pluginOptions.hiddenPages || []).map(title => title.toLowerCase());
+    const { showBanner = false } = pluginOptions;
 
     // Create 404 page
     actions.createPage({
@@ -222,6 +223,8 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
             source,
             // To render static example HTML from patternfly-next
             htmlExamples: source === 'core' ? examples : undefined,
+            // To hide the banner for core/React sites
+            showBanner
           }
         });
 

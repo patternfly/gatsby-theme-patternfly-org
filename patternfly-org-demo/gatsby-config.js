@@ -16,6 +16,7 @@ module.exports = {
       options: {
         context: 'org',
         hiddenPages: ['withOuia'], // By title
+        showBanner: true, // PF3 banner
         sideNav: {
           core: [
             { section: 'overview' },
