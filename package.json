@@ -24,13 +24,11 @@
     "packages": [
       "gatsby-theme-patternfly-org",
       "patternfly-org-demo/patternfly-next",
-      "patternfly-org-demo/patternfly-react",
-      "patternfly-org-demo/patternfly-react/packages/**",
+      "patternfly-org-demo/patternfly-react/packages/react-docs",
       "patternfly-org-demo"
     ],
     "nohoist": [
-      "**/@patternfly/patternfly",
-      "**/gatsby-theme-patternfly-org"
+      "**/@patternfly/patternfly"
     ]
   }
 }
