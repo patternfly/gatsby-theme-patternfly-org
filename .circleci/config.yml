@@ -46,7 +46,7 @@ workflows:
 jobs:
   install:
     docker:
-    - image: circleci/node:10
+    - image: circleci/node:12
     steps:
     - checkout
     - run:
@@ -67,15 +67,9 @@ jobs:
         root: ~/project
         paths:
           - "*"
-    - run:
-        name: debug
-        command: git clean -ndfx
-    - run:
-        name: debug2
-        command: git submodule foreach --recursive git clean -dfxn
   build_next:
     docker:
-    - image: circleci/node:10
+    - image: circleci/node:12
     steps:
     - *attach_workspace
     - run:
@@ -87,7 +81,7 @@ jobs:
         - patternfly-org-demo/patternfly-next/public/
   build_react:
     docker:
-    - image: circleci/node:10
+    - image: circleci/node:12
     steps:
     - *attach_workspace
     - run:
@@ -96,10 +90,10 @@ jobs:
     - persist_to_workspace:
         root: ~/project
         paths: 
-        - patternfly-org-demo/patternfly-react/packages/react-docs/public/
+        - patternfly-org-demo/patternfly-react/packages/patternfly-4/react-docs/public/
   build_org:
     docker:
-    - image: circleci/node:10
+    - image: circleci/node:12
     steps:
     - *attach_workspace
     - run:
@@ -119,7 +113,7 @@ jobs:
         command: ./circleci/upload-docs.sh
   deploy:
     docker:
-    - image: circleci/node:10
+    - image: circleci/node:12
     steps:
     - *attach_workspace
     - run:
