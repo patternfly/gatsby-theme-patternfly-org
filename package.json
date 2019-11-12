@@ -24,7 +24,8 @@
     "packages": [
       "gatsby-theme-patternfly-org",
       "patternfly-org-demo/patternfly-next",
-      "patternfly-org-demo/patternfly-react/packages/react-docs",
+      "patternfly-org-demo/patternfly-react/packages/patternfly-4/react-docs",
+      "patternfly-org-demo/patternfly-react/packages/patternfly-4/react-docs/plugins/**",
       "patternfly-org-demo"
     ],
     "nohoist": [
