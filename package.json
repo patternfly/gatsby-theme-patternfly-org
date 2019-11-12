@@ -10,7 +10,7 @@
     "clean:next": "yarn workspace @patternfly/patternfly clean",
     "serve:next": "yarn workspace @patternfly/patternfly gatsby serve  -p 8001",
     "develop:react": "yarn workspace @patternfly/react-docs develop -p 8002",
-    "build:react": "yarn workspace @patternfly/react-docs gatsby build",
+    "build:react": "yarn workspace @patternfly/react-docs build:ram",
     "clean:react": "yarn workspace @patternfly/react-docs clean",
     "serve:react": "yarn workspace @patternfly/react-docs gatsby serve  -p 8002",
     "develop:org": "yarn workspace patternfly-org-demo develop -p 8003",
