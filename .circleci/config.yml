@@ -3,15 +3,6 @@ version: 2
 # Adapted from https://github.com/circleci/circleci-docs/blob/master/.circleci/config.yml
 # I'd love to find docs on this syntax.
 references:
-  js_deps_paths: &js_deps_paths
-  - node_modules/
-  - gatsby-theme-patternfly-org/node_modules/
-  - patternfly-org-demo/node_modules/
-  - patternfly-org-demo/patternfly-next/node_modules/
-  - patternfly-org-demo/patternfly-react/packages/patternfly-4/react-docs/node_modules/
-  - patternfly-org-demo/patternfly-react/packages/patternfly-4/react-docs/plugins/gatsby-transformer-react-docgen-typescript/node_modules/
-  js_deps_cache_key: &js_deps_cache_key
-    js-deps-v{{.Environment.CACHE_VERSION}}-{{checksum "yarn.lock"}}
   attach_workspace: &attach_workspace
     attach_workspace:
       at: ~/project
@@ -54,15 +45,9 @@ jobs:
         command: |
           git submodule init
           git submodule update --remote
-    - restore_cache:
-        keys:
-        - *js_deps_cache_key
     - run:
-        name: Conditional install
-        command: if [ ! -d node_modules ]; then yarn install --frozen-lockfile; fi
-    - save_cache:
-        paths: *js_deps_paths
-        key: *js_deps_cache_key
+        name: Install
+        command: yarn install
     - persist_to_workspace:
         root: ~/project
         paths:
