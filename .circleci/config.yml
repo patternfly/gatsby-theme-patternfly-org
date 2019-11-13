@@ -82,11 +82,8 @@ jobs:
     steps:
     - *attach_workspace
     - run:
-        name: Install yarn
-        command: curl -o- -L https://yarnpkg.com/install.sh | bash
-    - run:
         name: Build patternfly.org docs
-        command: yarn build:org
+        command: npm run build:org
     - persist_to_workspace:
         root: ~/project
         paths: 
