@@ -6,7 +6,8 @@ references:
   attach_workspace: &attach_workspace
     attach_workspace:
       at: ~/project
-
+environment:
+  BASH_ENV: ~/.bashrc
 workflows:
   version: 2
   install_build_deploy:
@@ -84,9 +85,6 @@ jobs:
     - run:
         name: Install yarn
         command: curl -o- -L https://yarnpkg.com/install.sh | bash
-    - run:
-        name: Source yarn
-        command: source ~/.bashrc
     - run:
         name: Build patternfly.org docs
         command: yarn build:org
