@@ -77,8 +77,6 @@ jobs:
         paths: 
         - patternfly-org-demo/patternfly-react/packages/patternfly-4/react-docs/public/
   build_org:
-    docker:
-    - image: circleci/node:12
     steps:
     - *attach_workspace
     - run:
