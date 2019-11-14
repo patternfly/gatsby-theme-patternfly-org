@@ -110,7 +110,7 @@ jobs:
     - *attach_workspace
     - run:
         name: Upload docs
-        command: ./circleci/upload-docs.sh
+        command: .circleci/upload-docs.sh
   deploy:
     docker:
     - image: circleci/node:12
