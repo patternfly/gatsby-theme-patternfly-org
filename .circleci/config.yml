@@ -78,8 +78,6 @@ jobs:
   build_org:
     machine:
       image: circleci/classic:latest
-    environment:
-      BASH_ENV: ~/.bashrc
     steps:
     - *attach_workspace
     - run:
@@ -87,7 +85,7 @@ jobs:
         command: curl -o- -L https://yarnpkg.com/install.sh | bash
     - run:
         name: Build patternfly.org docs
-        command: yarn build:org
+        command: PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH" yarn build:org
     - persist_to_workspace:
         root: ~/project
         paths: 
