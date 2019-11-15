@@ -20,7 +20,7 @@ workflows:
     - build_org:
         requires:
         - install
-    - upload_docs:
+    - upload_previews:
         requires:
         - build_react
         - build_next
@@ -103,7 +103,7 @@ jobs:
         root: ~/project
         paths: 
         - patternfly-org-demo/public/
-  upload_docs:
+  upload_previews:
     docker:
     - image: circleci/node:10
     steps:
@@ -117,9 +117,6 @@ jobs:
     steps:
     - *attach_workspace
     - run:
-        name: Avoid Unknown Host for github.com
-        command: mkdir ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
-    - run:
         name: Install AWS CLI
         command: |
           sudo apt-get update
@@ -129,5 +126,8 @@ jobs:
         name: Sync to staging
         command: .circleci/upload-staging.sh
     - run:
+        name: Avoid Unknown Host for github.com
+        command: mkdir ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+    - run:
         name: Deploy to NPM
-        command: semantic-release
+        command: npx semantic-release
