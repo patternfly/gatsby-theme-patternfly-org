@@ -140,6 +140,7 @@ jobs:
     docker:
     - image: circleci/node:12
     steps:
+    - *attach_workspace
     - restore_cache:
         keys:
         - *js_deps_cache_key
