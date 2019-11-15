@@ -7,7 +7,7 @@
   "scripts": {
     "build": "yarn build:static && yarn build:ram",
     "build:prefix": "yarn build:static && yarn build:ram --prefix-paths",
-    "build:ram": "node --max-old-space-size=4096 ./node_modules/.bin/gatsby build",
+    "build:ram": "node --max-old-space-size=8192 ./node_modules/.bin/gatsby build",
     "build:static": "node ./copyAssets.js",
     "clean": "gatsby clean",
     "develop": "yarn build:static && gatsby develop",

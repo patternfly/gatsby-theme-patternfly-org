@@ -30,9 +30,9 @@ workflows:
         - build_react
         - build_next
         - build_org
-        filters:
-          branches:
-            only: master
+        # filters:
+        #   branches:
+        #     only: master
 jobs:
   install:
     docker:
@@ -110,7 +110,7 @@ jobs:
     - *attach_workspace
     - run:
         name: Upload docs
-        command: .circleci/upload-docs.sh
+        command: .circleci/upload-preview.sh
   deploy:
     docker:
     - image: circleci/node:12
@@ -120,5 +120,8 @@ jobs:
         name: Avoid Unknown Host for github.com
         command: mkdir ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
     - run:
+        name: Upload to staging
+        command: .circleci/upload-staging.sh
+    - run:
         name: Deploy to NPM
-        command: cd gatsby-theme-patternfly-org && npx semantic-release
+        command: semantic-release
