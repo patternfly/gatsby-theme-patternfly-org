@@ -255,7 +255,7 @@ module.exports = {
         // do not build favicon from icon image
         include_favicon: false
       },
-    }
+    },
     // We used to use service workers pre-refactor in gatsby-plugin-offline.
     // We don't need service workers except for a high Lighthouse score. Kill them.
     'gatsby-plugin-remove-serviceworker',
