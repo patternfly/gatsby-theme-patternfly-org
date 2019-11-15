@@ -30,9 +30,9 @@ workflows:
         - build_react
         - build_next
         - build_org
-        # filters:
-        #   branches:
-        #     only: master
+        filters:
+          branches:
+            only: master
 jobs:
   install:
     docker:
