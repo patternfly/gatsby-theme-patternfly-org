@@ -63,15 +63,14 @@ jobs:
     - save_cache:
         paths: *js_deps_paths
         key: *js_deps_cache_key
-    - persist_to_workspace:
-        root: ~/project
-        paths:
-          - "*"
   build_next:
     docker:
     - image: circleci/node:12
     steps:
     - *attach_workspace
+    - restore_cache:
+        keys:
+        - *js_deps_cache_key
     - run:
         name: Build patternfly-next docs
         command: yarn build:next
@@ -83,7 +82,9 @@ jobs:
     docker:
     - image: circleci/node:12
     steps:
-    - *attach_workspace
+    - restore_cache:
+        keys:
+        - *js_deps_cache_key
     - run:
         name: Build patternfly-react docs
         command: yarn build:react
