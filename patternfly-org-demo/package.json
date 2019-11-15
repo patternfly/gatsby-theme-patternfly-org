@@ -41,8 +41,5 @@
     "gatsby-transformer-json": "^2.2.15",
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
-  },
-  "devDependencies": {
-    "fs-extra": "^8.1.0"
   }
 }
