@@ -102,6 +102,9 @@ jobs:
       image: circleci/classic:latest
     steps:
     - *attach_workspace
+    - restore_cache:
+        keys:
+        - *js_deps_cache_key
     - run:
         name: Install node@12 (need right version for `yarn`)
         command: |
