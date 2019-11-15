@@ -3,9 +3,19 @@ version: 2
 # Adapted from https://github.com/circleci/circleci-docs/blob/master/.circleci/config.yml
 # I'd love to find docs on this syntax.
 references:
+  js_deps_paths: &js_deps_paths
+  - node_modules/
+  - gatsby-theme-patternfly-org/node_modules/
+  - patternfly-org-demo/node_modules/
+  - patternfly-org-demo/patternfly-next/node_modules/
+  - patternfly-org-demo/patternfly-react/packages/patternfly-4/react-docs/node_modules/
+  # Excluded: react-docs/plugins
+  js_deps_cache_key: &js_deps_cache_key
+    js-deps-v{{.Environment.CACHE_VERSION}}-{{checksum "yarn.lock"}}
   attach_workspace: &attach_workspace
     attach_workspace:
       at: ~/project
+
 workflows:
   version: 2
   install_build_deploy:
@@ -44,18 +54,27 @@ jobs:
         command: |
           git submodule init
           git submodule update --remote
-    - run:
-        name: Install
-        command: yarn install
     - persist_to_workspace:
         root: ~/project
-        paths:
-          - "*"
+        paths: 
+        - "*"
+    - restore_cache:
+        keys:
+        - *js_deps_cache_key
+    - run:
+        name: Conditional install
+        command: if [ ! -d node_modules ]; then yarn install --frozen-lockfile; fi
+    - save_cache:
+        paths: *js_deps_paths
+        key: *js_deps_cache_key
   build_next:
     docker:
     - image: circleci/node:12
     steps:
     - *attach_workspace
+    - restore_cache:
+        keys:
+        - *js_deps_cache_key
     - run:
         name: Build patternfly-next docs
         command: yarn build:next
@@ -68,6 +87,9 @@ jobs:
     - image: circleci/node:12
     steps:
     - *attach_workspace
+    - restore_cache:
+        keys:
+        - *js_deps_cache_key
     - run:
         name: Build patternfly-react docs
         command: yarn build:react
@@ -80,6 +102,9 @@ jobs:
       image: circleci/classic:latest
     steps:
     - *attach_workspace
+    - restore_cache:
+        keys:
+        - *js_deps_cache_key
     - run:
         name: Install node@12 (need right version for `yarn`)
         command: |
@@ -115,7 +140,9 @@ jobs:
     docker:
     - image: circleci/node:12
     steps:
-    - *attach_workspace
+    - restore_cache:
+        keys:
+        - *js_deps_cache_key
     - run:
         name: Install AWS CLI
         command: |
