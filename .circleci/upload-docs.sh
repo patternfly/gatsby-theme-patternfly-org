@@ -25,7 +25,7 @@ npx surge --project patternfly-org-demo/patternfly-next/public/ --domain ${DEPLO
 npx surge --project patternfly-org-demo/patternfly-react/packages/patternfly-4/react-docs/public/ --domain ${DEPLOY_DOMAIN_REACT}
 npx surge --project patternfly-org-demo//public/ --domain ${DEPLOY_DOMAIN_ORG}
 
-if [ -n "${PR_NUM}" ] # && [ -z "${ALREADY_DEPLOYED}" ] # Leave a Github comment
+if [ -n "${PR_NUM}" ] && [ -z "${ALREADY_DEPLOYED}" ] # Leave a Github comment
 then
   # Use Issues api instead of PR api because
   # PR api requires comments be made on specific files of specific commits
