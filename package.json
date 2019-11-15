@@ -18,7 +18,8 @@
     "build:org:prefix": "yarn workspace patternfly-org-demo build:prefix",
     "clean:org": "yarn workspace patternfly-org-demo clean",
     "serve:org": "yarn workspace patternfly-org-demo serve",
-    "serve:org:prefix": "yarn workspace patternfly-org-demo serve:prefix"
+    "serve:org:prefix": "yarn workspace patternfly-org-demo serve:prefix",
+    "semantic-release": "yarn workspace gatsby-theme-patternfly-org semantic-release"
   },
   "workspaces": {
     "packages": [

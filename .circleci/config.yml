@@ -130,4 +130,4 @@ jobs:
         command: mkdir ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
     - run:
         name: Deploy to NPM
-        command: npx semantic-release
+        command: yarn semantic-release
