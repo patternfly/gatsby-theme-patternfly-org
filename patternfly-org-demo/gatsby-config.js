@@ -251,7 +251,7 @@ module.exports = {
         // Opens the web app to look and feel like a standalone native app
         display: 'standalone',
         // icon used for splash screen, on home screen
-        icon: 'images/patternfly-orb.svg',
+        icon: 'src/images/patternfly-orb.svg',
         // do not build favicon from icon image
         include_favicon: false
       },
