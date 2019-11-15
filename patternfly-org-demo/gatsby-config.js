@@ -242,6 +242,8 @@ module.exports = {
         name: 'PatternFly 4',
         // short_name is used on the user's home screen, launcher, or other places where space may be limited
         short_name: 'PatternFly 4',
+        // The start_url tells the browser where your application should start when it is launched
+        start_url: '/v4',
         // The background_color property is used on the splash screen when the application is first launched
         background_color: '#151515',
         // The theme_color sets the color of the tool bar, and may be reflected in the app's preview in task switchers.
@@ -250,8 +252,8 @@ module.exports = {
         display: 'standalone',
         // icon used for splash screen, on home screen
         icon: 'images/patternfly-orb.svg',
-        // 
-        favicon: false
+        // do not build favicon from icon image
+        include_favicon: false
       },
     }
     // We used to use service workers pre-refactor in gatsby-plugin-offline.
