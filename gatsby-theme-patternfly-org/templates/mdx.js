@@ -16,6 +16,7 @@ import { commonComponents } from '../components/commonComponents';
 import { getId } from '../helpers/getId';
 import { slugger } from '../helpers/slugger';
 import { capitalize } from '../helpers/capitalize';
+import versions from '../versions.json';
 import './mdx.css';
 
 const getExperimentalWarning = (state, componentName) => {
@@ -47,7 +48,7 @@ const getSourceTitle = source => {
 }
 
 export default ({ data, location, pageContext }) => {
-  const { cssPrefix, hideTOC, experimentalStage, optIn, hideDarkMode, showTitle } = data.doc.frontmatter;
+  const { cssPrefix, hideTOC, experimentalStage, optIn, hideDarkMode, showTitle, releaseNoteTOC } = data.doc.frontmatter;
   const { componentName, navSection } = data.doc.fields;
   const { title, source, tableOfContents, htmlExamples, propComponents = [''], showBanner } = pageContext;
   const props = data.props && data.props.nodes && propComponents
@@ -142,6 +143,14 @@ export default ({ data, location, pageContext }) => {
           )}
         </React.Fragment>
       )}
+      {releaseNoteTOC && (
+        <React.Fragment>
+          <div>
+            {JSON.stringify(versions, null, 2)}
+            Evan implement me using versions.json
+          </div>
+        </React.Fragment>
+      )}
     </React.Fragment>
   );
 
@@ -230,6 +239,7 @@ export const pageQuery = graphql`
         experimentalStage
         hideDarkMode
         showTitle
+        releaseNoteTOC
       }
       fields {
         navSection
