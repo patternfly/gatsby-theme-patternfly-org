@@ -45,11 +45,9 @@ const TrainingLayout = ({ katacodaId, location }) => {
   // TODO: use location
   const Breadcrumbs = (
     <Breadcrumb>
-      <BreadcrumbItem to="#">Section Home</BreadcrumbItem>
-      <BreadcrumbItem to="#">Section Title</BreadcrumbItem>
-      <BreadcrumbItem to="#">Section Title</BreadcrumbItem>
+      <BreadcrumbItem to="#">{location}</BreadcrumbItem>
       <BreadcrumbItem to="#" isActive>
-        Section Landing
+        {katacodaId}
       </BreadcrumbItem>
     </Breadcrumb>
   );
@@ -76,7 +74,7 @@ const TrainingLayout = ({ katacodaId, location }) => {
       </Helmet>
       <Page header={Header}>
         <div id="katacoda-scenario-1"
-          data-katacoda-id={katacodaId}
+          data-katacoda-id={'patternfly/courses/' + katacodaId}
           data-katacoda-color="004d7f"
           style={{ height: '600px', paddingTop: '20px'}} />
       </Page>

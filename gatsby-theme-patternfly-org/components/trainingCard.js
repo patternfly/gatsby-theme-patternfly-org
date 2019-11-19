@@ -49,7 +49,7 @@ class TrainingCard extends React.Component {
         <CardFooter>
           <Link
             to="#"
-            state={{ katacodaId: 'html-css/module-1' }} // For keeping context on shared pages
+            state={{ katacodaId: this.props.katacodaId }} // For keeping context on shared pages
           >
             <Button variant="link">
               Start
