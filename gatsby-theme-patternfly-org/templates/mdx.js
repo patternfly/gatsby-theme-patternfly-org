@@ -198,7 +198,7 @@ export default ({ data, location, pageContext }) => {
   );
 
   return (
-    location.state.katacodaId
+    location.state && location.state.katacodaId
       ? <TrainingLayout location={location} katacodaId={location.state.katacodaId} />
       : (
       <SideNavLayout
