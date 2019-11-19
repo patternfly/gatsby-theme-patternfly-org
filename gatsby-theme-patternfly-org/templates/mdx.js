@@ -4,6 +4,12 @@ import { MDXProvider } from '@mdx-js/react';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import {
   Alert,
+  Badge,
+  Card,
+  CardHeader,
+  CardBody,
+  Grid,
+  GridItem,
   PageSection,
   Title
 } from '@patternfly/react-core';
@@ -145,10 +151,42 @@ export default ({ data, location, pageContext }) => {
       )}
       {releaseNoteTOC && (
         <React.Fragment>
-          <div>
-            {JSON.stringify(versions, null, 2)}
-            Evan implement me using versions.json
-          </div>
+          <Grid gutter="sm" className="ws-release-notes-toc">
+            {versions.Releases
+              .filter(version => (
+                tableOfContents.some(header => header.includes(version.name))))
+              .slice(0, 6)                         // limit to newest releases
+              .map(version => {
+                const [year, month, day] = version.date.split('-');
+                const releaseDate = new Date(`${month}-${day}-${year}`)
+                  .toLocaleDateString('us-EN', {
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric'
+                  });
+                const releaseTitle = tableOfContents.find(heading => heading.includes(version.name));
+                return releaseTitle && (
+                  <GridItem sm={6} md={4} key={version.name}>
+                    <Card>
+                      <CardHeader>
+                        {releaseTitle && (
+                          <a key={version.name} href={`#${slugger(releaseTitle)}`}>
+                            Release {version.name}
+                          </a>
+                        )}
+                        {version.latest && (
+                          <Badge>Latest</Badge>
+                        )}
+                      </CardHeader>
+                      <CardBody>
+                        Released on {releaseDate}. 
+                      </CardBody>
+                    </Card>
+                  </GridItem>
+                );
+              })
+            }
+          </Grid>
         </React.Fragment>
       )}
     </React.Fragment>

@@ -24,6 +24,39 @@ p ~ .ws-toc {
   margin-top: var(--pf-global--spacer--lg);
 }
 
+.ws-release-notes-toc {
+  margin-bottom: var(--pf-global--spacer--lg);
+}
+
+.ws-release-notes-toc .pf-c-card {
+  height: 100%;
+}
+
+.ws-release-notes-toc .pf-c-card__header {
+  color: #0066CC;
+  font-family: RedHatDisplay;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 32px;
+  padding-bottom: 4px;
+}
+
+.ws-release-notes-toc .pf-c-card__header a {
+  margin-right: 8px;
+}
+
+.ws-release-notes-toc .pf-c-card__header .pf-c-badge {
+  vertical-align: middle;
+}
+
+.ws-release-notes-toc .pf-c-card__body {
+  color: #72767B;
+  font-family: RedHatText;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
 .ws-page-title {
   margin-top: var(--pf-global--spacer--sm);
   margin-bottom: var(--pf-global--spacer--lg);
