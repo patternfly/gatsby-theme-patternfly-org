@@ -3,14 +3,14 @@ import { Helmet } from 'react-helmet';
 import './fullscreen.css';
 
 const FullscreenHTMLTemplate = ({ pageContext }) => (
-  <div
-    class="ws-fullscreen-example"
-    dangerouslySetInnerHTML={{__html: pageContext.code || 'No fullscreen example.'}}
-  >
+  <main>
     <Helmet>
-      <title>{`Fullscreen HTML ${pageContext.title} example`}</title>
+      <title>{pageContext.title}</title>
     </Helmet>
-  </div>
+    <div
+      className="ws-fullscreen-example"
+      dangerouslySetInnerHTML={{__html: pageContext.code || 'No fullscreen example.'}} />
+  </main>
 );
 
 export default FullscreenHTMLTemplate;

@@ -240,7 +240,7 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
                   // To exclude fullscreen pages from sitemap
                   isFullscreen: true,
                   // For page title
-                  title: key,
+                  title: `${source === 'core' ? 'HTML' : 'React'} - ${title} ${key.replace(/-/g, ' ')}`,
                   // The HTML or JSX to render
                   code: example
                 }
@@ -297,3 +297,19 @@ exports.onCreateWebpackConfig = ({ actions, stage }) => {
     ]
   });
 };
+
+exports.onPostBootstrap = ({ graphql }) => graphql(`
+  {
+    allSitePage(filter: {context: {isFullscreen: {eq: true}}}) {
+      nodes {
+        path
+      }
+    }
+  }
+  `).then(result => {
+    if (result.errors) {
+      return Promise.reject(result.errors);
+    }
+
+    console.log('write a file', result.data);
+  });

@@ -6,15 +6,17 @@ import { transformCode } from '../helpers/transformCode';
 import './fullscreen.css';
 
 const FullscreenMDXTemplate = ({ pageContext }) => (
-  <LiveProvider
-    scope={useMDXScope()}
-    code={pageContext.code}
-    transformCode={code => transformCode(code, 'jsx')}>
+  <main>
     <Helmet>
-      <title>{`Fullscreen React ${pageContext.title} example`}</title>
+      <title>{pageContext.title}</title>
     </Helmet>
-    <LivePreview />
-  </LiveProvider>
+    <LiveProvider
+      scope={useMDXScope()}
+      code={pageContext.code}
+      transformCode={code => transformCode(code, 'jsx')}>
+      <LivePreview />
+    </LiveProvider>
+  </main>
 );
 
 export default FullscreenMDXTemplate;
