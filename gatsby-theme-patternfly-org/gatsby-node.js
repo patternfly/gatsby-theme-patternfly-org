@@ -239,6 +239,8 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
                 context: {
                   // To exclude fullscreen pages from sitemap
                   isFullscreen: true,
+                  // For page title
+                  title: key,
                   // The HTML or JSX to render
                   code: example
                 }

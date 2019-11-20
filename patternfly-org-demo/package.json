@@ -12,7 +12,9 @@
     "clean": "gatsby clean",
     "develop": "yarn build:static && gatsby develop",
     "serve": "gatsby serve",
-    "serve:prefix": "gatsby serve --prefix-paths"
+    "serve:prefix": "gatsby serve --prefix-paths",
+    "test:a11y": "generate-fullscreen-sitemap http://localhost:8000 && patternfly-a11y -f ./sitemap.json",
+    "test:a11y:ci": "start-server-and-test develop \"http://localhost:8000\" test:a11y"
   },
   "dependencies": {
     "@patternfly/patternfly": "*",
@@ -37,12 +39,14 @@
     "gatsby-plugin-sitemap": "^2.2.19",
     "gatsby-remark-copy-linked-files": "^2.1.28",
     "gatsby-source-filesystem": "^2.1.22",
-    "gatsby-theme-patternfly-org": "^0.0.20",
+    "gatsby-theme-patternfly-org": "*",
     "gatsby-transformer-json": "^2.2.15",
     "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "react-dom": "^16.8.0",
+    "start-server-and-test": "^1.5.0"
   },
   "devDependencies": {
+    "@patternfly/patternfly-a11y": "^0.0.6",
     "fs-extra": "^8.1.0"
   }
 }

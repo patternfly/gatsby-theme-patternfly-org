@@ -3,3 +3,5 @@ public
 node_modules
 
 patternfly-org-demo/static
+patternfly-org-demo/coverage
+patternfly-org-demo/sitemap.json
