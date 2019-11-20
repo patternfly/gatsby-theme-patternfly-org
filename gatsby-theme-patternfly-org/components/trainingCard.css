@@ -7,10 +7,10 @@
   position: relative;
 }
 .pf-c-card__head:first-child {
-  padding-top: 24px;
+  padding-top: 24px !important;
 }
 .pf-c-card__head:not(:last-child) {
-  padding-bottom: 16px;
+  padding-bottom: 24px !important;
 }
 .pf-c-card__head .pf-c-card.small-card-icon {
   position: absolute;
@@ -26,9 +26,7 @@
 .pf-c-card__head div.level > svg {
   margin-right: 8px;
 }
-.pf-c-card__head:not(:last-child) {
-  padding-bottom: 16px;
-}
+
 .pf-c-card__body {
   font-size: 14px;
 }
