@@ -9,6 +9,7 @@ import { graphql, useStaticQuery } from 'gatsby';
 import { Helmet } from 'react-helmet';
 
 import { Page, PageHeader, Brand, Breadcrumb, BreadcrumbItem } from '@patternfly/react-core';
+import { Location } from '@reach/router';
 import logo from '../images/logo.svg';
 
 const TrainingLayout = ({ katacodaId, location }) => {
@@ -44,12 +45,16 @@ const TrainingLayout = ({ katacodaId, location }) => {
 
   // TODO: use location
   const Breadcrumbs = (
-    <Breadcrumb>
-      <BreadcrumbItem to="#">{location}</BreadcrumbItem>
-      <BreadcrumbItem to="#" isActive>
-        {katacodaId}
-      </BreadcrumbItem>
-    </Breadcrumb>
+    <Location>
+      {({ location }) => (
+        <Breadcrumb>
+          <BreadcrumbItem to="#">{location.pathname}</BreadcrumbItem>
+          <BreadcrumbItem to="#" isActive>
+            {katacodaId}
+          </BreadcrumbItem>
+        </Breadcrumb>
+      )}
+    </Location>
   );
   
   const Header = (
