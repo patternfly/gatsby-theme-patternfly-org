@@ -55,7 +55,6 @@ const TrainingLayout = ({ trainingType, katacodaId, location }) => {
   
   const Header = (
     <PageHeader
-      className="ws-page-header"
       logo={headerTitle}
       logoProps={{
         href: url || '/'
@@ -73,11 +72,11 @@ const TrainingLayout = ({ trainingType, katacodaId, location }) => {
         <title>{title}</title>
         <script src="//katacoda.com/embed.js"></script>
       </Helmet>
-      <Page header={Header}>
+      <Page header={Header} style={{ height: '100vh' }}>
         <div id="katacoda-scenario-1"
           data-katacoda-id={'patternfly/courses/' + fileName}
           data-katacoda-color="004d7f"
-          style={{ height: '600px', paddingTop: '20px'}} />
+          style={{ height: '100%'}} />
       </Page>
     </div>
   );
