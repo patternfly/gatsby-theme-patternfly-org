@@ -13,7 +13,7 @@
     "develop": "yarn build:static && gatsby develop",
     "serve": "gatsby serve",
     "serve:prefix": "gatsby serve --prefix-paths",
-    "test:a11y": "generate-fullscreen-sitemap http://localhost:8000 && patternfly-a11y -f ./sitemap.json",
+    "test:a11y": "patternfly-a11y -f .cache/sitemap.json",
     "test:a11y:ci": "start-server-and-test develop \"http://localhost:8000\" test:a11y"
   },
   "dependencies": {
@@ -29,6 +29,7 @@
     "@patternfly/react-tokens": "*",
     "@patternfly/react-topology": "*",
     "@patternfly/react-virtualized-extension": "*",
+    "chromedriver": "^78.0.1",
     "eslint-config-react-app": "^5.0.2",
     "gatsby": "2.17.10",
     "gatsby-cli": "2.8.8",
@@ -46,7 +47,7 @@
     "start-server-and-test": "^1.5.0"
   },
   "devDependencies": {
-    "@patternfly/patternfly-a11y": "^0.0.6",
+    "@patternfly/patternfly-a11y": "^0.0.8",
     "fs-extra": "^8.1.0"
   }
 }
