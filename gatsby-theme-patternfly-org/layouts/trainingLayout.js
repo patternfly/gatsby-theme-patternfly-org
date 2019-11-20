@@ -12,7 +12,7 @@ import { Page, PageHeader, Brand, Breadcrumb, BreadcrumbItem } from '@patternfly
 import { Location } from '@reach/router';
 import logo from '../images/logo.svg';
 
-const TrainingLayout = ({ katacodaId, location }) => {
+const TrainingLayout = ({ trainingType, katacodaId, location }) => {
   const data = useStaticQuery(graphql`
   {
     site {
@@ -34,7 +34,7 @@ const TrainingLayout = ({ katacodaId, location }) => {
   const { title } = data.site.siteMetadata;
   const { num, url } = data.prInfo;
   const { context: pageSource } = data.sitePlugin.pluginOptions;
-  
+  const fileName = trainingType + '/' + katacodaId;
 
   let headerTitle = title;
   if (pageSource === 'org') {
@@ -45,16 +45,12 @@ const TrainingLayout = ({ katacodaId, location }) => {
 
   // TODO: use location
   const Breadcrumbs = (
-    <Location>
-      {({ location }) => (
-        <Breadcrumb>
-          <BreadcrumbItem to="#">{location.pathname}</BreadcrumbItem>
-          <BreadcrumbItem to="#" isActive>
-            {katacodaId}
-          </BreadcrumbItem>
-        </Breadcrumb>
-      )}
-    </Location>
+    <Breadcrumb>
+      <BreadcrumbItem to="#">{trainingType}</BreadcrumbItem>
+      <BreadcrumbItem to="#" isActive>
+        {katacodaId}
+      </BreadcrumbItem>
+    </Breadcrumb>
   );
   
   const Header = (
@@ -79,7 +75,7 @@ const TrainingLayout = ({ katacodaId, location }) => {
       </Helmet>
       <Page header={Header}>
         <div id="katacoda-scenario-1"
-          data-katacoda-id={'patternfly/courses/' + katacodaId}
+          data-katacoda-id={'patternfly/courses/' + fileName}
           data-katacoda-color="004d7f"
           style={{ height: '600px', paddingTop: '20px'}} />
       </Page>

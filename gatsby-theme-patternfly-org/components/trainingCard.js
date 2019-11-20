@@ -14,7 +14,7 @@ class TrainingCard extends React.Component {
       <Card isCompact>
         <CardHead>
           <Card className="small-card-icon">
-            {this.props.trainingType === 'htmlcss' || this.props.trainingType === 'reactbasics' ? (
+            {this.props.trainingType === 'htmlcss' || this.props.trainingType === 'react' ? (
               <CubesIcon className="training-basics" />
             ) : (
                 this.props.trainingType === 'reactcomponents' ? (
@@ -52,12 +52,12 @@ class TrainingCard extends React.Component {
           {({ location }) => (
             <Link
               to={location.pathname}
-              state={{ katacodaId: 'abc123' }} // To show embedded tutorial
+              state={{ trainingType: this.props.trainingType, katacodaId: this.props.katacodaId }} // To show embedded tutorial
             >
               <Button variant="link">
                 Start
+                <ArrowRightIcon />
               </Button>
-              <ArrowRightIcon />
             </Link>
           )}
         </Location>
