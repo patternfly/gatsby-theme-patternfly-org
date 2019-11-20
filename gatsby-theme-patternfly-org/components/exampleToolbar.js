@@ -75,7 +75,6 @@ export default class ExampleToolbar extends React.Component {
           <Button
             onClick={this.onCopy}
             variant="plain"
-            title="Copy code"
             aria-label="Copy code"
           >
             <CopyIcon />
@@ -84,7 +83,6 @@ export default class ExampleToolbar extends React.Component {
             <Button
               onClick={onDarkmodeChange}
               variant="plain"
-              title="Toggle Dark Theme"
               aria-label="Toggle Dark Theme"
             >
               <AsleepIcon />
@@ -99,6 +97,7 @@ export default class ExampleToolbar extends React.Component {
               style={{display: "inline-block"}}
             >
               <Button
+                aria-label="Open in CodeSandbox"
                 variant="plain"
                 type="submit"
               >
@@ -114,7 +113,6 @@ export default class ExampleToolbar extends React.Component {
               target="_blank"
               rel="noopener noreferrer"
               variant="plain"
-              title="Open in new window"
               aria-label="Open in new window"
             >
               <ExternalLinkAltIcon />
