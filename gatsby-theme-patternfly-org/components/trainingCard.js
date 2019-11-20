@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, CardHead, CardHeader, CardBody, CardFooter, Button } from "@patternfly/react-core";
 import { ArrowRightIcon, CubesIcon, ClockIcon, RunningIcon, PuzzlePieceIcon, ChartBarIcon } from '@patternfly/react-icons';
 import { Link } from 'gatsby';
+import { Location } from '@reach/router';
 import './trainingCard.css';
 
 class TrainingCard extends React.Component {
@@ -47,15 +48,19 @@ class TrainingCard extends React.Component {
           {this.props.description}
         </CardBody>
         <CardFooter>
-          <Link
-            to="#"
-            state={{ katacodaId: this.props.katacodaId }} // For keeping context on shared pages
-          >
-            <Button variant="link">
-              Start
-            </Button>
-            <ArrowRightIcon />
-          </Link>
+        <Location>
+          {({ location }) => (
+            <Link
+              to={location.pathname}
+              state={{ katacodaId: 'abc123' }} // To show embedded tutorial
+            >
+              <Button variant="link">
+                Start
+              </Button>
+              <ArrowRightIcon />
+            </Link>
+          )}
+        </Location>
         </CardFooter>
       </Card>
     );
