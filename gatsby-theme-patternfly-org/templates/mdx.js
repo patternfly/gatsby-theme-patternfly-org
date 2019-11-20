@@ -158,7 +158,7 @@ export default ({ data, location, pageContext }) => {
               .slice(0, 6)                         // limit to newest releases
               .map(version => {
                 const [year, month, day] = version.date.split('-');
-                const releaseDate = new Date(`${month}-${day}-${year}`)
+                const releaseDate = new Date(+year, +month - 1, +day)
                   .toLocaleDateString('us-EN', {
                     month: 'long',
                     day: 'numeric',
