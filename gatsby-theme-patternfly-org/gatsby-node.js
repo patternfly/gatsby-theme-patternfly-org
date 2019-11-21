@@ -253,7 +253,7 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
           
           fs.writeFileSync(
             '.cache/fullscreenPages.json',
-            JSON.stringify(Object.keys(fullscreenPages), null, 2),
+            JSON.stringify(Object.keys(fullscreenPages).sort(), null, 2),
           );
         }
       });
