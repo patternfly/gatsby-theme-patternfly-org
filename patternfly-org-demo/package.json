@@ -43,12 +43,12 @@
     "gatsby-theme-patternfly-org": "*",
     "gatsby-transformer-json": "^2.2.15",
     "react": "^16.8.0",
-    "react-dom": "^16.8.0",
-    "start-server-and-test": "^1.5.0"
+    "react-dom": "^16.8.0"
   },
   "devDependencies": {
     "@patternfly/patternfly-a11y": "^0.0.9",
     "fs-extra": "^8.1.0",
+    "start-server-and-test": "^1.5.0",
     "shx": "^0.3.2"
   }
 }
