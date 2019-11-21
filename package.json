@@ -19,7 +19,8 @@
     "clean:org": "yarn workspace patternfly-org-demo clean",
     "serve:org": "yarn workspace patternfly-org-demo serve",
     "serve:org:prefix": "yarn workspace patternfly-org-demo serve:prefix",
-    "semantic-release": "yarn workspace gatsby-theme-patternfly-org semantic-release"
+    "semantic-release": "yarn workspace gatsby-theme-patternfly-org semantic-release",
+    "test:org": "yarn workspace patternfly-org-demo test:a11y:ci"
   },
   "workspaces": {
     "packages": [

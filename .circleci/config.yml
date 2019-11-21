@@ -35,6 +35,9 @@ workflows:
         - build_react
         - build_next
         - build_org
+    - test_org_a11y:
+        requires:
+        - build_org
     - deploy:
         requires:
         - build_react
@@ -130,12 +133,20 @@ jobs:
         - patternfly-org-demo/public/
   upload_previews:
     docker:
-    - image: circleci/node:10
+    - image: circleci/node:12
     steps:
     - *attach_workspace
     - run:
         name: Upload docs
         command: .circleci/upload-preview.sh
+  test_org_a11y:
+    docker:
+    - image: circleci/node:12
+    steps:
+    - *attach_workspace
+    - run:
+        name: Test a11y
+        command: yarn test:org
   deploy:
     docker:
     - image: circleci/node:12
