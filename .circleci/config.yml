@@ -151,6 +151,8 @@ jobs:
     - run:
         name: Test a11y
         command: yarn test:org || true
+    - store_artifacts:
+        path: patternfly-org-demo/coverage/
   deploy:
     docker:
     - image: circleci/node:12
