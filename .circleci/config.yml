@@ -131,7 +131,7 @@ jobs:
         root: ~/project
         paths: 
         - patternfly-org-demo/public/
-        - patternfly-org-demo/.cache/fullscreenPages.json
+        - patternfly-org-demo/.cache/
   upload_previews:
     docker:
     - image: circleci/node:12
