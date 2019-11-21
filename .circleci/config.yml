@@ -136,9 +136,6 @@ jobs:
     - image: circleci/node:12
     steps:
     - *attach_workspace
-    - restore_cache:
-        keys:
-        - *js_deps_cache_key
     - run:
         name: Upload docs
         command: .circleci/upload-preview.sh
@@ -147,6 +144,9 @@ jobs:
     - image: circleci/node:12-browsers
     steps:
     - *attach_workspace
+    - restore_cache:
+        keys:
+        - *js_deps_cache_key
     - run:
         name: Test a11y
         command: yarn test:org
