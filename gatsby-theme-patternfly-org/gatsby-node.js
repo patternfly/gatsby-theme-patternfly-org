@@ -306,19 +306,3 @@ exports.onCreateWebpackConfig = ({ actions, stage }) => {
     ]
   });
 };
-
-exports.onPostBootstrap = ({ graphql }) => graphql(`
-  {
-    allSitePage(filter: {context: {isFullscreen: {eq: true}}}) {
-      nodes {
-        path
-      }
-    }
-  }
-  `).then(result => {
-    if (result.errors) {
-      return Promise.reject(result.errors);
-    }
-
-    console.log('write a file', result.data);
-  });
