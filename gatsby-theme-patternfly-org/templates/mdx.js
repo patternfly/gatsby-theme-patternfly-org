@@ -136,11 +136,11 @@ export default ({ data, location, pageContext }) => {
               {getExperimentalWarning(experimentalStage)}
             </Alert>
           )}
-          {data.designDoc &&
+          {data.designDoc && (
             <MDXRenderer>
               {data.designDoc.body}
             </MDXRenderer>
-          }
+          )}
           {releaseNoteTOC && (
             <Grid gutter="sm" className="ws-release-notes-toc">
               {versions.Releases
@@ -179,17 +179,17 @@ export default ({ data, location, pageContext }) => {
               }
             </Grid>
           )}
-          {!hideTOC && tableOfContents.map(heading => (
+          {!releaseNoteTOC && tableOfContents.map(heading => (
             <a key={heading} href={`#${slugger(heading)}`} className="ws-toc">
               {heading}
             </a>
           ))}
-          {props.length > 0 && (
+          {!releaseNoteTOC && props.length > 0 && (
             <a href="#props" className="ws-toc">
               Props
             </a>
           )}
-          {cssPrefix && (
+          {!releaseNoteTOC && cssPrefix && (
             <a href="#css-variables" className="ws-toc">
               CSS Variables
             </a>
