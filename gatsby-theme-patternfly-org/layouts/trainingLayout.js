@@ -65,7 +65,7 @@ const TrainingLayout = ({ trainingType, katacodaId, location }) => {
   );
 
   // Wrap in a div to force scrolling the same content
-  // TODO: SEO
+  // TODO: Extract SEO to component
   return (
     <div>
       <Helmet>

@@ -196,7 +196,6 @@ export default ({ data, location, pageContext }) => {
     </MDXProvider>
   );
 
-  console.log(Boolean(location.state && location.state.katacodaId), location.state)
   return (
     location.state && location.state.trainingType && location.state.katacodaId
       ? <TrainingLayout location={location} trainingType={location.state.trainingType} katacodaId={location.state.katacodaId} />
