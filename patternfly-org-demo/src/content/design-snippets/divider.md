@@ -1,0 +1,4 @@
+---
+reactComponentName: 'divider'
+coreComponentName: 'divider'
+---

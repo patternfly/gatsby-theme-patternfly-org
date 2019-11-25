@@ -1,0 +1,4 @@
+---
+reactComponentName: 'overflowmenu'
+coreComponentName: 'overflowmenu'
+---

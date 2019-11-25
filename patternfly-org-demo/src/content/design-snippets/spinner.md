@@ -1,0 +1,4 @@
+---
+reactComponentName: 'spinner'
+coreComponentName: 'spinner'
+---

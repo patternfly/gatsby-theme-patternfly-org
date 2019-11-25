@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import './fullscreen.css';
 
 const FullscreenHTMLTemplate = ({ pageContext }) => (
-  <main>
+  <main className="ws-site-root">
     <Helmet>
       <title>{pageContext.title}</title>
     </Helmet>

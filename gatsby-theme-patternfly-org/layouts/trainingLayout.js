@@ -67,7 +67,7 @@ const TrainingLayout = ({ trainingType, katacodaId, location }) => {
   // Wrap in a div to force scrolling the same content
   // TODO: Extract SEO to component
   return (
-    <div>
+    <div className="ws-site-root">
       <Helmet>
         <title>{title}</title>
         <script src="//katacoda.com/embed.js"></script>
