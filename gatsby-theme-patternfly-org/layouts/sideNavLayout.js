@@ -178,10 +178,9 @@ const SideNavLayout = ({ children, location, context, hideSideNav = false, showB
     />
   );
 
-  // Wrap in a div to force scrolling the same content
-  // TODO: SEO
+  // Wrap in a div to force scrolling the same content for Safari
   return (
-    <div className="ws-site-root">
+    <div>
       <Helmet>
         <title>{title}</title>
       </Helmet>
