@@ -35,6 +35,9 @@ workflows:
         - build_react
         - build_next
         - build_org
+    - test_org_a11y:
+        requires:
+        - build_org
     - deploy:
         requires:
         - build_react
@@ -53,7 +56,7 @@ jobs:
         name: Pull Submodules
         command: |
           git submodule init
-          git submodule update --remote
+          git submodule update
     - persist_to_workspace:
         root: ~/project
         paths: 
@@ -128,14 +131,28 @@ jobs:
         root: ~/project
         paths: 
         - patternfly-org-demo/public/
+        - patternfly-org-demo/.cache/
   upload_previews:
     docker:
-    - image: circleci/node:10
+    - image: circleci/node:12
     steps:
     - *attach_workspace
     - run:
         name: Upload docs
         command: .circleci/upload-preview.sh
+  test_org_a11y:
+    docker:
+    - image: circleci/node:12-browsers
+    steps:
+    - *attach_workspace
+    - restore_cache:
+        keys:
+        - *js_deps_cache_key
+    - run:
+        name: Test a11y
+        command: yarn test:org || true
+    - store_artifacts:
+        path: patternfly-org-demo/coverage/
   deploy:
     docker:
     - image: circleci/node:12
