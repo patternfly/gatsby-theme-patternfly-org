@@ -1,0 +1,4 @@
+---
+reactComponentName: 'datatoolbar'
+coreComponentName: 'datatoolbar'
+---

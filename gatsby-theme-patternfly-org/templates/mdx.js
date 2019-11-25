@@ -55,6 +55,14 @@ const getSourceTitle = source => {
 }
 
 export default ({ data, location, pageContext }) => {
+  if (location.state && location.state.trainingType && location.state.katacodaId) {
+    return (
+      <TrainingLayout
+        location={location}
+        trainingType={location.state.trainingType}
+        katacodaId={location.state.katacodaId} />
+    );
+  }
   const { cssPrefix, hideTOC, experimentalStage, optIn, hideDarkMode, showTitle, releaseNoteTOC } = data.doc.frontmatter;
   const { componentName, navSection } = data.doc.fields;
   const { title, source, tableOfContents, htmlExamples, propComponents = [''], showBanner } = pageContext;
@@ -73,7 +81,7 @@ export default ({ data, location, pageContext }) => {
     : [];
   
   let parityComponent = undefined;
-  if (data.designDoc) {
+  if (data.designDoc && ['components', 'experimental', 'utilities'].includes(navSection)) {
     const { reactComponentName, coreComponentName } = data.designDoc.frontmatter;
     if (source === 'core' && reactComponentName) {
       parityComponent = `${navSection}/${reactComponentName}`;
@@ -128,66 +136,64 @@ export default ({ data, location, pageContext }) => {
               {getExperimentalWarning(experimentalStage)}
             </Alert>
           )}
-          {data.designDoc &&
+          {data.designDoc && (
             <MDXRenderer>
               {data.designDoc.body}
             </MDXRenderer>
-          }
-          {tableOfContents.map(heading => (
+          )}
+          {releaseNoteTOC && (
+            <Grid gutter="sm" className="ws-release-notes-toc">
+              {versions.Releases
+                .filter(version => (
+                  tableOfContents.some(header => header.includes(version.name))))
+                .slice(0, 6)                         // limit to newest releases
+                .map(version => {
+                  const [year, month, day] = version.date.split('-');
+                  const releaseDate = new Date(+year, +month - 1, +day)
+                    .toLocaleDateString('us-EN', {
+                      month: 'long',
+                      day: 'numeric',
+                      year: 'numeric'
+                    });
+                  const releaseTitle = tableOfContents.find(heading => heading.includes(version.name));
+                  return releaseTitle && (
+                    <GridItem sm={6} md={4} key={version.name}>
+                      <Card>
+                        <CardHeader>
+                          {releaseTitle && (
+                            <a key={version.name} href={`#${slugger(releaseTitle)}`}>
+                              Release {version.name}
+                            </a>
+                          )}
+                          {version.latest && (
+                            <Badge>Latest</Badge>
+                          )}
+                        </CardHeader>
+                        <CardBody>
+                          Released on {releaseDate}. 
+                        </CardBody>
+                      </Card>
+                    </GridItem>
+                  );
+                })
+              }
+            </Grid>
+          )}
+          {!releaseNoteTOC && tableOfContents.map(heading => (
             <a key={heading} href={`#${slugger(heading)}`} className="ws-toc">
               {heading}
             </a>
           ))}
-          {props.length > 0 && (
+          {!releaseNoteTOC && props.length > 0 && (
             <a href="#props" className="ws-toc">
               Props
             </a>
           )}
-          {cssPrefix && (
+          {!releaseNoteTOC && cssPrefix && (
             <a href="#css-variables" className="ws-toc">
               CSS Variables
             </a>
           )}
-        </React.Fragment>
-      )}
-      {releaseNoteTOC && (
-        <React.Fragment>
-          <Grid gutter="sm" className="ws-release-notes-toc">
-            {versions.Releases
-              .filter(version => (
-                tableOfContents.some(header => header.includes(version.name))))
-              .slice(0, 6)                         // limit to newest releases
-              .map(version => {
-                const [year, month, day] = version.date.split('-');
-                const releaseDate = new Date(+year, +month - 1, +day)
-                  .toLocaleDateString('us-EN', {
-                    month: 'long',
-                    day: 'numeric',
-                    year: 'numeric'
-                  });
-                const releaseTitle = tableOfContents.find(heading => heading.includes(version.name));
-                return releaseTitle && (
-                  <GridItem sm={6} md={4} key={version.name}>
-                    <Card>
-                      <CardHeader>
-                        {releaseTitle && (
-                          <a key={version.name} href={`#${slugger(releaseTitle)}`}>
-                            Release {version.name}
-                          </a>
-                        )}
-                        {version.latest && (
-                          <Badge>Latest</Badge>
-                        )}
-                      </CardHeader>
-                      <CardBody>
-                        Released on {releaseDate}. 
-                      </CardBody>
-                    </Card>
-                  </GridItem>
-                );
-              })
-            }
-          </Grid>
         </React.Fragment>
       )}
     </React.Fragment>
@@ -244,30 +250,26 @@ export default ({ data, location, pageContext }) => {
   );
 
   return (
-    location.state && location.state.trainingType && location.state.katacodaId
-      ? <TrainingLayout location={location} trainingType={location.state.trainingType} katacodaId={location.state.katacodaId} />
-      : (
-        <SideNavLayout
-          location={location}
-          context={source}
-          parityComponent={parityComponent}
-          showBanner={showBanner}
-        >
-          <PageSection className="ws-section">
+      <SideNavLayout
+        location={location}
+        context={source}
+        parityComponent={parityComponent}
+        showBanner={showBanner}
+      >
+        <PageSection className="ws-section">
 
-            <TableOfContents />
+          <TableOfContents />
 
-            {/* Wrap in div for :last-child CSS selectors */}
-            <div>
-              <MDXContent />
-            </div>
+          {/* Wrap in div for :last-child CSS selectors */}
+          <div>
+            <MDXContent />
+          </div>
 
-            {props.length > 0 && <PropsSection />}
+          {props.length > 0 && <PropsSection />}
 
-            {cssPrefix && <CSSVariablesSection />}
-          </PageSection>
-        </SideNavLayout>
-      )
+          {cssPrefix && <CSSVariablesSection />}
+        </PageSection>
+      </SideNavLayout>
   );
 }
 

@@ -1,5 +1,6 @@
 /* Please leave this file alone. */
-#___gatsby {
+#___gatsby,
+.ws-site-root {
   height: 100%;
 }
 

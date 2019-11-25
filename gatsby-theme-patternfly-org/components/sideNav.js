@@ -26,6 +26,10 @@ const SideNav = ({ location, context, allPages, sideNavContexts, pageSource, par
   if (context === 'shared') {
     context = pageSource;
   }
+  // Default context
+  if (context === 'org') {
+    context = 'react';
+  }
   const allNavItems = allPages.reduce((accum, node) => {
     const navSection = node.context.navSection || 'page';
     accum[navSection] = accum[navSection] || [];
@@ -68,9 +72,9 @@ const SideNav = ({ location, context, allPages, sideNavContexts, pageSource, par
   return (
     <Nav aria-label="Side Nav">
       {/* debug */}
-      {/* <p>{context}</p> */}
-      {/* <p>{pageSource}</p> */}
-      {/* <p>{parityComponent}</p> */}
+      {/* <p>context: {context}</p>
+      <p>pageSource: {pageSource}</p>
+      <p>parityComponent: {parityComponent}</p> */}
       {Object.keys(contextSwitcher).includes(context) && (
         <div className="ws-org-context-switcher">
           <label className="">FRAMEWORK</label>
