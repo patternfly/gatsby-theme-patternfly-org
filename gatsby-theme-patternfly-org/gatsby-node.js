@@ -130,6 +130,8 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
   }
 };
 
+const fullscreenPages = {};
+
 exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
   {
     docs: allMdx(filter: { fields: { source: { ne: "design-snippets" } } }) {
@@ -231,19 +233,28 @@ exports.createPages = ({ actions, graphql }, pluginOptions) => graphql(`
         // Create per-example fullscreen pages for documentation pages
         if (['core', 'react'].includes(source)) {
           Object.entries(examples).forEach(([key, example]) => {
-              actions.createPage({
-                path: `${slug}/${key}`,
-                component: source === 'core'
-                  ? path.resolve(__dirname, './templates/fullscreenHtml.js')
-                  : path.resolve(__dirname, './templates/fullscreenMdx.js'),
-                context: {
-                  // To exclude fullscreen pages from sitemap
-                  isFullscreen: true,
-                  // The HTML or JSX to render
-                  code: example
-                }
-              });
+            const pagePath = `${slug}/${key}`;
+            fullscreenPages[pagePath] = true;
+            actions.createPage({
+              path: pagePath,
+              component: source === 'core'
+                ? path.resolve(__dirname, './templates/fullscreenHtml.js')
+                : path.resolve(__dirname, './templates/fullscreenMdx.js'),
+              context: {
+                // To exclude fullscreen pages from sitemap
+                isFullscreen: true,
+                // For page title
+                title: `${source === 'core' ? 'HTML' : 'React'} - ${title} ${key.replace(/-/g, ' ')}`,
+                // The HTML or JSX to render
+                code: example
+              }
+            });
           });
+          
+          fs.writeFileSync(
+            '.cache/fullscreenPages.json',
+            JSON.stringify(Object.keys(fullscreenPages).sort(), null, 2),
+          );
         }
       });
   });
