@@ -81,7 +81,7 @@ export default ({ data, location, pageContext }) => {
     : [];
   
   let parityComponent = undefined;
-  if (data.designDoc) {
+  if (data.designDoc && ['components', 'experimental', 'utilities'].includes(navSection)) {
     const { reactComponentName, coreComponentName } = data.designDoc.frontmatter;
     if (source === 'core' && reactComponentName) {
       parityComponent = `${navSection}/${reactComponentName}`;
