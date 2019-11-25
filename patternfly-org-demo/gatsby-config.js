@@ -15,7 +15,7 @@ module.exports = {
       resolve: `gatsby-theme-patternfly-org`,
       options: {
         context: 'org',
-        hiddenPages: ['withOuia'], // By title
+        hiddenPages: ['withOuia', 'Training'], // By title
         showBanner: true, // PF3 banner
         sideNav: {
           core: [
