@@ -4,6 +4,12 @@ import { MDXProvider } from '@mdx-js/react';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 import {
   Alert,
+  Badge,
+  Card,
+  CardHeader,
+  CardBody,
+  Grid,
+  GridItem,
   PageSection,
   Title
 } from '@patternfly/react-core';
@@ -17,6 +23,7 @@ import { commonComponents } from '../components/commonComponents';
 import { getId } from '../helpers/getId';
 import { slugger } from '../helpers/slugger';
 import { capitalize } from '../helpers/capitalize';
+import versions from '../versions.json';
 import './mdx.css';
 
 const getExperimentalWarning = (state, componentName) => {
@@ -48,7 +55,7 @@ const getSourceTitle = source => {
 }
 
 export default ({ data, location, pageContext }) => {
-  const { cssPrefix, hideTOC, experimentalStage, optIn, hideDarkMode, showTitle } = data.doc.frontmatter;
+  const { cssPrefix, hideTOC, experimentalStage, optIn, hideDarkMode, showTitle, releaseNoteTOC } = data.doc.frontmatter;
   const { componentName, navSection } = data.doc.fields;
   const { title, source, tableOfContents, htmlExamples, propComponents = [''], showBanner } = pageContext;
   const props = data.props && data.props.nodes && propComponents
@@ -143,6 +150,46 @@ export default ({ data, location, pageContext }) => {
           )}
         </React.Fragment>
       )}
+      {releaseNoteTOC && (
+        <React.Fragment>
+          <Grid gutter="sm" className="ws-release-notes-toc">
+            {versions.Releases
+              .filter(version => (
+                tableOfContents.some(header => header.includes(version.name))))
+              .slice(0, 6)                         // limit to newest releases
+              .map(version => {
+                const [year, month, day] = version.date.split('-');
+                const releaseDate = new Date(+year, +month - 1, +day)
+                  .toLocaleDateString('us-EN', {
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric'
+                  });
+                const releaseTitle = tableOfContents.find(heading => heading.includes(version.name));
+                return releaseTitle && (
+                  <GridItem sm={6} md={4} key={version.name}>
+                    <Card>
+                      <CardHeader>
+                        {releaseTitle && (
+                          <a key={version.name} href={`#${slugger(releaseTitle)}`}>
+                            Release {version.name}
+                          </a>
+                        )}
+                        {version.latest && (
+                          <Badge>Latest</Badge>
+                        )}
+                      </CardHeader>
+                      <CardBody>
+                        Released on {releaseDate}. 
+                      </CardBody>
+                    </Card>
+                  </GridItem>
+                );
+              })
+            }
+          </Grid>
+        </React.Fragment>
+      )}
     </React.Fragment>
   );
 
@@ -235,6 +282,7 @@ export const pageQuery = graphql`
         experimentalStage
         hideDarkMode
         showTitle
+        releaseNoteTOC
       }
       fields {
         navSection
