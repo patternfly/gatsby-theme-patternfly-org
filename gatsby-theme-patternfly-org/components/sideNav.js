@@ -28,7 +28,7 @@ const SideNav = ({ location, context, allPages, sideNavContexts, pageSource, par
   }
   // Default context
   if (context === 'org') {
-    context = location.state.context || 'react';
+    context = location.state && location.state.context || 'react';
   }
   const allNavItems = allPages.reduce((accum, node) => {
     const navSection = node.context.navSection || 'page';
