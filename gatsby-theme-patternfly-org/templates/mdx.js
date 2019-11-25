@@ -8,6 +8,7 @@ import {
   Title
 } from '@patternfly/react-core';
 import SideNavLayout from '../layouts/sideNavLayout';
+import TrainingLayout from '../layouts/trainingLayout';
 import AutoLinkHeader from '../components/autoLinkHeader';
 import Example from '../components/example';
 import CSSVariables from '../components/cssVariables';
@@ -196,26 +197,30 @@ export default ({ data, location, pageContext }) => {
   );
 
   return (
-    <SideNavLayout
-      location={location}
-      context={source}
-      parityComponent={parityComponent}
-      showBanner={showBanner}
-    >
-      <PageSection className="ws-section">
+    location.state && location.state.trainingType && location.state.katacodaId
+      ? <TrainingLayout location={location} trainingType={location.state.trainingType} katacodaId={location.state.katacodaId} />
+      : (
+        <SideNavLayout
+          location={location}
+          context={source}
+          parityComponent={parityComponent}
+          showBanner={showBanner}
+        >
+          <PageSection className="ws-section">
 
-        <TableOfContents />
+            <TableOfContents />
 
-        {/* Wrap in div for :last-child CSS selectors */}
-        <div>
-          <MDXContent />
-        </div>
+            {/* Wrap in div for :last-child CSS selectors */}
+            <div>
+              <MDXContent />
+            </div>
 
-        {props.length > 0 && <PropsSection />}
+            {props.length > 0 && <PropsSection />}
 
-        {cssPrefix && <CSSVariablesSection />}
-      </PageSection>
-    </SideNavLayout>
+            {cssPrefix && <CSSVariablesSection />}
+          </PageSection>
+        </SideNavLayout>
+      )
   );
 }
 

@@ -15,7 +15,7 @@ module.exports = {
       resolve: `gatsby-theme-patternfly-org`,
       options: {
         context: 'org',
-        hiddenPages: ['withOuia'], // By title
+        hiddenPages: ['withOuia', 'Training'], // By title
         showBanner: true, // PF3 banner
         sideNav: {
           core: [
@@ -102,6 +102,14 @@ module.exports = {
         path: `${path.resolve(__dirname)}/patternfly-next/RELEASE-NOTES.md`
       }
     },
+    // Core training
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'core', // This goes in URLs
+        path: `${path.resolve(__dirname)}/patternfly-next/src/site/training.md`
+      }
+    },
     // React docs
     {
       resolve: 'gatsby-source-filesystem',
@@ -139,6 +147,14 @@ module.exports = {
       options: {
         name: 'react', // This goes in URLs
         path: `${path.resolve(__dirname)}/patternfly-react/RELEASE-NOTES.md`
+      }
+    },
+    // React training
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'react', // This goes in URLs
+        path:`${path.resolve(__dirname)}/patternfly-react/packages/patternfly-4/react-docs/src/training.md`
       }
     },
     // Org docs
