@@ -1,4 +1,0 @@
----
-reactComponentName: 'drawer'
-coreComponentName: 'drawer'
----
